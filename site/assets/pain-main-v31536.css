@@ -1,0 +1,176 @@
+
+/* v3.15.36 — 제세현한의원 통증클리닉 대표 메인글 */
+.pain-main-v31536{
+  --pn-green:#183a2a;
+  --pn-green2:#315f45;
+  --pn-blue:#37649a;
+  --pn-soft:#f7f5f0;
+  --pn-mint:#e9f0eb;
+  --pn-line:#dfe5e0;
+  --pn-muted:#6f7872;
+  color:#27342c;
+}
+.pain-main-v31536 *{box-sizing:border-box}
+.pain-main-v31536 .pain-kicker{
+  margin-bottom:9px;color:var(--pn-green2);font-size:10px;font-weight:800;letter-spacing:.13em
+}
+.pain-main-v31536 .pain-hero{
+  padding:26px 0 62px;
+  display:grid;
+  grid-template-columns:1.04fr .96fr;
+  gap:34px;
+  align-items:center;
+}
+.pain-main-v31536 .pain-hero h2{
+  margin:0 0 18px;color:var(--pn-green);font-family:var(--title);
+  font-size:clamp(35px,4.6vw,54px)!important;line-height:1.32!important;letter-spacing:-.045em
+}
+.pain-main-v31536 .pain-hero h2 em{color:var(--pn-blue);font-style:normal}
+.pain-main-v31536 .pain-lead{
+  margin:0!important;color:#59645d;font-size:15px!important;line-height:1.95!important;word-break:keep-all
+}
+.pain-main-v31536 .pain-hero-image{
+  margin:0;border-radius:18px;overflow:hidden;background:#edf1ee
+}
+.pain-main-v31536 .pain-hero-image img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.pain-main-v31536 .pain-answer-box{
+  margin-top:22px;padding:17px 19px;display:grid;grid-template-columns:130px 1fr;gap:14px;
+  border:1px solid #d8e1e8;border-radius:14px;background:#f5f8fb
+}
+.pain-main-v31536 .pain-answer-box strong{color:var(--pn-blue);font-size:11px}
+.pain-main-v31536 .pain-answer-box span{color:#68727a;font-size:11px;line-height:1.8}
+.pain-main-v31536 .pain-hero-points{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pain-main-v31536 .pain-hero-points>div{padding:14px;border:1px solid var(--pn-line);border-radius:12px;background:#fff}
+.pain-main-v31536 .pain-hero-points b{display:block;margin-bottom:4px;color:var(--pn-green);font-size:11px}
+.pain-main-v31536 .pain-hero-points span{color:#778078;font-size:9px;line-height:1.6}
+
+.pain-main-v31536 .pain-section{margin:0 -34px;padding:64px 34px}
+.pain-main-v31536 .pain-soft{background:var(--pn-soft)}
+.pain-main-v31536 .pain-mint{background:var(--pn-mint)}
+.pain-main-v31536 .pain-section-head{max-width:790px;margin-bottom:28px}
+.pain-main-v31536 .pain-section-head h3,
+.pain-main-v31536 .pain-dark h3{
+  margin:0 0 12px;color:var(--pn-green);font-family:var(--title);
+  font-size:clamp(28px,3.7vw,40px)!important;line-height:1.43!important;letter-spacing:-.035em;word-break:keep-all
+}
+.pain-main-v31536 .pain-section-head p{
+  margin:0!important;color:var(--pn-muted);font-size:13px!important;line-height:1.9!important
+}
+
+.pain-main-v31536 .pain-quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.pain-main-v31536 .pain-quick-grid article{min-height:138px;padding:20px;border:1px solid var(--pn-line);border-radius:14px;background:#fff}
+.pain-main-v31536 .pain-quick-grid b{display:block;margin-bottom:8px;color:var(--pn-green);font-family:var(--title);font-size:17px;line-height:1.5}
+.pain-main-v31536 .pain-quick-grid span{color:#737c75;font-size:11px;line-height:1.72}
+
+.pain-main-v31536 .pain-two-column{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center}
+.pain-main-v31536 .pain-copy h4{margin:0 0 12px;color:var(--pn-green);font-family:var(--title);font-size:24px}
+.pain-main-v31536 .pain-copy p{color:#6c756e;font-size:13px!important;line-height:1.9!important}
+.pain-main-v31536 .pain-copy strong{color:#324b3b}
+.pain-main-v31536 .pain-feature-image{margin:0;border-radius:16px;overflow:hidden}
+.pain-main-v31536 .pain-feature-image img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+
+.pain-main-v31536 .pain-dark{
+  margin:0 -34px;padding:58px 34px;background:var(--pn-green);color:#fff
+}
+.pain-main-v31536 .pain-dark .pain-kicker{color:#a9bcae}
+.pain-main-v31536 .pain-dark h3{color:#fff}
+.pain-main-v31536 .pain-dark-copy>p,
+.pain-main-v31536 .pain-process-section .pain-section-head>p{
+  margin:0!important;color:rgba(255,255,255,.64);font-size:13px!important;line-height:1.85!important
+}
+.pain-main-v31536 .pain-chronic-grid{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pain-main-v31536 .pain-chronic-grid article{
+  padding:22px;border:1px solid rgba(255,255,255,.15);border-radius:14px;background:rgba(255,255,255,.045)
+}
+.pain-main-v31536 .pain-chronic-grid small{color:#9fb3a5;font-size:9px}
+.pain-main-v31536 .pain-chronic-grid h4{margin:16px 0 8px;color:#fff;font-family:var(--title);font-size:22px}
+.pain-main-v31536 .pain-chronic-grid p{margin:0!important;color:rgba(255,255,255,.66);font-size:11px!important;line-height:1.75!important}
+.pain-main-v31536 .pain-treatment-tags{margin-top:15px;display:flex;flex-wrap:wrap;gap:6px}
+.pain-main-v31536 .pain-treatment-tags span{padding:6px 9px;border:1px solid rgba(255,255,255,.18);border-radius:999px;color:#fff;font-size:9px}
+
+.pain-main-v31536 .pain-ultrasound-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:12px;align-items:stretch}
+.pain-main-v31536 .pain-ultrasound-grid figure{margin:0;display:flex;flex-direction:column;border:1px solid #dbe3dd;border-radius:15px;background:#fff;overflow:hidden}
+.pain-main-v31536 .pain-ultrasound-grid img{display:block;width:100%;height:100%;min-height:245px;object-fit:cover}
+.pain-main-v31536 .pain-ultrasound-grid figure:first-child img{aspect-ratio:16/10}
+.pain-main-v31536 .pain-ultrasound-grid figcaption{padding:13px 15px;color:#707a72;font-size:10px;line-height:1.65}
+
+.pain-main-v31536 .pain-treatment-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pain-main-v31536 .pain-treatment-grid article{display:grid;grid-template-columns:42px 1fr;gap:13px;padding:20px;border:1px solid var(--pn-line);border-radius:14px;background:#fff}
+.pain-main-v31536 .pain-treatment-grid article>span{color:#9baa9f;font-family:var(--title);font-size:15px}
+.pain-main-v31536 .pain-treatment-grid h4{margin:0 0 6px;color:var(--pn-green);font-family:var(--title);font-size:18px}
+.pain-main-v31536 .pain-treatment-grid p{margin:0!important;color:#707972;font-size:11px!important;line-height:1.75!important}
+
+.pain-main-v31536 .pain-maesun-grid,
+.pain-main-v31536 .pain-alert-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pain-main-v31536 .pain-maesun-grid>div,
+.pain-main-v31536 .pain-alert-grid>div{padding:20px;border:1px solid #dde3de;border-radius:14px;background:#fff}
+.pain-main-v31536 .pain-maesun-grid b,
+.pain-main-v31536 .pain-alert-grid b{display:block;margin-bottom:7px;color:var(--pn-green);font-family:var(--title);font-size:17px}
+.pain-main-v31536 .pain-maesun-grid span,
+.pain-main-v31536 .pain-alert-grid span{color:#737c75;font-size:11px;line-height:1.72}
+
+.pain-main-v31536 .pain-process-grid{margin-top:28px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.pain-main-v31536 .pain-process-grid>div{padding:17px;border:1px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(255,255,255,.04)}
+.pain-main-v31536 .pain-process-grid small{color:#a9bbae;font-size:9px}
+.pain-main-v31536 .pain-process-grid h4{margin:15px 0 6px;color:#fff;font-family:var(--title);font-size:17px}
+.pain-main-v31536 .pain-process-grid p{margin:0!important;color:rgba(255,255,255,.61);font-size:10px!important;line-height:1.7!important}
+
+.pain-main-v31536 .pain-condition-tags{display:flex;flex-wrap:wrap;gap:8px}
+.pain-main-v31536 .pain-condition-tags span{padding:9px 13px;border:1px solid #dbe2dc;border-radius:999px;background:#fff;color:#3d5546;font-size:10px;font-weight:700}
+
+.pain-main-v31536 .pain-faq{border-top:1px solid #dfe4df}
+.pain-main-v31536 .pain-faq details{border-bottom:1px solid #dfe4df}
+.pain-main-v31536 .pain-faq summary{list-style:none;cursor:pointer;padding:18px 0;display:flex;justify-content:space-between;gap:18px;color:#2d4034;font-size:14px;font-weight:700}
+.pain-main-v31536 .pain-faq summary::-webkit-details-marker{display:none}
+.pain-main-v31536 .pain-faq summary::after{content:"+";color:#7d8e82;font-size:20px;font-weight:300}
+.pain-main-v31536 .pain-faq details[open] summary::after{content:"−"}
+.pain-main-v31536 .pain-faq p{max-width:880px;margin:0 0 19px!important;color:#6f7872;font-size:12px!important;line-height:1.9!important}
+
+.pain-main-v31536 .pain-author-box{
+  margin:0 -34px;padding:22px 34px;display:flex;justify-content:space-between;align-items:center;gap:20px;
+  border-top:1px solid #e2e6e2;background:#f4f6f3
+}
+.pain-main-v31536 .pain-author-box span,
+.pain-main-v31536 .pain-author-box small{display:block;color:#828a84;font-size:9px}
+.pain-main-v31536 .pain-author-box b{display:block;margin:4px 0;color:#304438;font-size:12px}
+.pain-main-v31536 .pain-author-box>a{color:var(--pn-blue);text-decoration:none;font-size:10px;font-weight:700}
+
+.pain-main-v31536 .pain-final{
+  margin:0 -34px -34px;padding:42px 34px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;background:var(--pn-green);color:#fff
+}
+.pain-main-v31536 .pain-final h3{margin:0 0 8px;color:#fff;font-family:var(--title);font-size:29px;line-height:1.42}
+.pain-main-v31536 .pain-final p{margin:0!important;color:rgba(255,255,255,.62);font-size:12px!important;line-height:1.75!important}
+.pain-main-v31536 .pain-final a{min-height:46px;padding:0 18px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;background:#fff;color:var(--pn-green);text-decoration:none;font-size:11px;font-weight:700}
+
+#postRichEditor .pain-main-v31536{padding:18px;border:1px solid #d9e2db;border-radius:12px;background:#fff}
+
+@media(max-width:900px){
+  .pain-main-v31536 .pain-hero{grid-template-columns:1fr}
+  .pain-main-v31536 .pain-quick-grid{grid-template-columns:1fr 1fr}
+  .pain-main-v31536 .pain-two-column{grid-template-columns:1fr}
+  .pain-main-v31536 .pain-process-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .pain-main-v31536 .pain-hero{padding-bottom:44px}
+  .pain-main-v31536 .pain-hero h2{font-size:36px!important}
+  .pain-main-v31536 .pain-answer-box{grid-template-columns:1fr}
+  .pain-main-v31536 .pain-hero-points,
+  .pain-main-v31536 .pain-quick-grid,
+  .pain-main-v31536 .pain-chronic-grid,
+  .pain-main-v31536 .pain-ultrasound-grid,
+  .pain-main-v31536 .pain-treatment-grid,
+  .pain-main-v31536 .pain-maesun-grid,
+  .pain-main-v31536 .pain-alert-grid,
+  .pain-main-v31536 .pain-process-grid{grid-template-columns:1fr}
+  .pain-main-v31536 .pain-section,
+  .pain-main-v31536 .pain-dark{
+    margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px
+  }
+  .pain-main-v31536 .pain-ultrasound-grid img{min-height:0;height:auto}
+  .pain-main-v31536 .pain-author-box{
+    margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px;align-items:flex-start;flex-direction:column
+  }
+  .pain-main-v31536 .pain-final{
+    margin-left:-18px;margin-right:-18px;margin-bottom:-18px;padding:36px 18px;grid-template-columns:1fr
+  }
+}

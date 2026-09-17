@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="bg_기침" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a3a2a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d5a3d;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="shine_기침" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.12);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg_기침)"/>
+  <rect width="400" height="300" fill="url(#shine_기침)"/>
+  
+  <circle cx="200" cy="108" r="65" fill="rgba(255,255,255,0.12)"/>
+  <!-- 얼굴 -->
+  <ellipse cx="200" cy="102" rx="44" ry="50" fill="rgba(255,255,255,0.2)"/>
+  <!-- 눈 찡그림 -->
+  <path d="M181 84 Q188 79 195 84" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M205 84 Q212 79 219 84" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- 입 (기침 모양) -->
+  <path d="M178 115 Q200 130 222 115" stroke="rgba(255,255,255,0.85)" stroke-width="3" fill="rgba(255,255,255,0.2)" stroke-linecap="round"/>
+  <!-- 기침 파동들 -->
+  <path d="M230 108 Q245 102 258 112" stroke="rgba(255,255,255,0.65)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M235 120 Q253 112 270 124" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M238 132 Q260 122 278 136" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- 손 -->
+  <path d="M165 118 Q155 126 160 138 Q165 148 175 142" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+</svg>

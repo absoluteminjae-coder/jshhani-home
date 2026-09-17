@@ -1,0 +1,3944 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>제세현한의원 홈페이지 어드민</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2878f0;
+  --blue2:#eaf3ff;
+  --navy:#1d2d45;
+  --green:#183a2a;
+  --bg:#f7f9fc;
+  --panel:#ffffff;
+  --line:#e2e8f0;
+  --muted:#758197;
+  --text:#172033;
+  --sidebar:260px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg);letter-spacing:-.02em}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+.admin-topbar{
+  height:66px;background:#fff;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;padding:0 20px;
+  position:sticky;top:0;z-index:80
+}
+.admin-brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:800}
+.admin-brand-mark{display:flex;gap:3px}
+.admin-brand-mark i{display:block;width:8px;height:27px;border-radius:3px;background:var(--blue);transform:skewY(-26deg)}
+.top-actions{display:flex;align-items:center;gap:10px}
+.top-btn{height:44px;padding:0 15px;border:1px solid #d7deea;border-radius:10px;background:#fff;color:#26364d;font-weight:700}
+.user-pill{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700}
+.avatar{width:37px;height:37px;border-radius:50%;background:#f3f6fa;border:1px solid #dfe5ed;display:grid;place-items:center;color:#56647a}
+
+.layout{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:calc(100vh - 66px)}
+.sidebar{
+  background:#fff;border-right:1px solid var(--line);padding:18px 10px 40px;
+  position:sticky;top:66px;height:calc(100vh - 66px);overflow:auto
+}
+.side-group{margin-bottom:9px}
+.side-main{
+  width:100%;border:0;background:#fff;border-radius:8px;padding:12px 12px;
+  display:flex;align-items:center;gap:12px;text-align:left;font-weight:700;color:#26364d
+}
+.side-main:hover,.side-main.active{background:#f1f4f8}
+.side-main .ico{width:24px;text-align:center;font-size:19px;color:#5a6a81}
+.side-main .chev{margin-left:auto;color:#718097}
+.side-sub{margin:4px 0 6px 42px}
+.side-sub button{
+  width:calc(100% - 4px);border:0;background:transparent;border-radius:7px;
+  padding:11px 10px;text-align:left;color:#31425a;font-weight:600
+}
+.side-sub button.active,.side-sub button:hover{background:#f1f4f8;color:#111b2b}
+
+.main{min-width:0}
+.info-strip{
+  min-height:76px;background:#eaf4ff;border-bottom:1px solid #d6e6f8;
+  padding:14px 28px;display:flex;align-items:center;gap:12px;color:#33445d;font-size:13px
+}
+.info-icon{width:35px;height:35px;border:2px solid #57a1ff;border-radius:50%;display:grid;place-items:center;color:var(--blue);font-weight:800}
+.content{padding:26px 30px 60px;max-width:1600px;margin:0 auto}
+.view{display:none}.view.active{display:block}
+.page-toolbar{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:22px}
+.page-toolbar h1{font-size:26px;margin:0}
+.page-actions{display:flex;gap:9px;flex-wrap:wrap}
+.action-btn{
+  height:48px;padding:0 16px;border:1px solid #d9e0ea;background:#fff;border-radius:10px;
+  color:#27384e;font-weight:700
+}
+.action-btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.action-btn.small{height:38px;padding:0 12px;border-radius:8px;font-size:12px}
+.action-btn.danger{color:#c73e3e}
+
+.tabs{
+  display:flex;gap:5px;overflow-x:auto;border-bottom:1px solid var(--line);margin-bottom:20px;
+  scrollbar-width:none
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  border:0;background:transparent;white-space:nowrap;padding:13px 8px 14px;color:#53627a;font-weight:700
+}
+.tab.active{color:var(--blue);border-bottom:2px solid var(--blue)}
+.tab .count{display:inline-grid;place-items:center;min-width:28px;height:28px;padding:0 8px;margin-left:5px;border-radius:999px;background:#f1f4f8;border:1px solid #e1e6ee;font-size:12px}
+.tab.active .count{background:#eef5ff;color:var(--blue);border-color:#b9d7ff}
+
+.filterbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:14px}
+.filter-left{display:flex;gap:9px}
+.select{
+  height:46px;border:1px solid #d6deea;border-radius:10px;background:#fff;padding:0 14px;color:#34445c
+}
+.searchbox{
+  width:min(520px,45vw);height:46px;border:1px solid #d6deea;border-radius:10px;background:#fff;
+  display:flex;align-items:center;padding:0 14px;gap:9px
+}
+.searchbox input{width:100%;border:0;outline:0;font-size:14px}
+.total{font-size:13px;font-weight:700;color:#44546b}
+
+.table-wrap{background:#fff;border:1px solid #dfe5ed;border-radius:12px;overflow:auto}
+.post-table{width:100%;border-collapse:collapse;min-width:1050px}
+.post-table th{
+  height:52px;background:#fafbfd;border-bottom:1px solid #e5eaf1;padding:0 12px;
+  color:#647187;font-size:12px;text-align:left;white-space:nowrap
+}
+.post-table td{border-bottom:1px solid #e8ecf2;padding:14px 12px;font-size:13px;vertical-align:middle}
+.post-table tr:last-child td{border-bottom:0}
+.check{width:18px;height:18px}
+.post-cell{display:flex;align-items:center;gap:12px;min-width:420px}
+.thumb{width:50px;height:50px;border-radius:5px;background:#e8edf2;display:grid;place-items:center;overflow:hidden;color:#8994a6;font-size:9px;flex:0 0 auto}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.pin-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 7px;border:1px solid #dfe4eb;border-radius:6px;color:#45576f;font-size:10px;margin-right:6px}
+.post-title{font-weight:700;color:#1d2a3d;max-width:430px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.muted{color:#7e8999;font-size:11px;margin-top:4px}
+.toggle{
+  position:relative;width:48px;height:27px;border:0;border-radius:999px;background:#cbd4e0;padding:0
+}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s}
+.toggle.on{background:var(--blue)}.toggle.on::after{left:24px}
+.board-link{font-weight:700;color:#40516a}
+.row-actions{display:flex;align-items:center;gap:5px}
+.icon-btn{width:36px;height:36px;border:0;background:transparent;border-radius:7px;color:#5d6d83;font-size:18px}
+.icon-btn:hover{background:#f0f4f9}.icon-btn.active{color:var(--blue)}
+.move-btn{height:40px;padding:0 12px;border:1px solid #d9e0ea;border-radius:8px;background:#fff;font-weight:700;color:#31435b}
+
+.panel{background:#fff;border:1px solid #e0e6ee;border-radius:12px;padding:20px;margin-bottom:16px}
+.panel h2{margin:0 0 15px;font-size:18px}
+.menu-row{
+  display:grid;grid-template-columns:65px minmax(170px,1fr) minmax(150px,1.2fr) 110px 220px;
+  gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid #edf0f4
+}
+.menu-row:last-child{border-bottom:0}
+.order-input{width:58px;height:38px;border:1px solid #dbe2eb;border-radius:7px;padding:0 8px}
+.slug{font-size:11px;color:#8a94a3;margin-top:3px}
+.visibility{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700}
+.dot{width:8px;height:8px;border-radius:50%;background:#21b66f}.dot.off{background:#a9b1bd}
+
+.empty{padding:70px 20px;text-align:center;color:#8691a1}
+.dashboard-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat{background:#fff;border:1px solid #e0e6ee;border-radius:12px;padding:18px}
+.stat .label{font-size:12px;color:#778397}.stat .value{font-size:30px;font-weight:800;margin-top:10px}.stat .sub{font-size:11px;color:#8792a0;margin-top:5px}
+
+.design-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.font-card{border:1px solid #dfe5ed;border-radius:12px;padding:16px;background:#fff;cursor:pointer}
+.font-card.active{border:2px solid var(--blue);background:#f7fbff}.font-card h3{font-size:14px;margin:0 0 12px}.font-sample{font-size:23px;color:#173925;margin-bottom:8px}.font-card p{font-size:11px;color:#7b8697;margin:0}
+
+.popup-row{display:grid;grid-template-columns:1fr 140px 130px 160px;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid #edf0f4}
+
+/* modal */
+.modal-backdrop{
+  position:fixed;inset:0;z-index:200;background:rgba(16,26,40,.42);display:none;
+  align-items:center;justify-content:center;padding:24px
+}
+.modal-backdrop.open{display:flex}
+.modal{
+  width:min(980px,96vw);max-height:90vh;overflow:auto;background:#fff;border-radius:16px;
+  box-shadow:0 24px 70px rgba(0,0,0,.2)
+}
+.modal.small{width:min(650px,96vw)}
+.modal-head{height:68px;padding:0 22px;border-bottom:1px solid #e5e9ef;display:flex;align-items:center;justify-content:space-between}
+.modal-head h2{margin:0;font-size:19px}.close-btn{width:38px;height:38px;border:0;background:#f3f6f9;border-radius:8px;font-size:20px}
+.modal-body{padding:22px}
+.modal-foot{padding:16px 22px;border-top:1px solid #e5e9ef;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field label{display:block;font-size:11px;color:#6f7c90;margin-bottom:6px;font-weight:700}
+.field input,.field textarea,.field select{width:100%;border:1px solid #d8e0ea;border-radius:8px;padding:10px 11px;outline:none}
+.field textarea{min-height:120px;resize:vertical}.wide{grid-column:1/-1}
+.steps{display:flex;border-bottom:1px solid #e5e9ef}
+.step-tab{flex:1;padding:16px;text-align:center;font-size:13px;color:#8a95a5;font-weight:700;border-bottom:2px solid transparent}
+.step-tab.active{color:var(--blue);border-color:var(--blue)}
+.import-layout{display:grid;grid-template-columns:190px 1fr;gap:18px}
+.category-list{border-right:1px solid #e7ebf0;padding-right:14px}
+.category-item{padding:10px;border-radius:7px;font-size:12px;margin-bottom:4px}.category-item.active{background:#eef5ff;color:var(--blue);font-weight:700}
+.import-tools{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.import-tools input{flex:1;height:42px;border:1px solid #d9e0e9;border-radius:8px;padding:0 11px}
+.import-item{display:grid;grid-template-columns:24px 60px 1fr 100px;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid #edf0f4}
+.import-thumb{width:60px;height:60px;border-radius:7px;background:#e8edf2;display:grid;place-items:center;font-size:9px;color:#8994a4}
+.import-title{font-weight:700;font-size:13px}.import-meta{font-size:10px;color:#8792a1;margin-top:4px}.imported{font-size:10px;color:#1d9b63;font-weight:700}
+.board-choice{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.board-option{border:1px solid #dfe5ed;border-radius:10px;padding:14px;cursor:pointer}.board-option.active{border:2px solid var(--blue);background:#f6faff}
+
+.toast{position:fixed;right:22px;bottom:22px;z-index:300;padding:12px 15px;background:#1d2c43;color:#fff;border-radius:9px;font-size:12px;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}
+
+@media(max-width:1100px){
+  :root{--sidebar:220px}.dashboard-grid{grid-template-columns:1fr 1fr}.design-grid{grid-template-columns:1fr 1fr}.menu-row{grid-template-columns:55px 1fr 110px 170px}.menu-row .desc{display:none}
+}
+@media(max-width:760px){
+  .layout{grid-template-columns:1fr}.sidebar{display:none}.content{padding:20px 14px 50px}.info-strip{padding:12px 14px}.page-toolbar{align-items:flex-start;flex-direction:column}.searchbox{width:100%}.filterbar{align-items:stretch;flex-direction:column}.dashboard-grid,.design-grid{grid-template-columns:1fr}.menu-row{grid-template-columns:50px 1fr}.menu-row>*:nth-child(n+3){grid-column:2}.import-layout{grid-template-columns:1fr}.category-list{border-right:0;border-bottom:1px solid #e7ebf0;padding:0 0 10px;display:flex;overflow:auto}.category-item{white-space:nowrap}.board-choice{grid-template-columns:1fr}.popup-row{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.wide{grid-column:auto}.top-actions .user-pill{display:none}
+}
+
+.login-screen{min-height:100vh;display:grid;place-items:center;padding:30px;background:#f4f7fb}
+.login-card{width:min(440px,96vw);background:#fff;border:1px solid #dfe6ef;border-radius:18px;padding:28px;box-shadow:0 18px 50px rgba(28,46,73,.08)}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:24px}.login-logo h1{font-size:20px;margin:0}.login-card p{font-size:12px;line-height:1.7;color:#7a8799}
+.login-field{margin:13px 0}.login-field label{display:block;font-size:11px;font-weight:700;color:#66758a;margin-bottom:6px}.login-field input{width:100%;height:45px;border:1px solid #d7e0ea;border-radius:9px;padding:0 12px}
+.login-btn{width:100%;height:48px;border:0;border-radius:9px;background:#2878f0;color:#fff;font-weight:800;margin-top:6px}
+.login-error{font-size:11px;color:#c14545;margin-top:10px;min-height:17px}
+.app-hidden{display:none!important}
+.upload-row{display:flex;gap:8px;align-items:center}.upload-row input[type=text]{flex:1}.upload-btn{height:42px;padding:0 12px;border:1px solid #d8e0ea;border-radius:8px;background:#fff;font-weight:700;white-space:nowrap}
+.sync-badge{font-size:11px;color:#1c9460;font-weight:700}
+
+.media-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+.media-card{
+  border:1px solid #dfe5ed;
+  border-radius:12px;
+  overflow:hidden;
+  background:#fff;
+}
+.media-preview{
+  aspect-ratio:16/10;
+  background:#edf2f6;
+  display:grid;
+  place-items:center;
+  color:#8a96a7;
+  font-size:11px;
+  overflow:hidden;
+}
+.media-preview.portrait{aspect-ratio:4/3}
+.media-preview img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.media-card-body{padding:13px}
+.media-card-title{font-size:13px;font-weight:800;color:#23334a}
+.media-card-help{font-size:10px;color:#8490a0;margin-top:4px;line-height:1.5}
+.media-card-actions{
+  display:flex;
+  gap:6px;
+  margin-top:11px;
+  flex-wrap:wrap;
+}
+.media-card-actions button{
+  height:36px;
+  border-radius:7px;
+  padding:0 10px;
+  border:1px solid #dbe2eb;
+  background:#fff;
+  color:#34465e;
+  font-size:11px;
+  font-weight:700;
+}
+.media-card-actions button.primary{
+  background:#2878f0;
+  color:#fff;
+  border-color:#2878f0;
+}
+.media-url{
+  width:100%;
+  height:37px;
+  margin-top:8px;
+  border:1px solid #dbe2eb;
+  border-radius:7px;
+  padding:0 9px;
+  font-size:10px;
+}
+.media-section-note{
+  margin:0 0 15px;
+  font-size:12px;
+  line-height:1.7;
+  color:#758197;
+}
+@media(max-width:1100px){
+  .media-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .media-grid{grid-template-columns:1fr}
+}
+
+
+/* analytics */
+.analytics-tabs{
+  display:flex;gap:6px;border-bottom:1px solid #e2e8f0;margin-bottom:18px
+}
+.analytics-tab{
+  border:0;background:transparent;padding:13px 8px 14px;font-weight:800;color:#66758a
+}
+.analytics-tab.active{color:#2878f0;border-bottom:2px solid #2878f0}
+.range-buttons{display:flex;gap:0}
+.range-buttons button{
+  height:40px;padding:0 14px;border:1px solid #d9e0ea;background:#fff;color:#34465e;font-weight:700
+}
+.range-buttons button:first-child{border-radius:9px 0 0 9px}
+.range-buttons button:last-child{border-radius:0 9px 9px 0}
+.range-buttons button+button{border-left:0}
+.range-buttons button.active{background:#eaf3ff;color:#1768da}
+.analytics-summary{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px
+}
+.analytics-kpi{background:#fff;border:1px solid #e0e6ee;border-radius:12px;padding:17px}
+.analytics-kpi span{display:block;font-size:11px;color:#788599}
+.analytics-kpi strong{display:block;font-size:25px;margin-top:8px;color:#172033}
+.chart-card{background:#fff;border:1px solid #e0e6ee;border-radius:12px;padding:16px;overflow:hidden}
+.chart-legend{display:flex;justify-content:flex-end;gap:16px;font-size:11px;color:#68768a;margin-bottom:8px}
+.legend-bar::before,.legend-line::before{content:"";display:inline-block;width:11px;height:7px;margin-right:5px;vertical-align:1px}
+.legend-bar::before{background:#3189f4}.legend-line::before{height:2px;background:#ef3daf}
+.chart-scroll{overflow-x:auto}
+.analytics-chart{min-width:760px;width:100%;height:auto;display:block}
+.stats-table{width:100%;border-collapse:collapse;background:#fff}
+.stats-table th,.stats-table td{padding:13px 12px;border-bottom:1px solid #e7ecf2;font-size:12px;text-align:left}
+.stats-table th{background:#fafbfd;color:#657287}
+.stats-table td.num{text-align:right;font-weight:700}
+.stats-title{font-weight:700;color:#1c2a3d}
+
+/* media library */
+.library-toolbar{display:flex;gap:9px;align-items:center;margin-bottom:14px}
+.library-toolbar input{flex:1;height:42px;border:1px solid #d9e0e9;border-radius:8px;padding:0 11px}
+.library-grid{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px
+}
+.library-item{
+  border:1px solid #dfe5ed;border-radius:10px;overflow:hidden;background:#fff;cursor:pointer
+}
+.library-item:hover{border-color:#2878f0;box-shadow:0 6px 18px rgba(40,120,240,.08)}
+.library-thumb{aspect-ratio:1/1;background:#edf2f6;overflow:hidden}
+.library-thumb img{width:100%;height:100%;object-fit:cover}
+.library-info{padding:9px}
+.library-name{font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.library-meta{font-size:9px;color:#8a95a5;margin-top:4px}
+.library-use{margin-top:7px;width:100%;height:31px;border:1px solid #dbe2eb;border-radius:6px;background:#fff;color:#34465e;font-size:10px;font-weight:700}
+.media-card-actions .library-open{background:#eef5ff;color:#1768da;border-color:#bad6fb}
+@media(max-width:1100px){.library-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:760px){
+  .analytics-summary{grid-template-columns:1fr}
+  .library-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+
+.import-item{
+  cursor:pointer;
+  border-radius:8px;
+  padding-left:6px;
+  padding-right:6px;
+}
+.import-item:hover{background:#f7faff}
+.import-item.selected{
+  background:#eef6ff;
+  box-shadow:inset 0 0 0 1px #b8d6fb;
+}
+.import-item input[type="checkbox"]{
+  width:17px;
+  height:17px;
+  cursor:pointer;
+  accent-color:#2878f0;
+}
+.import-item.imported-row{
+  opacity:1;
+}
+.import-item .imported{
+  display:inline-block;
+  margin-bottom:3px;
+}
+
+
+.category-list{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.category-btn{
+  width:100%;
+  min-height:38px;
+  border:0;
+  background:transparent;
+  border-radius:7px;
+  padding:0 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  text-align:left;
+  color:#34465e;
+  cursor:pointer;
+  font:inherit;
+}
+.category-btn span{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.category-btn strong{
+  flex:0 0 auto;
+  margin-left:8px;
+  font-size:10px;
+  font-weight:700;
+  color:#64748b;
+}
+.category-btn:hover{
+  background:#f2f6fb;
+}
+.category-btn.active{
+  background:#eaf3ff;
+  color:#1768da;
+  font-weight:800;
+}
+.category-btn.active strong{
+  color:#1768da;
+}
+
+
+.rich-editor-wrap{
+  border:1px solid #d7e0ea;
+  border-radius:10px;
+  overflow:hidden;
+  background:#fff;
+}
+.rich-toolbar{
+  display:flex;
+  gap:6px;
+  align-items:center;
+  flex-wrap:wrap;
+  padding:9px;
+  border-bottom:1px solid #e3e8ef;
+  background:#f8fafc;
+}
+.rich-toolbar button,
+.rich-toolbar select{
+  height:34px;
+  min-width:34px;
+  border:1px solid #d8e0e9;
+  border-radius:6px;
+  background:#fff;
+  color:#34465e;
+  padding:0 9px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+.rich-toolbar button:hover{
+  border-color:#2878f0;
+  color:#1768da;
+}
+.rich-toolbar .editor-toolbar-sep{
+  width:1px;
+  height:24px;
+  margin:0 2px;
+  background:#dfe5ec;
+}
+.rich-toolbar .editor-image-btn{
+  border-color:#bdd8c7;
+  background:#f1f8f3;
+  color:#28563f;
+}
+.rich-toolbar .editor-image-btn:hover{
+  border-color:#5f8a6c;
+  color:#183a2a;
+  background:#eaf5ed;
+}
+.rich-editor{
+  min-height:360px;
+  max-height:650px;
+  overflow:auto;
+  padding:26px 28px;
+  outline:none;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:18px;
+  line-height:1.95;
+  color:#2e3a31;
+  background:#fff;
+}
+.rich-editor p{margin:0 0 1.2em}
+.rich-editor h2{
+  font-size:28px;
+  line-height:1.5;
+  margin:2em 0 .7em;
+  color:#183a2a;
+}
+.rich-editor h3{
+  font-size:23px;
+  line-height:1.5;
+  margin:1.7em 0 .6em;
+  color:#20382b;
+}
+.rich-editor img{
+  max-width:100%;
+  height:auto;
+  display:block;
+  margin:20px auto;
+}
+.rich-editor figure.jsh-inline-image{
+  max-width:100%;
+  margin:28px auto;
+  padding:10px;
+  border:1px dashed #cfd9d1;
+  border-radius:10px;
+  background:#fafcf9;
+}
+.rich-editor figure.jsh-inline-image img{
+  margin:0 auto;
+  border-radius:8px;
+}
+.rich-editor figure.jsh-inline-image::after{
+  content:'본문 이미지 · 클릭 후 Delete/Backspace로 삭제';
+  display:block;
+  margin-top:8px;
+  color:#8a958e;
+  font-size:9px;
+  text-align:center;
+}
+.rich-editor blockquote{
+  margin:24px 0;
+  padding:16px 18px;
+  border-left:3px solid #64856e;
+  background:#f5f7f4;
+}
+.source-editor{
+  display:none;
+  width:100%;
+  min-height:360px;
+  border:0;
+  resize:vertical;
+  padding:18px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12px;
+  line-height:1.6;
+}
+.editor-help{
+  padding:9px 12px;
+  border-top:1px solid #edf0f4;
+  color:#7a8798;
+  font-size:10px;
+  background:#fbfcfd;
+}
+
+
+.home-copy-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.copy-card{border:1px solid #dfe5ed;border-radius:12px;padding:16px;background:#fff}.copy-card h3{margin:0 0 12px;font-size:14px;color:#213248}.copy-card .field{margin-bottom:10px}.copy-actions{display:flex;justify-content:flex-end;margin-top:16px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}.tabs .tab{flex:0 0 auto;cursor:pointer}.tabs .tab.active{color:#1768da;border-bottom:2px solid #2878f0;background:#eef5ff}.tabs .tab:hover{background:#f4f8fd}
+.category-manager-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.category-manager-item{display:flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid #dfe5ed;border-radius:8px;background:#fff;font-size:11px}.category-manager-item button{border:0;background:none;color:#a24d4d;cursor:pointer}
+@media(max-width:800px){.home-copy-grid{grid-template-columns:1fr}}
+
+
+/* v3.12 actual page category sidebar */
+.page-toolbar-desc{
+  margin:6px 0 0;
+  font-size:12px;
+  color:var(--muted);
+}
+.post-manager-layout{
+  display:grid;
+  grid-template-columns:240px minmax(0,1fr);
+  gap:18px;
+  align-items:start;
+}
+.page-category-panel{
+  position:sticky;
+  top:84px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  overflow:hidden;
+  min-height:560px;
+}
+.page-category-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:15px 14px 12px;
+  border-bottom:1px solid #edf1f5;
+}
+.page-category-head > div{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.page-category-head strong{
+  font-size:13px;
+  color:#1f2f46;
+}
+.page-category-head span{
+  font-size:10px;
+  color:#8994a5;
+}
+.page-add-btn{
+  width:32px;
+  height:32px;
+  border:1px solid #d9e1eb;
+  border-radius:8px;
+  background:#fff;
+  color:var(--blue);
+  font-size:18px;
+  line-height:1;
+}
+.page-category-search{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin:11px;
+  padding:0 9px;
+  height:36px;
+  border:1px solid #e0e6ee;
+  border-radius:8px;
+  background:#fafbfd;
+  color:#8c98a8;
+}
+.page-category-search input{
+  min-width:0;
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  font-size:11px;
+}
+.page-category-list{
+  padding:2px 8px 12px;
+  max-height:calc(100vh - 250px);
+  overflow:auto;
+}
+.page-category-item{
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  align-items:center;
+  min-height:46px;
+  padding:8px 9px;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  text-align:left;
+  cursor:pointer;
+  color:#37475e;
+}
+.page-category-item:hover{
+  background:#f5f8fc;
+}
+.page-category-item.active{
+  background:var(--blue2);
+  color:#1768da;
+}
+.page-category-main{
+  min-width:0;
+}
+.page-category-name{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:11px;
+  font-weight:800;
+}
+.page-category-name .vis-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#3aa46f;
+  flex:0 0 auto;
+}
+.page-category-name .vis-dot.off{
+  background:#b8c0ca;
+}
+.page-category-slug{
+  margin-top:3px;
+  font-size:9px;
+  color:#99a3b1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.page-category-count{
+  min-width:26px;
+  height:23px;
+  display:grid;
+  place-items:center;
+  padding:0 6px;
+  border-radius:999px;
+  background:#f0f3f7;
+  color:#718096;
+  font-size:9px;
+  font-weight:800;
+}
+.page-category-item.active .page-category-count{
+  background:#fff;
+  color:#1768da;
+}
+.page-category-actions{
+  display:flex;
+  gap:5px;
+  padding:0 9px 8px;
+}
+.page-category-actions button{
+  flex:1;
+  height:29px;
+  border:1px solid #dfe5ed;
+  border-radius:6px;
+  background:#fff;
+  color:#66758a;
+  font-size:9px;
+  font-weight:700;
+}
+.page-category-foot{
+  padding:10px;
+  border-top:1px solid #edf1f5;
+}
+.page-category-foot button{
+  width:100%;
+  height:34px;
+  border:1px solid #dfe5ed;
+  border-radius:7px;
+  background:#fff;
+  color:#58677b;
+  font-size:10px;
+  font-weight:700;
+}
+.post-manager-main{
+  min-width:0;
+}
+.selected-page-bar{
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:10px;
+  padding:11px 14px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+}
+.selected-page-info strong{
+  display:block;
+  font-size:14px;
+}
+.selected-page-info span{
+  display:block;
+  margin-top:3px;
+  font-size:10px;
+  color:#8a95a5;
+}
+.selected-page-actions{
+  display:flex;
+  gap:6px;
+}
+.selected-page-actions button,
+.selected-page-actions a{
+  height:32px;
+  display:inline-flex;
+  align-items:center;
+  padding:0 10px;
+  border:1px solid #dfe5ed;
+  border-radius:7px;
+  background:#fff;
+  color:#526176;
+  font-size:9px;
+  font-weight:800;
+}
+@media(max-width:980px){
+  .post-manager-layout{
+    grid-template-columns:1fr;
+  }
+  .page-category-panel{
+    position:static;
+    min-height:0;
+  }
+  .page-category-list{
+    max-height:260px;
+  }
+}
+
+
+/* v3.14 admin information architecture */
+.side-section-title{
+  padding:18px 18px 7px;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.12em;
+  color:#9aa5b4;
+  text-transform:uppercase;
+}
+.sidebar .side-group{margin-bottom:2px}
+.sidebar .side-main{
+  width:calc(100% - 16px);
+  margin:0 8px;
+  border-radius:8px;
+}
+.sidebar .side-main.active{
+  background:#edf4ff;
+  color:#1768da;
+}
+.admin-dashboard-grid .stat-sub{
+  margin-top:7px;
+  font-size:10px;
+  color:#8995a6;
+}
+.dashboard-two-col{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:16px;
+  margin-top:16px;
+}
+.panel-title-row h2{margin:0}
+.panel-title-row p{margin:5px 0 0;font-size:10px;color:#8b96a5}
+.quick-action-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  margin-top:16px;
+}
+.quick-action-grid button{
+  min-height:46px;
+  padding:0 13px;
+  border:1px solid #dfe5ed;
+  border-radius:8px;
+  background:#fff;
+  color:#314056;
+  text-align:left;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+}
+.quick-action-grid button:hover{border-color:#aac8ef;background:#f8fbff}
+.status-list{margin-top:10px}
+.status-list>div{
+  display:flex;justify-content:space-between;gap:20px;
+  padding:12px 0;border-bottom:1px solid #edf0f4;font-size:11px;
+}
+.status-list span{color:#7c8898}
+.status-list strong{color:#2d3b50}
+.status-list strong.ok{color:#2b8a5b}
+
+/* products */
+.product-kpis{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  margin-bottom:14px;
+}
+.product-kpis>div{
+  padding:15px 16px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+}
+.product-kpis span{display:block;font-size:10px;color:#8793a4}
+.product-kpis strong{display:block;margin-top:5px;font-size:21px;color:#25364d}
+.product-panel{padding:0;overflow:hidden}
+.product-toolbar{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:14px;border-bottom:1px solid #edf0f4;
+}
+.product-filters{display:flex;gap:8px}
+.product-filters select{
+  height:36px;border:1px solid #dfe5ed;border-radius:7px;background:#fff;padding:0 28px 0 10px;font-size:10px;color:#4c5a6c;
+}
+.product-db-warning{
+  margin:14px;padding:13px 14px;border:1px solid #f0c2c2;border-radius:8px;background:#fff6f6;color:#9e4141;font-size:11px;line-height:1.6;
+}
+.product-table .product-cell{display:flex;align-items:center;gap:11px;min-width:260px}
+.product-thumb{
+  width:58px;height:58px;flex:0 0 58px;border-radius:8px;overflow:hidden;
+  display:grid;place-items:center;background:#f0f3f6;color:#9aa4b2;font-size:9px;
+}
+.product-thumb img{width:100%;height:100%;object-fit:cover}
+.product-name{font-size:11px;font-weight:800;color:#27384f;line-height:1.45}
+.product-summary{margin-top:4px;max-width:330px;font-size:9px;color:#8994a4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.price-main{font-size:11px;font-weight:800;color:#24354c}
+.price-old{font-size:9px;color:#a0a8b3;text-decoration:line-through}
+.badge{
+  display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;
+  background:#f1f4f7;color:#68758a;font-size:9px;font-weight:800;
+}
+.badge.green{background:#eaf8f0;color:#2d8a59}
+.badge.red{background:#fff0f0;color:#b84b4b}
+.badge.blue{background:#edf4ff;color:#3978c8}
+.external-link-btn{
+  display:inline-flex;align-items:center;height:28px;padding:0 8px;border:1px solid #dfe5ed;border-radius:6px;background:#fff;font-size:9px;color:#526176;font-weight:700;
+}
+
+.product-modal{width:min(900px,94vw)}
+.product-form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.product-form-grid .span-2{grid-column:1/-1}
+.product-image-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:7px}
+.product-image-preview{
+  margin-top:10px;width:160px;aspect-ratio:4/3;border:1px dashed #d5dce5;border-radius:8px;
+  display:grid;place-items:center;overflow:hidden;background:#fafbfd;color:#9ba5b2;font-size:9px;
+}
+.product-image-preview img{width:100%;height:100%;object-fit:cover}
+.product-rich-editor{min-height:190px}
+.field-help{margin-top:5px;font-size:9px;line-height:1.55;color:#8d98a7}
+
+@media(max-width:980px){
+  .dashboard-two-col{grid-template-columns:1fr}
+  .product-kpis{grid-template-columns:repeat(2,1fr)}
+  .product-toolbar{align-items:stretch;flex-direction:column}
+  .product-form-grid{grid-template-columns:1fr}
+  .product-form-grid .span-2{grid-column:auto}
+}
+
+
+/* v3.14.3 popup admin */
+.popup-panel{padding:0;overflow:hidden}
+.popup-guide{
+  margin:14px;
+  padding:13px 15px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  border:1px solid #dce8df;
+  border-radius:9px;
+  background:#f5faf6;
+  color:#53645a;
+  font-size:10px;
+  line-height:1.6;
+}
+.popup-guide strong{color:#24553a;font-size:11px}
+.popup-row{
+  display:grid !important;
+  grid-template-columns:82px minmax(0,1fr) 100px 86px 86px 130px !important;
+  gap:12px !important;
+  align-items:center !important;
+  padding:13px 16px !important;
+}
+.popup-list-thumb{
+  width:72px;
+  height:72px;
+  border-radius:8px;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background:#f0f3f5;
+  color:#9aa4b1;
+  font-size:9px;
+}
+.popup-list-thumb img{width:100%;height:100%;object-fit:cover}
+.popup-row-title{font-size:12px;font-weight:800;color:#2c3d53}
+.popup-row-link{margin-top:4px;font-size:9px;color:#8994a4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:460px}
+.popup-edit-modal{width:min(820px,95vw)}
+.popup-image-tools{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:7px}
+.popup-image-preview{
+  width:min(320px,100%);
+  aspect-ratio:4/3;
+  margin-top:10px;
+  border:1px dashed #d5dce5;
+  border-radius:10px;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background:#fafbfd;
+  color:#929dab;
+  font-size:10px;
+}
+.popup-image-preview img{width:100%;height:100%;object-fit:contain;background:#fff}
+.popup-link-examples{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  margin-top:7px;
+  font-size:9px;
+  color:#7f8b9a;
+}
+.popup-link-examples code{
+  padding:1px 4px;
+  border-radius:4px;
+  background:#f3f5f7;
+  color:#4b5a70;
+}
+@media(max-width:900px){
+  .popup-row{
+    grid-template-columns:64px minmax(0,1fr) 80px 80px !important;
+  }
+  .popup-row .popup-sort,
+  .popup-row .popup-link-action{display:none}
+}
+@media(max-width:650px){
+  .popup-image-tools{grid-template-columns:1fr}
+}
+
+
+/* v3.15.11 — 메인 문구 수동 줄바꿈 */
+.copy-title-textarea{
+  min-height:68px;
+  resize:vertical;
+  line-height:1.55;
+  font-weight:600;
+}
+
+</style>
+<link rel="stylesheet" href="assets/diet-main-v31512.css?v=3.15.12">
+<script src="assets/diet-main-template-v31512.js?v=3.15.12"></script>
+<link rel="stylesheet" href="assets/bopye-main-v31522.css?v=3.15.34">
+<script src="assets/bopye-main-template-v31535.js?v=3.15.35"></script>
+<link rel="stylesheet" href="assets/damjeok-main-v31526.css?v=3.15.26">
+<script src="assets/damjeok-main-template-v31526.js?v=3.15.26"></script>
+
+<link rel="stylesheet" href="assets/pain-main-v31536.css?v=3.15.36">
+<link rel="stylesheet" href="assets/menopause-main-v31541.css?v=3.15.41">
+<script src="assets/pain-main-template-v31536.js?v=3.15.36"></script>
+<script src="assets/menopause-main-template-v31541.js?v=3.15.41"></script>
+</head>
+<body data-jsh-build="3.15.41">
+<div class="login-screen" id="loginScreen"><div class="login-card">
+  <div class="login-logo"><span class="admin-brand-mark"><i></i><i></i><i></i></span><div><h1>제세현한의원 홈페이지 어드민</h1><p style="margin:4px 0 0">Supabase 관리자 계정으로 로그인합니다.</p></div></div>
+  <div class="login-field"><label>이메일</label><input id="loginEmail" type="email" autocomplete="username"></div>
+  <div class="login-field"><label>비밀번호</label><input id="loginPassword" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')Admin.login()"></div>
+  <button class="login-btn" onclick="Admin.login()">로그인</button><div id="loginError" class="login-error"></div>
+</div></div>
+
+<div id="adminApp" class="app-hidden">
+<header class="admin-topbar">
+  <div class="admin-brand"><span style="font-size:22px;color:#5f6c7f">⠿</span><span class="admin-brand-mark"><i></i><i></i><i></i></span><span>제세현한의원 홈페이지 어드민</span></div>
+  <div class="top-actions"><a class="top-btn" href="index.html" target="_blank">✎ 홈페이지 직접 편집</a><button class="top-btn" onclick="Admin.logout()">로그아웃</button><div class="user-pill"><span class="avatar">제세</span><span id="userEmail">관리자</span></div></div>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+  <div class="side-section-title">운영</div>
+  <div class="side-group">
+    <button class="side-main" data-view-btn="dashboard" onclick="setView('dashboard')">
+      <span class="ico">▦</span>대시보드
+    </button>
+  </div>
+
+  <div class="side-section-title">사이트 관리</div>
+  <div class="side-group">
+    <button class="side-main" data-view-btn="menus" onclick="setView('menus')">
+      <span class="ico">☷</span>페이지 관리
+    </button>
+    <button class="side-main" data-view-btn="design" onclick="setView('design')">
+      <span class="ico">◫</span>홈페이지 설정
+    </button>
+</div>
+
+  <div class="side-section-title">콘텐츠 관리</div>
+  <div class="side-group">
+    <button class="side-main active" data-view-btn="posts" onclick="setView('posts')">
+      <span class="ico">▤</span>게시글 관리
+    </button>
+    <button class="side-main" data-view-btn="products" onclick="setView('products')">
+      <span class="ico">◆</span>상품 관리
+    </button>
+    <button class="side-main" data-view-btn="reviews" onclick="setView('reviews')">
+      <span class="ico">★</span>진료후기 관리
+    </button>
+    <button class="side-main" data-view-btn="popups" onclick="setView('popups')">
+      <span class="ico">▣</span>팝업 관리
+    </button>
+  </div>
+
+  <div class="side-section-title">분석</div>
+  <div class="side-group">
+    <button class="side-main" data-view-btn="stats" onclick="setView('stats')">
+      <span class="ico">⌁</span>통계
+    </button>
+  </div>
+</aside>
+
+<main class="main">
+<div class="info-strip"><div class="info-icon">i</div><div><strong>Supabase 연결 버전</strong> · 페이지/게시글/대표글/팝업/디자인 설정이 데이터베이스에 저장됩니다. <span class="sync-badge">● DB 연결</span></div></div>
+<div class="content">
+
+<section class="view" data-view="dashboard">
+  <div class="page-toolbar">
+    <div>
+      <h1>대시보드</h1>
+      <p class="page-toolbar-desc">홈페이지 운영 현황과 자주 쓰는 기능을 한곳에서 확인합니다.</p>
+    </div>
+    <div class="page-actions">
+      <a class="action-btn" href="index.html" target="_blank">홈페이지 보기</a>
+      <a class="action-btn" href="shop.html" target="_blank">상품몰 보기</a>
+    </div>
+  </div>
+
+  <div class="dashboard-grid admin-dashboard-grid">
+    <div class="stat"><div class="label">공개 페이지</div><div class="value" id="dashVisible">0</div><div class="stat-sub" id="dashPagesSub">전체 0개</div></div>
+    <div class="stat"><div class="label">게시글</div><div class="value" id="dashPosts">0</div><div class="stat-sub" id="dashPinnedSub">대표글 0개</div></div>
+    <div class="stat"><div class="label">판매 상품</div><div class="value" id="dashProducts">0</div><div class="stat-sub" id="dashProductsSub">전체 0개</div></div>
+    <div class="stat"><div class="label">진료후기</div><div class="value" id="dashReviews">0</div><div class="stat-sub" id="dashReviewsSub">공개 0개</div></div>
+  </div>
+
+  <div class="dashboard-two-col">
+    <div class="panel">
+      <div class="panel-title-row">
+        <div><h2>빠른 작업</h2><p>자주 사용하는 관리 기능</p></div>
+      </div>
+      <div class="quick-action-grid">
+        <button onclick="setView('posts');Admin.openPost()">＋ 게시글 작성</button>
+        <button onclick="setView('products');Admin.openProduct()">＋ 상품 등록</button>
+        <button onclick="setView('menus');Admin.openPage()">＋ 상세페이지 추가</button>
+        <button onclick="setView('reviews');Admin.openReview()">＋ 진료후기 등록</button>
+        <button onclick="setView('design')">대문·홈페이지 설정</button>
+        <button onclick="setView('stats')">통계 확인</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title-row">
+        <div><h2>운영 상태</h2><p>현재 사이트 공개 상태</p></div>
+      </div>
+      <div class="status-list">
+        <div><span>대표 도메인</span><strong>www.jshhani.com</strong></div>
+        <div><span>DB 연결</span><strong class="ok">정상</strong></div>
+        <div><span>상품 DB</span><strong id="productDbStatus">확인 중</strong></div>
+        <div><span>네이버 블로그</span><strong>연동 사용</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="view" data-view="menus">
+  <div class="page-toolbar"><h1>상단 메뉴 관리</h1><div class="page-actions"><button class="action-btn primary" onclick="Admin.openPage()">＋ 상세페이지 추가</button></div></div>
+  <div class="panel"><h2>상세페이지 / 상단 인덱스</h2><p style="font-size:12px;color:#7a8697">노출 중인 페이지만 홈페이지 상단 메뉴에 자동 표시됩니다.</p><div id="menuRows"></div></div>
+</section>
+
+<section class="view active" data-view="posts">
+  <div class="page-toolbar">
+    <div>
+      <h1>게시글 관리</h1>
+      <p class="page-toolbar-desc">왼쪽 페이지를 선택하면 해당 상세페이지의 글만 표시됩니다.</p>
+    </div>
+    <div class="page-actions">
+      <button class="action-btn" onclick="Admin.openImport()">▣ 블로그 가져오기</button>
+      <button class="action-btn primary" onclick="Admin.openPost()">＋ 게시글 작성</button>
+    </div>
+  </div>
+
+  <div class="post-manager-layout">
+    <aside class="page-category-panel">
+      <div class="page-category-head">
+        <div>
+          <strong>페이지 카테고리</strong>
+          <span id="pageCategoryVisibleCount">0개 노출</span>
+        </div>
+        <button type="button" class="page-add-btn" onclick="Admin.openPage()">＋</button>
+      </div>
+
+      <div class="page-category-search">
+        <span>⌕</span>
+        <input id="pageCategorySearch" placeholder="페이지 검색" oninput="Admin.setPageCategorySearch(this.value)">
+      </div>
+
+      <div class="page-category-list" id="pageCategoryList"></div>
+
+      <div class="page-category-foot">
+        <button type="button" onclick="setView('menus')">페이지 순서·상세 설정</button>
+      </div>
+    </aside>
+
+    <div class="post-manager-main">
+      <div class="selected-page-bar" id="selectedPageBar"></div>
+
+      <div class="filterbar">
+        <select class="select" onchange="Admin.setStatus(this.value)">
+          <option value="all">게시 상태 전체</option>
+          <option value="active">활성화</option>
+          <option value="hidden">비활성화</option>
+        </select>
+        <div style="display:flex;align-items:center;gap:16px">
+          <div class="total" id="postTotal">총 0개</div>
+          <div class="searchbox">
+            <span>⌕</span>
+            <input placeholder="게시글 검색" oninput="Admin.setSearch(this.value)">
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th><input class="check" type="checkbox"></th>
+              <th>게시글 제목</th>
+              <th>출처</th>
+              <th>활성화</th>
+              <th>페이지</th>
+              <th>이동</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody id="postBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="view" data-view="products">
+  <div class="page-toolbar">
+    <div>
+      <h1>상품 관리</h1>
+      <p class="page-toolbar-desc">홈페이지에 노출할 상품과 외부 구매 링크를 관리합니다.</p>
+    </div>
+    <div class="page-actions">
+      <a class="action-btn" href="shop.html" target="_blank">상품몰 보기</a>
+      <button class="action-btn primary" onclick="Admin.openProduct()">＋ 상품 등록</button>
+    </div>
+  </div>
+
+  <div class="product-kpis">
+    <div><span>전체 상품</span><strong id="productKpiAll">0</strong></div>
+    <div><span>판매중</span><strong id="productKpiActive">0</strong></div>
+    <div><span>추천 상품</span><strong id="productKpiFeatured">0</strong></div>
+    <div><span>품절</span><strong id="productKpiSoldout">0</strong></div>
+  </div>
+
+  <div class="panel product-panel">
+    <div id="productDbWarning" class="product-db-warning" style="display:none">
+      상품 테이블이 아직 없습니다. 먼저 별도로 제공된 SQL 파일을 Supabase SQL Editor에서 한 번 실행해주세요.
+    </div>
+
+    <div class="product-toolbar">
+      <div class="product-filters">
+        <select id="productStatusFilter" onchange="Admin.setProductStatus(this.value)">
+          <option value="all">상태 전체</option>
+          <option value="active">노출중</option>
+          <option value="hidden">숨김</option>
+          <option value="soldout">품절</option>
+          <option value="featured">추천</option>
+        </select>
+        <select id="productCategoryFilter" onchange="Admin.setProductCategory(this.value)">
+          <option value="all">카테고리 전체</option>
+        </select>
+      </div>
+      <div class="searchbox">
+        <span>⌕</span>
+        <input id="productSearch" placeholder="상품명·카테고리 검색" oninput="Admin.setProductSearch(this.value)">
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="post-table product-table">
+        <thead>
+          <tr>
+            <th>상품</th>
+            <th>카테고리</th>
+            <th>판매가</th>
+            <th>재고</th>
+            <th>노출</th>
+            <th>추천</th>
+            <th>외부판매</th>
+            <th>관리</th>
+          </tr>
+        </thead>
+        <tbody id="productBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="view" data-view="reviews">
+  <div class="page-toolbar">
+    <h1>진료후기 관리</h1>
+    <div class="page-actions">
+      <a class="action-btn" href="reviews.html" target="_blank">후기 게시판 보기</a>
+      <button class="action-btn primary" onclick="Admin.openReview()">＋ 진료후기 추가</button>
+    </div>
+  </div>
+
+  <div class="filterbar">
+    <div class="total" id="reviewAdminTotal">총 0개</div>
+    <div class="searchbox">
+      <span>⌕</span>
+      <input id="reviewAdminSearch" placeholder="후기 제목 검색" oninput="Admin.renderAdminReviews(this.value)">
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="post-table">
+      <thead>
+        <tr>
+          <th>대표이미지</th>
+          <th>제목</th>
+          <th>분류</th>
+          <th>노출</th>
+          <th>대표</th>
+          <th>순서</th>
+          <th>관리</th>
+        </tr>
+      </thead>
+      <tbody id="reviewAdminBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="view" data-view="popups">
+  <div class="page-toolbar">
+    <div>
+      <h1>팝업 관리</h1>
+      <p class="page-toolbar-desc">홈페이지에 표시할 안내 팝업을 등록하고 이미지·링크·노출 순서를 관리합니다.</p>
+    </div>
+    <div class="page-actions">
+      <button class="action-btn primary" onclick="Admin.openPopup()">＋ 팝업 등록</button>
+    </div>
+  </div>
+
+  <div class="panel popup-panel">
+    <div class="popup-guide">
+      <strong>연결 링크란?</strong>
+      <span>방문자가 팝업 이미지나 ‘자세히 보기’를 눌렀을 때 이동할 주소입니다. 비워두면 클릭 이동 없이 안내용 팝업으로 표시됩니다.</span>
+    </div>
+    <div id="popupRows"></div>
+  </div>
+</section>
+
+<section class="view" data-view="design"><div class="page-toolbar"><h1>홈페이지 디자인</h1></div><div class="panel"><h2>폰트 조합</h2><div class="design-grid">
+  <div class="font-card" data-font="classic" onclick="Admin.chooseFont('classic')"><h3>클래식</h3><div class="font-sample" style="font-family:'Nanum Myeongjo'">몸의 흐름을 봅니다.</div><p>명조 + 산세리프</p></div>
+  <div class="font-card" data-font="editorial" onclick="Admin.chooseFont('editorial')"><h3>에디토리얼</h3><div class="font-sample" style="font-family:'Nanum Myeongjo';font-weight:800">대표 원장이 직접 진료합니다.</div><p>고급스럽고 선명한 제목</p></div>
+  <div class="font-card" data-font="elegant" onclick="Admin.chooseFont('elegant')"><h3>우아한 한글</h3><div class="font-sample" style="font-family:'Gowun Batang'">제세현한의원</div><p>부드러운 인상</p></div>
+  <div class="font-card" data-font="clean" onclick="Admin.chooseFont('clean')"><h3>모던</h3><div class="font-sample" style="font-family:'Noto Sans KR';font-weight:700">정확하게 살펴봅니다.</div><p>깔끔한 산세리프</p></div>
+</div></div>
+
+
+<div class="panel">
+  <h2>메인페이지 문구 편집</h2>
+  <p class="media-section-note">메인페이지 주요 문구를 수정하면 Supabase에 저장되고 공개 홈페이지에 반영됩니다. 제목과 설명에서 Enter 키로 넣은 줄바꿈도 그대로 표시됩니다.</p>
+  <div class="home-copy-grid">
+    <div class="copy-card"><h3>메인 슬라이드 1</h3><div class="field"><label>제목</label><textarea id="copyHero1Title" rows="2" class="copy-title-textarea" placeholder="Enter 키로 원하는 위치에서 줄바꿈할 수 있습니다."></textarea></div><div class="field"><label>설명</label><textarea id="copyHero1Subtitle"></textarea></div></div>
+    <div class="copy-card"><h3>메인 슬라이드 2</h3><div class="field"><label>제목</label><textarea id="copyHero2Title" rows="2" class="copy-title-textarea" placeholder="Enter 키로 원하는 위치에서 줄바꿈할 수 있습니다."></textarea></div><div class="field"><label>설명</label><textarea id="copyHero2Subtitle"></textarea></div></div>
+    <div class="copy-card"><h3>메인 슬라이드 3</h3><div class="field"><label>제목</label><textarea id="copyHero3Title" rows="2" class="copy-title-textarea" placeholder="Enter 키로 원하는 위치에서 줄바꿈할 수 있습니다."></textarea></div><div class="field"><label>설명</label><textarea id="copyHero3Subtitle"></textarea></div></div>
+    <div class="copy-card"><h3>주요 진료</h3><div class="field"><label>제목</label><textarea id="copyClinicsTitle" rows="2" class="copy-title-textarea" placeholder="Enter 키로 원하는 위치에서 줄바꿈할 수 있습니다."></textarea></div><div class="field"><label>설명</label><textarea id="copyClinicsSubtitle"></textarea></div></div>
+    <div class="copy-card"><h3>의료진 소개</h3><div class="field"><label>섹션 제목</label><textarea id="copyDoctorTitle" rows="2" class="copy-title-textarea" placeholder="Enter 키로 원하는 위치에서 줄바꿈할 수 있습니다."></textarea></div><div class="field"><label>원장명</label><input id="copyDoctorName"></div><div class="field"><label>소개 문구</label><textarea id="copyDoctorBody"></textarea></div></div>
+    <div class="copy-card"><h3>건강정보</h3><div class="field"><label>제목</label><textarea id="copyHealthTitle" rows="2" class="copy-title-textarea" placeholder="Enter 키로 원하는 위치에서 줄바꿈할 수 있습니다."></textarea></div><div class="field"><label>설명</label><textarea id="copyHealthSubtitle"></textarea></div></div>
+    <div class="copy-card"><h3>오시는 길</h3><div class="field"><label>제목</label><textarea id="copyVisitTitle" rows="2" class="copy-title-textarea" placeholder="Enter 키로 원하는 위치에서 줄바꿈할 수 있습니다."></textarea></div><div class="field"><label>설명</label><textarea id="copyVisitSubtitle"></textarea></div></div>
+  </div>
+  <div class="copy-actions"><button class="action-btn primary" onclick="Admin.saveHomeCopy()">메인 문구 저장</button></div>
+</div>
+
+<div class="panel">
+  <h2>네이버 지도 연결</h2>
+  <p class="media-section-note">
+    메인페이지 하단의 오시는길 영역에 실제 네이버 지도를 표시합니다.
+    네이버 클라우드 Maps의 Client ID(ncpKeyId)만 입력하세요. Client Secret은 입력하지 않습니다.
+  </p>
+
+  <div class="home-copy-grid">
+    <div class="copy-card">
+      <h3>네이버 지도 API</h3>
+      <div class="field">
+        <label>Client ID (ncpKeyId)</label>
+        <input id="locationNaverMapClientId" value="x8pnvdh1ek" placeholder="네이버 클라우드 Maps Client ID">
+      </div>
+      <div class="field-help">
+        네이버 클라우드 Maps에서 Dynamic Map을 활성화하고 Web 서비스 URL에
+        https://www.jshhani.com 을 등록해야 합니다.
+      </div>
+    </div>
+
+    <div class="copy-card">
+      <h3>한의원 위치 정보</h3>
+      <div class="field"><label>한의원명</label><input id="locationClinicName" value="제세현한의원"></div>
+      <div class="field"><label>주소</label><input id="locationAddress" value="충청북도 청주시 상당구 상당로 10-1, 1층"></div>
+      <div class="field"><label>전화번호</label><input id="locationPhone" value="043-221-1275"></div>
+    </div>
+  </div>
+
+  <div class="copy-actions">
+    <a class="action-btn" href="index.html#visit" target="_blank">메인 지도 보기</a>
+    <button class="action-btn primary" onclick="Admin.saveLocationSettings()">네이버 지도 설정 저장</button>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>메인페이지 이미지 관리</h2>
+  <p class="media-section-note">
+    사진 선택 후 즉시 Supabase Storage에 업로드되고 메인페이지에 적용됩니다.
+    상단 슬라이드 3장, 주요 진료 카드 6장, 의료진 사진을 관리할 수 있습니다.
+  </p>
+  <div class="media-grid" id="homeMediaGrid"></div>
+</div>
+</section>
+<section class="view" data-view="consult"><div class="page-toolbar"><h1>상담 관리</h1></div><div class="panel"><div class="empty">기존 상담 테이블 연결은 다음 단계에서 붙입니다.</div></div></section>
+<section class="view" data-view="remote"><div class="page-toolbar"><h1>비대면진료</h1></div><div class="panel"><div class="empty">비대면진료 접수 모듈 영역입니다.</div></div></section>
+<section class="view" data-view="sales"><div class="page-toolbar"><h1>매출 관리</h1></div><div class="panel"><div class="empty">매출 입력/분류 모듈 영역입니다.</div></div></section>
+<section class="view" data-view="stats">
+  <div class="page-toolbar">
+    <h1>방문 통계</h1>
+    <div class="page-actions">
+      <div class="range-buttons">
+        <button id="range30" class="active" onclick="Admin.setStatsRange(30)">30일</button>
+        <button id="range60" onclick="Admin.setStatsRange(60)">60일</button>
+        <button id="range90" onclick="Admin.setStatsRange(90)">90일</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="analytics-tabs">
+    <button class="analytics-tab active" id="visitStatsTab" onclick="Admin.setStatsTab('visits')">방문 통계</button>
+    <button class="analytics-tab" id="postStatsTab" onclick="Admin.setStatsTab('posts')">게시글 조회수</button>
+  </div>
+
+  <div id="visitStatsPane">
+    <div class="analytics-summary">
+      <div class="analytics-kpi"><span>기간 방문수</span><strong id="kpiViews">0</strong></div>
+      <div class="analytics-kpi"><span>기간 순 방문자</span><strong id="kpiVisitors">0</strong></div>
+      <div class="analytics-kpi"><span>일평균 방문수</span><strong id="kpiAverage">0</strong></div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-legend"><span class="legend-bar">방문수</span><span class="legend-line">순 방문자</span></div>
+      <div class="chart-scroll"><svg id="visitChart" class="analytics-chart" viewBox="0 0 1100 340" preserveAspectRatio="none"></svg></div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:16px">
+      <table class="stats-table">
+        <thead><tr><th>날짜</th><th style="text-align:right">방문수</th><th style="text-align:right">순 방문자</th></tr></thead>
+        <tbody id="visitStatsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="postStatsPane" style="display:none">
+    <div class="table-wrap">
+      <table class="stats-table">
+        <thead>
+          <tr><th>게시판</th><th>게시글 제목</th><th style="text-align:right">조회수</th><th style="text-align:right">순 방문자</th><th>최근 조회</th></tr>
+        </thead>
+        <tbody id="postStatsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</div></main></div></div>
+
+<div class="modal-backdrop" id="pageModal"><div class="modal small"><div class="modal-head"><h2 id="pageModalTitle">상세페이지 추가</h2><button class="close-btn" onclick="Admin.closeModal('pageModal')">×</button></div><div class="modal-body"><input type="hidden" id="pageId"><div class="form-grid"><div class="field"><label>페이지 이름</label><input id="pageName"></div><div class="field"><label>주소 slug</label><input id="pageSlug"></div><div class="field wide"><label>영문 소제목</label><input id="pageEyebrow"></div><div class="field wide"><label>한 줄 소개</label><textarea id="pageDescription"></textarea></div></div></div><div class="modal-foot"><button class="action-btn danger" id="pageDeleteBtn" style="display:none" onclick="Admin.deletePage(document.getElementById('pageId').value)">페이지 삭제</button><button class="action-btn primary" onclick="Admin.savePage()">저장</button></div></div></div>
+
+<div class="modal-backdrop" id="postModal"><div class="modal"><div class="modal-head"><h2 id="postModalTitle">게시글 작성</h2><button class="close-btn" onclick="Admin.closeModal('postModal')">×</button></div><div class="modal-body"><div class="form-grid">
+<div class="field"><label>게시판</label><select id="postPage"></select></div><div class="field"><label>게시글 분류</label><select id="postCategorySelect"></select></div>
+<div class="field"><label>대표이미지</label><div class="upload-row"><input id="postImage" type="text"><button class="upload-btn" onclick="document.getElementById('postImageFile').click()" type="button">새 사진 업로드</button><button class="upload-btn" onclick="Admin.openMediaLibrary('post')" type="button">보관함</button><input id="postImageFile" type="file" accept="image/*" style="display:none" onchange="Admin.uploadPostImage()"></div></div>
+<div class="field wide"><label>게시글 제목</label><input id="postTitle"></div>
+<div class="field wide"><label>요약</label><textarea id="postSummary"></textarea></div>
+<div class="field wide">
+  <label>본문 편집</label>
+  <div class="rich-editor-wrap">
+    <div class="rich-toolbar">
+      <select onchange="Admin.editorFormatBlock(this.value);this.selectedIndex=0">
+        <option value="">문단 스타일</option>
+        <option value="p">본문</option>
+        <option value="h2">큰 제목</option>
+        <option value="h3">작은 제목</option>
+        <option value="blockquote">인용문</option>
+      </select>
+
+      <button type="button" onclick="Admin.editorCommand('bold')" title="굵게"><b>B</b></button>
+      <button type="button" onclick="Admin.editorCommand('italic')" title="기울임"><i>I</i></button>
+      <button type="button" onclick="Admin.editorCommand('underline')" title="밑줄"><u>U</u></button>
+
+      <select onchange="Admin.editorFontSize(this.value);this.selectedIndex=0">
+        <option value="">글자 크기</option>
+        <option value="15">15px</option>
+        <option value="16">16px</option>
+        <option value="18">18px</option>
+        <option value="20">20px</option>
+        <option value="22">22px</option>
+        <option value="24">24px</option>
+        <option value="28">28px</option>
+      </select>
+
+      <button type="button" onclick="Admin.editorCommand('justifyLeft')" title="왼쪽 정렬">≡</button>
+      <button type="button" onclick="Admin.editorCommand('justifyCenter')" title="가운데 정렬">≣</button>
+      <button type="button" onclick="Admin.editorCommand('insertUnorderedList')" title="목록">• 목록</button>
+      <button type="button" onclick="Admin.editorCreateLink()" title="링크">🔗</button>
+
+      <span class="editor-toolbar-sep" aria-hidden="true"></span>
+      <button class="editor-image-btn"
+              type="button"
+              onmousedown="Admin.rememberPostEditorSelection()"
+              onclick="Admin.pickPostInlineImages()"
+              title="본문 현재 위치에 이미지 첨부">🖼 이미지 첨부</button>
+      <button class="editor-image-btn"
+              type="button"
+              onmousedown="Admin.rememberPostEditorSelection()"
+              onclick="Admin.openPostInlineMediaLibrary()"
+              title="이미지 보관함에서 본문에 삽입">보관함 이미지</button>
+      <input id="postInlineImageFile"
+             type="file"
+             accept="image/*"
+             multiple
+             style="display:none"
+             onchange="Admin.uploadPostInlineImages()">
+
+      <button type="button" onclick="Admin.toggleEditorSource()" id="editorSourceBtn">HTML 보기</button>
+    </div>
+
+    <div id="postRichEditor" class="rich-editor" contenteditable="true"></div>
+    <textarea id="postBodyHtml" class="source-editor"></textarea>
+
+    <div class="editor-help">
+      글자를 드래그한 뒤 크기/굵기/제목을 선택할 수 있습니다. 이미지 첨부는 현재 커서 위치에 들어가며 여러 장을 한 번에 선택할 수도 있습니다.
+    </div>
+  </div>
+</div>
+<div class="field wide"><label>원문 링크(선택)</label><input id="postSourceUrl"></div>
+</div></div><div class="modal-foot"><span>저장하면 즉시 공개 홈페이지 데이터에 반영됩니다.</span><button class="action-btn primary" onclick="Admin.savePost()">저장</button></div></div></div>
+
+<div class="modal-backdrop" id="moveModal"><div class="modal small"><div class="modal-head"><h2>게시판 이동</h2><button class="close-btn" onclick="Admin.closeModal('moveModal')">×</button></div><div class="modal-body"><div class="field"><label>이동할 게시판</label><select id="movePage"></select></div></div><div class="modal-foot"><span></span><button class="action-btn primary" onclick="Admin.saveMove()">이동</button></div></div></div>
+
+<div class="modal-backdrop" id="importModal"><div class="modal"><div class="modal-head"><h2>블로그 글 가져오기</h2><button class="close-btn" onclick="Admin.closeModal('importModal')">×</button></div><div class="steps"><div class="step-tab active">1. 블로그 선택</div><div class="step-tab">2. 글 선택</div><div class="step-tab">3. 게시판 선택</div></div><div class="modal-body" id="importBody"></div><div class="modal-foot"><strong id="importFootLeft">블로그 1개 선택</strong><button class="action-btn primary" id="importNext" onclick="Admin.nextImport()">다음</button></div></div></div>
+
+
+
+
+<div class="modal-backdrop" id="categoryManagerModal"><div class="modal small"><div class="modal-head"><h2>게시글 분류 관리</h2><button class="close-btn" onclick="Admin.closeModal('categoryManagerModal')">×</button></div><div class="modal-body"><div class="field"><label>새 분류</label><div class="upload-row"><input id="newPostCategory" placeholder="예: 담적, 호흡기"><button class="upload-btn" onclick="Admin.addPostCategory()" type="button">추가</button></div></div><div id="categoryManagerList" class="category-manager-list"></div></div><div class="modal-foot"><span>게시글 작성/수정 시 실제 선택됩니다.</span><button class="action-btn" onclick="Admin.closeModal('categoryManagerModal')">닫기</button></div></div></div>
+
+<div class="modal-backdrop" id="reviewModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="reviewModalTitle">진료후기 추가</h2>
+      <button class="close-btn" onclick="Admin.closeModal('reviewModal')">×</button>
+    </div>
+
+    <div class="modal-body">
+      <input type="hidden" id="reviewId">
+
+      <div class="form-grid">
+        <div class="field">
+          <label>진료 분류</label>
+          <input id="reviewCategory" placeholder="예: 담적·소화기">
+        </div>
+
+        <div class="field">
+          <label>대표이미지</label>
+          <div class="upload-row">
+            <input id="reviewImage" type="text">
+            <button class="upload-btn" type="button" onclick="document.getElementById('reviewImageFile').click()">새 사진 업로드</button>
+            <button class="upload-btn" type="button" onclick="Admin.openMediaLibrary('review')">보관함</button>
+            <input id="reviewImageFile" type="file" accept="image/*" style="display:none" onchange="Admin.uploadReviewImage()">
+          </div>
+        </div>
+
+        <div class="field wide">
+          <label>제목</label>
+          <input id="reviewTitle">
+        </div>
+
+        <div class="field wide">
+          <label>목록 요약</label>
+          <textarea id="reviewSummary"></textarea>
+        </div>
+
+        <div class="field wide">
+          <label>후기 본문 HTML</label>
+          <textarea id="reviewBodyHtml" style="min-height:280px"></textarea>
+        </div>
+
+        <div class="field">
+          <label>정렬 순서</label>
+          <input id="reviewSortOrder" type="number" value="100">
+        </div>
+
+        <div class="field">
+          <label>공개 설정</label>
+          <select id="reviewVisible">
+            <option value="true">로그인 사용자에게 공개</option>
+            <option value="false">숨김</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <span>환자는 로그인 후 읽기만 가능하며 작성 기능은 없습니다.</span>
+      <button class="action-btn primary" onclick="Admin.saveReview()">저장</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-backdrop" id="productModal">
+  <div class="modal product-modal">
+    <div class="modal-head">
+      <div>
+        <h2 id="productModalTitle">상품 등록</h2>
+        <p>상품 정보와 외부 구매 링크를 등록합니다.</p>
+      </div>
+      <button class="close-btn" onclick="Admin.closeModal('productModal')">×</button>
+    </div>
+
+    <div class="modal-body">
+      <input type="hidden" id="productId">
+
+      <div class="product-form-grid">
+        <div class="field span-2">
+          <label>상품명 *</label>
+          <input id="productName" placeholder="예: 원방 공진단">
+        </div>
+
+        <div class="field">
+          <label>카테고리</label>
+          <input id="productCategory" list="productCategoryList" placeholder="예: 공진단">
+          <datalist id="productCategoryList"></datalist>
+        </div>
+
+        <div class="field">
+          <label>정렬 순서</label>
+          <input id="productSortOrder" type="number" min="0" value="100">
+        </div>
+
+        <div class="field">
+          <label>정상가</label>
+          <input id="productRegularPrice" type="number" min="0" step="100" placeholder="원">
+        </div>
+
+        <div class="field">
+          <label>판매가</label>
+          <input id="productSalePrice" type="number" min="0" step="100" placeholder="원">
+        </div>
+
+        <div class="field span-2">
+          <label>한 줄 설명</label>
+          <input id="productSummary" placeholder="상품 목록에 표시되는 짧은 설명">
+        </div>
+
+        <div class="field span-2">
+          <label>대표 이미지</label>
+          <div class="product-image-row">
+            <input id="productImage" placeholder="이미지 URL">
+            <button type="button" class="action-btn" onclick="document.getElementById('productImageFile').click()">업로드</button>
+            <button type="button" class="action-btn" onclick="Admin.openMediaLibrary('product','image')">보관함</button>
+            <input id="productImageFile" type="file" accept="image/*" style="display:none" onchange="Admin.uploadProductImage()">
+          </div>
+          <div id="productImagePreview" class="product-image-preview"></div>
+        </div>
+
+        <div class="field span-2">
+          <label>상세 설명</label>
+          <div id="productDescription" class="rich-editor product-rich-editor" contenteditable="true"><p></p></div>
+        </div>
+
+        <div class="field span-2">
+          <label>외부 구매 URL</label>
+          <input id="productExternalUrl" placeholder="https://smartstore.naver.com/... 또는 결제 링크">
+          <div class="field-help">구매하기 버튼을 누르면 이 주소로 이동합니다. 외부 판매처가 없으면 버튼은 표시하지 않습니다.</div>
+        </div>
+
+        <div class="field">
+          <label>재고 상태</label>
+          <select id="productStockStatus">
+            <option value="in_stock">판매중</option>
+            <option value="out_of_stock">품절</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>공개 설정</label>
+          <select id="productActive">
+            <option value="true">홈페이지 노출</option>
+            <option value="false">숨김</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>추천 상품</label>
+          <select id="productFeatured">
+            <option value="false">일반 상품</option>
+            <option value="true">추천 상품</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>상품 URL slug</label>
+          <input id="productSlug" placeholder="비워두면 자동 생성">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <span>결제는 등록한 외부 판매처에서 진행됩니다.</span>
+      <div style="display:flex;gap:8px">
+        <button class="action-btn" onclick="Admin.closeModal('productModal')">취소</button>
+        <button class="action-btn primary" onclick="Admin.saveProduct()">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-backdrop" id="popupModal">
+  <div class="modal popup-edit-modal">
+    <div class="modal-head">
+      <div>
+        <h2 id="popupModalTitle">팝업 등록</h2>
+        <p>글만 등록하거나, 이미지와 함께 팝업을 만들 수 있습니다.</p>
+      </div>
+      <button class="close-btn" onclick="Admin.closeModal('popupModal')">×</button>
+    </div>
+
+    <div class="modal-body">
+      <input type="hidden" id="popupId">
+
+      <div class="form-grid">
+        <div class="field wide">
+          <label>팝업 제목 *</label>
+          <input id="popupTitle" placeholder="예: 추석 공진단 사전예약 안내">
+        </div>
+
+        <div class="field wide">
+          <label>팝업 이미지</label>
+          <div class="popup-image-tools">
+            <input id="popupImage" placeholder="이미지 URL">
+            <button type="button" class="action-btn" onclick="document.getElementById('popupImageFile').click()">이미지 업로드</button>
+            <button type="button" class="action-btn" onclick="Admin.openMediaLibrary('popup','image')">보관함에서 선택</button>
+            <input id="popupImageFile" type="file" accept="image/*" style="display:none" onchange="Admin.uploadPopupImage()">
+          </div>
+          <div id="popupImagePreview" class="popup-image-preview">이미지를 등록하면 여기에서 미리 볼 수 있습니다.</div>
+          <div class="field-help">권장: 세로형 또는 정사각형 이미지. 큰 이미지는 업로드 시 자동 최적화됩니다.</div>
+        </div>
+
+        <div class="field wide">
+          <label>팝업 클릭 시 이동할 주소 <span style="font-weight:400;color:#97a1ae">(선택)</span></label>
+          <input id="popupLink" placeholder="예: detail.html?slug=damjeok 또는 https://booking.naver.com/...">
+          <div class="popup-link-examples">
+            <span>내부 상세페이지: <code>detail.html?slug=damjeok</code></span>
+            <span>상품페이지: <code>shop.html</code></span>
+            <span>외부 예약/블로그: <code>https://...</code></span>
+          </div>
+          <div class="field-help">비워두면 팝업은 열리지만 이미지와 제목을 눌러도 다른 페이지로 이동하지 않습니다.</div>
+        </div>
+
+        <div class="field">
+          <label>노출 상태</label>
+          <select id="popupActive">
+            <option value="true">노출</option>
+            <option value="false">숨김</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>노출 순서</label>
+          <input id="popupSortOrder" type="number" min="0" value="100">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <span>현재 홈페이지에는 노출중인 팝업 중 순서가 가장 빠른 1개가 표시됩니다.</span>
+      <div style="display:flex;gap:8px">
+        <button class="action-btn" onclick="Admin.closeModal('popupModal')">취소</button>
+        <button class="action-btn primary" onclick="Admin.savePopup()">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="mediaLibraryModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>이미지 보관함</h2>
+      <button class="close-btn" onclick="Admin.closeModal('mediaLibraryModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="library-toolbar">
+        <input id="mediaLibrarySearch" placeholder="파일명 검색" oninput="Admin.renderMediaLibrary(this.value)">
+        <button class="action-btn" type="button" onclick="document.getElementById('mediaLibraryUpload').click()">＋ 새 이미지 업로드</button>
+        <input id="mediaLibraryUpload" type="file" accept="image/*" style="display:none" onchange="Admin.uploadLibraryImage()">
+      </div>
+      <div id="mediaLibraryGrid" class="library-grid"></div>
+    </div>
+    <div class="modal-foot">
+      <span>한 번 업로드한 이미지는 삭제하지 않는 한 계속 재사용할 수 있습니다.</span>
+      <button class="action-btn" onclick="Admin.closeModal('mediaLibraryModal')">닫기</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script>window.JSH_CONFIG = {
+  supabaseUrl: 'https://cegqsbsxtrvwmlqnilsz.supabase.co',
+  supabaseAnonKey: 'sb_publishable_f9h7XU0hhvSoD74iMAFY-Q_vTZXfRLO',
+  siteUrl: 'https://www.jshhani.com'
+};
+</script>
+<script>
+(function(){
+  const C=window.JSH_CONFIG||{};
+  const BASE=(C.supabaseUrl||'').replace(/\/$/,'');
+  const KEY=C.supabaseAnonKey||'';
+  const TOKEN_KEY='jsh_admin_access_token';
+  const state={filter:'all',search:'',status:'all',pageCategorySearch:'',productSearch:'',productStatus:'all',productCategory:'all',editProduct:null,editPost:null,move:null,importStep:1,selectedImports:new Set(),importBoard:'',blogId:'jesehyunhani',naverItems:[],naverPage:1,naverCount:30,naverTotal:0,naverCategory:'all',importBusy:false};
+  let token=localStorage.getItem(TOKEN_KEY)||'';
+  let currentUser=null;
+  let pageCache=[];
+  let postCache=[];
+  let productCache=[];
+  let productTableReady=true;
+  let homeMedia={};
+  let mediaCache=[];
+  let mediaTarget=null;
+  let statsDays=30;
+  let statsTab='visits';
+  let reviewCache=[];
+  let editReview=null;
+  let postCategories=[];
+  let homeCopy={};
+  let postEditorSavedRange=null;
+
+  const $=id=>document.getElementById(id);
+  function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+  function headers(extra={}){return {apikey:KEY,Authorization:'Bearer '+token,...extra}}
+
+  async function rest(path,options={}){
+    const r=await fetch(BASE+'/rest/v1/'+path,{...options,headers:headers({'Content-Type':'application/json',...(options.headers||{})})});
+    if(!r.ok)throw new Error(await r.text());
+    if(r.status===204)return null;
+    const t=await r.text();return t?JSON.parse(t):null;
+  }
+
+
+  async function callNaver(payload){
+    const r=await fetch(BASE+'/functions/v1/naver-blog-import',{
+      method:'POST',
+      headers:headers({'Content-Type':'application/json',apikey:KEY}),
+      body:JSON.stringify(payload)
+    });
+
+    let data={};
+    try{data=await r.json()}catch(e){}
+
+    if(!r.ok){
+      const msg=data.error || ('Edge Function 호출 실패 ('+r.status+')');
+      if(r.status===404) throw new Error('naver-blog-import Edge Function이 아직 배포되지 않았습니다.');
+      if(r.status===401) throw new Error('관리자 로그인 세션이 만료되었거나 Edge Function JWT 설정이 잘못되었습니다.');
+      if(r.status===403) throw new Error('현재 로그인 계정이 admin_users 관리자에 등록되어 있지 않습니다.');
+      throw new Error(msg);
+    }
+    return data;
+  }
+
+  function toast(msg){
+    const t=$('toast');t.textContent=msg;t.classList.add('show');
+    clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove('show'),2000);
+  }
+
+  async function login(){
+    $('loginError').textContent='';
+    const email=$('loginEmail').value.trim(),password=$('loginPassword').value;
+    if(!email||!password){$('loginError').textContent='이메일과 비밀번호를 입력해주세요.';return}
+    try{
+      const r=await fetch(BASE+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+      const j=await r.json();
+      if(!r.ok)throw new Error(j.msg||j.error_description||'로그인 실패');
+      token=j.access_token;currentUser=j.user;localStorage.setItem(TOKEN_KEY,token);
+      await verifyAdmin();showApp();
+    }catch(e){$('loginError').textContent='로그인 실패: '+e.message}
+  }
+
+  async function verifyAdmin(){
+    const r=await fetch(BASE+'/rest/v1/admin_users?select=id,email&id=eq.'+encodeURIComponent(currentUser?.id||''),{headers:headers()});
+    if(!r.ok)throw new Error('관리자 권한 확인 실패');
+    const rows=await r.json();
+    if(!rows.length)throw new Error('관리자 계정으로 등록되지 않았습니다.');
+  }
+
+  async function restore(){
+    if(!token)return false;
+    try{
+      const r=await fetch(BASE+'/auth/v1/user',{headers:headers()});
+      if(!r.ok)throw new Error();
+      currentUser=await r.json();await verifyAdmin();return true;
+    }catch(e){localStorage.removeItem(TOKEN_KEY);token='';return false}
+  }
+
+  function logout(){localStorage.removeItem(TOKEN_KEY);location.reload()}
+
+  function showApp(){
+    $('loginScreen').classList.add('app-hidden');
+    $('adminApp').classList.remove('app-hidden');
+    $('userEmail').textContent=currentUser?.email||'관리자';
+    refreshAll().catch(e=>toast('데이터 로드 실패: '+e.message));
+  }
+
+
+  async function refreshAll(){
+    const productPromise=rest('cms_products?select=*&order=sort_order.asc,created_at.desc')
+      .then(rows=>{productTableReady=true;return rows})
+      .catch(e=>{console.warn('cms_products unavailable',e);productTableReady=false;return[]});
+
+    const [pages,posts,reviews,cats,copy,products]=await Promise.all([
+      rest('cms_pages?select=*&order=sort_order.asc,name.asc'),
+      rest('cms_posts?select=*&order=created_at.desc'),
+      rest('cms_reviews?select=*&order=is_featured.desc,sort_order.asc,created_at.desc'),
+      rest('cms_settings?select=*&key=eq.post_categories&limit=1'),
+      rest('cms_settings?select=*&key=eq.home_copy&limit=1'),
+      productPromise
+    ]);
+
+
+    pageCache=pages;postCache=posts;reviewCache=reviews;productCache=products||[];
+    postCategories=cats?.[0]?.value?.items||[];homeCopy=copy?.[0]?.value||{};
+
+    renderDashboard();renderMenus();renderPosts();renderProducts();renderAdminReviews();renderPopups();renderDesign();
+  }
+
+  function pageById(id){return pageCache.find(p=>p.id===id)}
+  function joinedPosts(){return postCache.map(x=>({...x,page:pageById(x.page_id)}))}
+
+
+  function won(v){
+    const n=Number(v||0);
+    return n>0?n.toLocaleString('ko-KR')+'원':'-';
+  }
+
+  function productCategories(){
+    return [...new Set(productCache.map(x=>(x.category||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ko'));
+  }
+
+  function renderProductCategoryOptions(){
+    const filter=$('productCategoryFilter');
+    if(filter){
+      const current=state.productCategory;
+      filter.innerHTML='<option value="all">카테고리 전체</option>'+
+        productCategories().map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+      filter.value=productCategories().includes(current)?current:'all';
+      if(filter.value==='all')state.productCategory='all';
+    }
+
+    const list=$('productCategoryList');
+    if(list)list.innerHTML=productCategories().map(c=>`<option value="${esc(c)}"></option>`).join('');
+  }
+
+  function filteredProducts(){
+    let rows=[...productCache];
+
+    if(state.productStatus==='active')rows=rows.filter(x=>x.is_active);
+    if(state.productStatus==='hidden')rows=rows.filter(x=>!x.is_active);
+    if(state.productStatus==='soldout')rows=rows.filter(x=>x.stock_status==='out_of_stock');
+    if(state.productStatus==='featured')rows=rows.filter(x=>x.is_featured);
+    if(state.productCategory!=='all')rows=rows.filter(x=>(x.category||'')===state.productCategory);
+
+    const q=(state.productSearch||'').trim().toLowerCase();
+    if(q){
+      rows=rows.filter(x=>((x.name||'')+' '+(x.category||'')+' '+(x.summary||'')).toLowerCase().includes(q));
+    }
+
+    return rows.sort((a,b)=>(Number(a.sort_order)||100)-(Number(b.sort_order)||100) || new Date(b.created_at)-new Date(a.created_at));
+  }
+
+  function renderProducts(){
+    if(!$('productBody'))return;
+
+    renderProductCategoryOptions();
+
+    const rows=filteredProducts();
+    const all=productCache.length;
+    const active=productCache.filter(x=>x.is_active).length;
+    const featured=productCache.filter(x=>x.is_featured).length;
+    const soldout=productCache.filter(x=>x.stock_status==='out_of_stock').length;
+
+    $('productKpiAll').textContent=all;
+    $('productKpiActive').textContent=active;
+    $('productKpiFeatured').textContent=featured;
+    $('productKpiSoldout').textContent=soldout;
+
+    if($('productDbWarning'))$('productDbWarning').style.display=productTableReady?'none':'block';
+
+    $('productBody').innerHTML=rows.length?rows.map(p=>`
+      <tr>
+        <td>
+          <div class="product-cell">
+            <div class="product-thumb">${p.image_url?`<img src="${esc(p.image_url)}" alt="">`:'IMG'}</div>
+            <div>
+              <div class="product-name">${esc(p.name||'')}</div>
+              <div class="product-summary">${esc(p.summary||'')}</div>
+            </div>
+          </div>
+        </td>
+        <td>${p.category?`<span class="badge">${esc(p.category)}</span>`:'-'}</td>
+        <td>
+          <div class="price-main">${won(p.sale_price||p.regular_price)}</div>
+          ${(p.sale_price&&p.regular_price&&Number(p.sale_price)<Number(p.regular_price))?`<div class="price-old">${won(p.regular_price)}</div>`:''}
+        </td>
+        <td>${p.stock_status==='out_of_stock'?'<span class="badge red">품절</span>':'<span class="badge green">판매중</span>'}</td>
+        <td><button class="toggle ${p.is_active?'on':''}" onclick="Admin.toggleProductActive('${p.id}')"></button></td>
+        <td><button class="icon-btn ${p.is_featured?'active':''}" onclick="Admin.toggleProductFeatured('${p.id}')" title="추천상품">★</button></td>
+        <td>${p.external_url?`<a class="external-link-btn" href="${esc(p.external_url)}" target="_blank">구매 링크 ↗</a>`:'-'}</td>
+        <td>
+          <div class="row-actions">
+            <a class="icon-btn" href="product.html?id=${encodeURIComponent(p.id)}" target="_blank" style="display:grid;place-items:center" title="상품보기">↗</a>
+            <button class="icon-btn" onclick="Admin.openProduct('${p.id}')" title="수정">✎</button>
+            <button class="icon-btn" onclick="Admin.deleteProduct('${p.id}')" title="삭제">🗑</button>
+          </div>
+        </td>
+      </tr>`).join(''):`<tr><td colspan="8"><div class="empty">${productTableReady?'등록된 상품이 없습니다.':'상품 DB를 먼저 생성해주세요.'}</div></td></tr>`;
+  }
+
+  function setProductSearch(v){state.productSearch=v||'';renderProducts()}
+  function setProductStatus(v){state.productStatus=v||'all';renderProducts()}
+  function setProductCategory(v){state.productCategory=v||'all';renderProducts()}
+
+  function updateProductImagePreview(){
+    const url=$('productImage')?.value.trim()||'';
+    const box=$('productImagePreview');
+    if(!box)return;
+    box.innerHTML=url?`<img src="${esc(url)}" alt="">`:'대표 이미지 미리보기';
+  }
+
+  function openProduct(id=''){
+    if(!productTableReady){
+      toast('먼저 상품 테이블 생성 SQL을 실행해주세요.');
+      return;
+    }
+
+    const p=productCache.find(x=>x.id===id)||null;
+    state.editProduct=p;
+    $('productModalTitle').textContent=p?'상품 수정':'상품 등록';
+    $('productId').value=p?.id||'';
+    $('productName').value=p?.name||'';
+    $('productCategory').value=p?.category||'';
+    $('productSortOrder').value=p?.sort_order??100;
+    $('productRegularPrice').value=p?.regular_price??'';
+    $('productSalePrice').value=p?.sale_price??'';
+    $('productSummary').value=p?.summary||'';
+    $('productImage').value=p?.image_url||'';
+    $('productDescription').innerHTML=p?.description_html||'<p></p>';
+    $('productExternalUrl').value=p?.external_url||'';
+    $('productStockStatus').value=p?.stock_status||'in_stock';
+    $('productActive').value=String(p?.is_active!==false);
+    $('productFeatured').value=String(!!p?.is_featured);
+    $('productSlug').value=p?.slug||'';
+    renderProductCategoryOptions();
+    updateProductImagePreview();
+    openModal('productModal');
+
+    $('productImage').oninput=updateProductImagePreview;
+  }
+
+  function makeProductSlug(name){
+    const ascii=(name||'').trim().toLowerCase()
+      .replace(/[^a-z0-9가-힣]+/g,'-')
+      .replace(/^-+|-+$/g,'')
+      .slice(0,60);
+    if(ascii && /^[a-z0-9-]+$/.test(ascii))return ascii;
+    return 'product-'+Date.now();
+  }
+
+  async function saveProduct(){
+    if(!productTableReady){toast('상품 DB를 먼저 생성해주세요.');return}
+
+    const name=$('productName').value.trim();
+    if(!name){toast('상품명을 입력해주세요.');return}
+
+    const regularRaw=$('productRegularPrice').value.trim();
+    const saleRaw=$('productSalePrice').value.trim();
+    const slug=$('productSlug').value.trim() || state.editProduct?.slug || makeProductSlug(name);
+
+    const payload={
+      name,
+      slug,
+      category:$('productCategory').value.trim(),
+      summary:$('productSummary').value.trim(),
+      description_html:$('productDescription').innerHTML.trim(),
+      image_url:$('productImage').value.trim(),
+      regular_price:regularRaw?Number(regularRaw):null,
+      sale_price:saleRaw?Number(saleRaw):null,
+      stock_status:$('productStockStatus').value,
+      external_url:$('productExternalUrl').value.trim(),
+      is_active:$('productActive').value==='true',
+      is_featured:$('productFeatured').value==='true',
+      sort_order:Number($('productSortOrder').value||100)
+    };
+
+    try{
+      if(state.editProduct){
+        await rest('cms_products?id=eq.'+state.editProduct.id,{
+          method:'PATCH',
+          headers:{Prefer:'return=minimal'},
+          body:JSON.stringify(payload)
+        });
+      }else{
+        await rest('cms_products',{
+          method:'POST',
+          headers:{Prefer:'return=minimal'},
+          body:JSON.stringify(payload)
+        });
+      }
+
+      closeModal('productModal');
+      state.editProduct=null;
+      await refreshAll();
+      setView('products');
+      toast('상품을 저장했습니다.');
+    }catch(e){
+      if(String(e.message).includes('duplicate key'))toast('같은 상품 slug가 이미 있습니다. slug를 변경해주세요.');
+      else toast('상품 저장 실패: '+e.message);
+    }
+  }
+
+  async function toggleProductActive(id){
+    const p=productCache.find(x=>x.id===id);if(!p)return;
+    await rest('cms_products?id=eq.'+id,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({is_active:!p.is_active})});
+    await refreshAll();setView('products');
+  }
+
+  async function toggleProductFeatured(id){
+    const p=productCache.find(x=>x.id===id);if(!p)return;
+    await rest('cms_products?id=eq.'+id,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({is_featured:!p.is_featured})});
+    await refreshAll();setView('products');
+  }
+
+  async function deleteProduct(id){
+    const p=productCache.find(x=>x.id===id);if(!p)return;
+    if(!confirm(`"${p.name}" 상품을 삭제할까요?`))return;
+    await rest('cms_products?id=eq.'+id,{method:'DELETE',headers:{Prefer:'return=minimal'}});
+    await refreshAll();setView('products');toast('상품을 삭제했습니다.');
+  }
+
+  async function uploadProductImage(){
+    const file=$('productImageFile')?.files?.[0];
+    if(!file)return;
+    try{
+      toast('상품 이미지를 최적화하고 있습니다.');
+      const optimized=await optimizeAdminImage(file,false);
+      const media=await saveUploadedMedia(optimized);
+      $('productImage').value=media.public_url;
+      $('productImageFile').value='';
+      updateProductImagePreview();
+      toast('상품 이미지를 저장했습니다.');
+    }catch(e){
+      toast('상품 이미지 업로드 실패: '+e.message);
+    }
+  }
+
+
+  function setView(view){
+    document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
+    document.querySelectorAll('[data-view-btn]').forEach(x=>x.classList.toggle('active',x.dataset.viewBtn===view));
+    if(view==='menus')renderMenus();
+    if(view==='posts')renderPosts();
+    if(view==='products')renderProducts();
+    if(view==='popups')renderPopups();
+    if(view==='dashboard')renderDashboard();
+    if(view==='design')renderDesign();
+    if(view==='stats')renderStats();
+    if(view==='reviews')renderAdminReviews();
+  }
+  window.setView=setView;
+
+  function renderDashboard(){
+    const visiblePages=pageCache.filter(p=>p.is_visible).length;
+    const pinned=postCache.filter(p=>p.is_pinned).length;
+    const activeProducts=productCache.filter(p=>p.is_active).length;
+    const publicReviews=reviewCache.filter(r=>r.is_visible).length;
+
+    if($('dashVisible'))$('dashVisible').textContent=visiblePages;
+    if($('dashPagesSub'))$('dashPagesSub').textContent='전체 '+pageCache.length+'개';
+    if($('dashPosts'))$('dashPosts').textContent=postCache.length;
+    if($('dashPinnedSub'))$('dashPinnedSub').textContent='대표글 '+pinned+'개';
+    if($('dashProducts'))$('dashProducts').textContent=activeProducts;
+    if($('dashProductsSub'))$('dashProductsSub').textContent='전체 '+productCache.length+'개';
+    if($('dashReviews'))$('dashReviews').textContent=reviewCache.length;
+    if($('dashReviewsSub'))$('dashReviewsSub').textContent='공개 '+publicReviews+'개';
+    if($('productDbStatus')){
+      $('productDbStatus').textContent=productTableReady?'정상':'SQL 실행 필요';
+      $('productDbStatus').classList.toggle('ok',productTableReady);
+    }
+  }
+
+  function renderMenus(){
+    $('menuRows').innerHTML=pageCache.map(p=>`
+      <div class="menu-row">
+        <input class="order-input" type="number" min="1" value="${p.sort_order}" onchange="Admin.setOrder('${p.id}',this.value)">
+        <div><strong>${esc(p.name)}</strong><div class="slug">${esc(p.slug)}</div></div>
+        <div class="desc">${esc(p.description||'')}</div>
+        <div class="visibility"><span class="dot ${p.is_visible?'':'off'}"></span>${p.is_visible?'노출중':'숨김'}</div>
+        <div class="actions">
+          <button class="action-btn small" onclick="Admin.togglePage('${p.id}')">${p.is_visible?'숨기기':'노출'}</button>
+          <button class="action-btn small" onclick="Admin.openPage('${p.id}')">수정</button>
+          <a class="action-btn small" href="${p.slug==='bopye'?'bopye.html':'/'+encodeURIComponent(p.slug)+'/'}" target="_blank">보기</a>
+          <button class="action-btn small danger" onclick="Admin.deletePage('${p.id}')">삭제</button>
+        </div>
+      </div>`).join('');
+  }
+
+
+  function fillHomeCopyForm(){
+    const set=(id,key)=>{const el=$(id);if(el)el.value=homeCopy[key]||''};
+    set('copyHero1Title','hero1_title');set('copyHero1Subtitle','hero1_subtitle');set('copyHero2Title','hero2_title');set('copyHero2Subtitle','hero2_subtitle');set('copyHero3Title','hero3_title');set('copyHero3Subtitle','hero3_subtitle');set('copyClinicsTitle','clinics_title');set('copyClinicsSubtitle','clinics_subtitle');set('copyDoctorTitle','doctor_title');set('copyDoctorName','doctor_name');set('copyDoctorBody','doctor_body');set('copyHealthTitle','health_title');set('copyHealthSubtitle','health_subtitle');set('copyVisitTitle','visit_title');set('copyVisitSubtitle','visit_subtitle');
+  }
+  async function saveHomeCopy(){
+    homeCopy={hero1_title:$('copyHero1Title').value.trim(),hero1_subtitle:$('copyHero1Subtitle').value.trim(),hero2_title:$('copyHero2Title').value.trim(),hero2_subtitle:$('copyHero2Subtitle').value.trim(),hero3_title:$('copyHero3Title').value.trim(),hero3_subtitle:$('copyHero3Subtitle').value.trim(),clinics_title:$('copyClinicsTitle').value.trim(),clinics_subtitle:$('copyClinicsSubtitle').value.trim(),doctor_title:$('copyDoctorTitle').value.trim(),doctor_name:$('copyDoctorName').value.trim(),doctor_body:$('copyDoctorBody').value.trim(),health_title:$('copyHealthTitle').value.trim(),health_subtitle:$('copyHealthSubtitle').value.trim(),visit_title:$('copyVisitTitle').value.trim(),visit_subtitle:$('copyVisitSubtitle').value.trim()};
+    await rest('cms_settings?on_conflict=key',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({key:'home_copy',value:homeCopy})});toast('메인페이지 문구를 저장했습니다.');
+  }
+  function effectiveCategories(){return postCategories.length?postCategories:[...new Set(pageCache.map(p=>p.name))]}
+  function renderPostCategorySelect(value=''){const s=$('postCategorySelect');if(!s)return;const cats=effectiveCategories();s.innerHTML='<option value="">분류 선택</option>'+cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');if(value)s.value=value;}
+  function openCategoryManager(){if(!postCategories.length)postCategories=[...new Set(pageCache.map(p=>p.name))];renderCategoryManager();openModal('categoryManagerModal')}
+  function renderCategoryManager(){const l=$('categoryManagerList');if(!l)return;l.innerHTML=postCategories.map((c,i)=>`<div class="category-manager-item"><span>${esc(c)}</span><button type="button" onclick="Admin.removePostCategory(${i})">×</button></div>`).join('')||'<div class="empty">분류가 없습니다.</div>'}
+  async function persistPostCategories(){await rest('cms_settings?on_conflict=key',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({key:'post_categories',value:{items:postCategories}})})}
+  async function addPostCategory(){const i=$('newPostCategory'),v=i.value.trim();if(!v)return;if(!postCategories.includes(v))postCategories.push(v);await persistPostCategories();i.value='';renderCategoryManager();toast('분류를 추가했습니다.')}
+  async function removePostCategory(i){postCategories.splice(Number(i),1);await persistPostCategories();renderCategoryManager();toast('분류를 삭제했습니다.')}
+
+  function renderPageCategorySidebar(){
+    const wrap=$('pageCategoryList');
+    if(!wrap)return;
+
+    const q=(state.pageCategorySearch||'').trim().toLowerCase();
+    const posts=joinedPosts();
+    const visibleCount=pageCache.filter(p=>p.is_visible).length;
+    const countEl=$('pageCategoryVisibleCount');
+    if(countEl)countEl.textContent=visibleCount+'개 노출';
+
+    const pages=pageCache.filter(p=>
+      !q ||
+      (p.name||'').toLowerCase().includes(q) ||
+      (p.slug||'').toLowerCase().includes(q)
+    );
+
+    const allCount=posts.length;
+    let html=`
+      <button type="button"
+        class="page-category-item ${state.filter==='all'?'active':''}"
+        onclick="Admin.filterPage('all')">
+        <div class="page-category-main">
+          <div class="page-category-name"><span class="vis-dot"></span>전체 게시글</div>
+          <div class="page-category-slug">모든 페이지</div>
+        </div>
+        <span class="page-category-count">${allCount}</span>
+      </button>`;
+
+    html += pages.map(p=>{
+      const count=posts.filter(x=>x.page_id===p.id).length;
+      return `
+        <div class="page-category-block">
+          <button type="button"
+            class="page-category-item ${state.filter===p.id?'active':''}"
+            onclick="Admin.filterPage('${p.id}')">
+            <div class="page-category-main">
+              <div class="page-category-name">
+                <span class="vis-dot ${p.is_visible?'':'off'}"></span>
+                ${esc(p.name)}
+              </div>
+              <div class="page-category-slug">${esc(p.slug)}</div>
+            </div>
+            <span class="page-category-count">${count}</span>
+          </button>
+          ${state.filter===p.id?`
+          <div class="page-category-actions">
+            <button type="button" onclick="Admin.openPage('${p.id}')">페이지 수정</button>
+            <button type="button" onclick="Admin.togglePage('${p.id}')">${p.is_visible?'숨기기':'노출하기'}</button>
+            <button type="button" onclick="Admin.deletePage('${p.id}')">페이지 삭제</button>
+          </div>`:''}
+        </div>`;
+    }).join('');
+
+    wrap.innerHTML=html;
+  }
+
+  function renderSelectedPageBar(){
+    const el=$('selectedPageBar');
+    if(!el)return;
+
+    if(state.filter==='all'){
+      el.innerHTML=`
+        <div class="selected-page-info">
+          <strong>전체 게시글</strong>
+          <span>모든 상세페이지에 등록된 게시글을 표시합니다.</span>
+        </div>
+        <div class="selected-page-actions">
+          <button type="button" onclick="Admin.openPage()">＋ 새 페이지</button>
+        </div>`;
+      return;
+    }
+
+    const p=pageById(state.filter);
+    if(!p){
+      state.filter='all';
+      renderSelectedPageBar();
+      return;
+    }
+
+    const count=postCache.filter(x=>x.page_id===p.id).length;
+    el.innerHTML=`
+      <div class="selected-page-info">
+        <strong>${esc(p.name)}</strong>
+        <span>${esc(p.slug)} · 게시글 ${count}개 · ${p.is_visible?'홈페이지 노출중':'현재 숨김'}</span>
+      </div>
+      <div class="selected-page-actions">
+        <a href="detail.html?slug=${encodeURIComponent(p.slug)}" target="_blank">페이지 보기</a>
+        <button type="button" onclick="Admin.openPage('${p.id}')">페이지 수정</button>
+        <button type="button" class="danger" onclick="Admin.deletePage('${p.id}')">페이지 삭제</button>
+        <button type="button" onclick="Admin.openPost()">＋ 이 페이지에 글쓰기</button>
+      </div>`;
+  }
+
+  function renderPosts(){
+    renderPageCategorySidebar();
+    renderSelectedPageBar();
+
+    let rows=joinedPosts();
+    if(state.filter!=='all')rows=rows.filter(x=>x.page_id===state.filter);
+    if(state.status==='active')rows=rows.filter(x=>x.is_active);
+    if(state.status==='hidden')rows=rows.filter(x=>!x.is_active);
+
+    const q=state.search.trim().toLowerCase();
+    if(q){
+      rows=rows.filter(x=>
+        ((x.title||'')+' '+(x.summary||'')+' '+(x.category||'')+' '+(x.page?.name||''))
+          .toLowerCase().includes(q)
+      );
+    }
+
+    $('postTotal').textContent='총 '+rows.length+'개';
+    $('postBody').innerHTML=rows.length?rows.map(post=>`
+      <tr>
+        <td><input class="check" type="checkbox" value="${post.id}"></td>
+        <td><div class="post-cell">
+          <div class="thumb">${post.image_url?`<img src="${esc(post.image_url)}" alt="">`:'IMG'}</div>
+          <div>
+            <div>
+              ${post.is_pinned?'<span class="pin-badge">📌 대표</span>':''}
+              <span class="post-title">${esc(post.title)}</span>
+            </div>
+            <div class="muted">${esc(post.category||post.page?.name||'미분류')} · ${post.source_type==='naver'?'네이버 블로그':'직접 작성'}</div>
+          </div>
+        </div></td>
+        <td>${post.source_type==='naver'?'가져온 글':'직접 작성'}</td>
+        <td><button class="toggle ${post.is_active?'on':''}" onclick="Admin.togglePost('${post.id}')"></button></td>
+        <td><span class="board-link">${esc(post.page?.name||'')} ›</span></td>
+        <td><button class="move-btn" onclick="Admin.openMove('${post.id}')">이동</button></td>
+        <td><div class="row-actions">
+          <button class="icon-btn ${post.is_pinned?'active':''}" onclick="Admin.pinPost('${post.id}')" title="대표글">📌</button>
+          <button class="icon-btn" onclick="Admin.openPost('${post.id}')" title="수정">✎</button>
+          <button class="icon-btn" onclick="Admin.deletePost('${post.id}')" title="삭제">🗑</button>
+          <a class="icon-btn" href="${post.is_pinned?'detail.html?slug='+encodeURIComponent(post.page?.slug||''):'article.html?id='+encodeURIComponent(post.id)}" target="_blank" style="display:grid;place-items:center">↗</a>
+        </div></td>
+      </tr>`).join(''):`<tr><td colspan="7"><div class="empty">이 페이지에는 게시글이 없습니다.</div></td></tr>`;
+  }
+
+  function setPageCategorySearch(v){
+    state.pageCategorySearch=v||'';
+    renderPageCategorySidebar();
+  }
+
+  function filterPage(v){state.filter=v||'all';renderPosts()}
+  function setSearch(v){state.search=v;renderPosts()}
+  function setStatus(v){state.status=v;renderPosts()}
+
+  async function togglePost(id){
+    const p=postCache.find(x=>x.id===id);if(!p)return;
+    if(p.is_pinned&&p.is_active){toast('대표글은 다른 글을 대표로 지정한 뒤 비활성화해주세요.');return}
+    await rest('cms_posts?id=eq.'+id,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({is_active:!p.is_active})});
+    await refreshAll();toast('게시 상태를 변경했습니다.');
+  }
+
+  async function pinPost(id){
+    const p=postCache.find(x=>x.id===id);if(!p)return;
+    await rest('cms_posts?page_id=eq.'+p.page_id+'&is_pinned=eq.true',{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({is_pinned:false})});
+    await rest('cms_posts?id=eq.'+id,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({is_pinned:true,is_active:true})});
+    await refreshAll();toast('대표 메인글로 지정했습니다.');
+  }
+
+  async function deletePost(id){
+    const p=postCache.find(x=>x.id===id);if(!p)return;
+    if(p.is_pinned){toast('대표글은 다른 글을 먼저 대표로 지정해주세요.');return}
+    if(!confirm('이 게시글을 삭제할까요?'))return;
+    await rest('cms_posts?id=eq.'+id,{method:'DELETE',headers:{Prefer:'return=minimal'}});
+    await refreshAll();toast('삭제했습니다.');
+  }
+
+  function fillPageSelect(select,value=''){
+    select.innerHTML=pageCache.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+    if(value)select.value=value;
+  }
+
+  function openPost(id=''){
+    const p=postCache.find(x=>x.id===id);
+    state.editPost=p||null;
+    $('postModalTitle').textContent=p?'게시글 수정':'게시글 작성';
+    fillPageSelect($('postPage'),p?.page_id||(state.filter!=='all'?state.filter:''));
+    $('postTitle').value=p?.title||'';
+    renderPostCategorySelect(p?.category||p?.page?.name||'');
+    $('postSummary').value=p?.summary||'';
+    $('postImage').value=p?.image_url||'';
+
+    const postPage=pageById(p?.page_id);
+    const isDietRepresentative=!!(p?.is_pinned && postPage?.slug==='diet');
+    const isBopyeRepresentative=!!(p?.is_pinned && postPage?.slug==='bopye');
+    const isDamjeokRepresentative=!!(p?.is_pinned && postPage?.slug==='damjeok');
+    const isPainRepresentative=!!(p?.is_pinned && postPage?.slug==='pain');
+    const isMenopauseRepresentative=!!(p?.is_pinned && (postPage?.slug==='menopause' || String(postPage?.name||'').includes('갱년기')));
+
+    const hasDietTemplate=String(p?.content_html||'').includes('data-diet-main-template="v31512"');
+    const hasBopyeTemplate=String(p?.content_html||'').includes('data-bopye-main-template="v31535"');
+    const hasDamjeokTemplate=String(p?.content_html||'').includes('data-damjeok-main-template="v31526"');
+    const hasPainTemplate=String(p?.content_html||'').includes('data-pain-main-template="v31536"');
+    const hasMenopauseTemplate=String(p?.content_html||'').includes('data-menopause-main-template="v31541"');
+
+    let initialPostHtml=p?.content_html||'<p></p>';
+
+    if(isDietRepresentative && !hasDietTemplate && window.JSH_DIET_MAIN_TEMPLATE){
+      initialPostHtml=window.JSH_DIET_MAIN_TEMPLATE;
+    }
+
+    if(isBopyeRepresentative && !hasBopyeTemplate && window.JSH_BOPYE_MAIN_TEMPLATE){
+      initialPostHtml=window.JSH_BOPYE_MAIN_TEMPLATE;
+    }
+
+    if(isDamjeokRepresentative && !hasDamjeokTemplate && window.JSH_DAMJEOK_MAIN_TEMPLATE){
+      initialPostHtml=window.JSH_DAMJEOK_MAIN_TEMPLATE;
+    }
+
+    if(isPainRepresentative && !hasPainTemplate && window.JSH_PAIN_MAIN_TEMPLATE){
+      initialPostHtml=window.JSH_PAIN_MAIN_TEMPLATE;
+    }
+    if(isMenopauseRepresentative && !hasMenopauseTemplate && window.JSH_MENOPAUSE_MAIN_TEMPLATE){
+      initialPostHtml=window.JSH_MENOPAUSE_MAIN_TEMPLATE;
+    }
+
+
+    $('postBodyHtml').value=initialPostHtml;
+    $('postRichEditor').innerHTML=initialPostHtml;
+    $('postRichEditor').style.display='';
+    $('postBodyHtml').style.display='none';
+    postEditorSavedRange=null;
+
+    const richEditor=$('postRichEditor');
+    if(richEditor && !richEditor.dataset.selectionTrackingBound){
+      richEditor.dataset.selectionTrackingBound='1';
+      ['mouseup','keyup','input','focus'].forEach(evt=>{
+        richEditor.addEventListener(evt,rememberPostEditorSelection);
+      });
+    }
+    const sourceBtn=$('editorSourceBtn'); if(sourceBtn)sourceBtn.textContent='HTML 보기';
+    $('postSourceUrl').value=p?.source_url||'';
+    openModal('postModal');
+
+    if(isDietRepresentative && !hasDietTemplate && window.JSH_DIET_MAIN_TEMPLATE){
+      toast('다이어트 대표 메인글 새 템플릿을 불러왔습니다. 이미지와 문구를 확인한 뒤 저장해주세요.');
+    }
+
+    if(isBopyeRepresentative && !hasBopyeTemplate && window.JSH_BOPYE_MAIN_TEMPLATE){
+      toast('보폐고엔오 최신 GEO·SEO 대표글을 불러왔습니다. 수정 후 저장하면 다음부터 저장본이 그대로 열립니다.');
+    }
+
+    if(isDamjeokRepresentative && !hasDamjeokTemplate && window.JSH_DAMJEOK_MAIN_TEMPLATE){
+      toast('담적병 대표 메인글 AI 검색 최적화 템플릿을 불러왔습니다. 확인 후 저장해주세요.');
+    }
+
+    if(isPainRepresentative && !hasPainTemplate && window.JSH_PAIN_MAIN_TEMPLATE){
+      toast('통증클리닉 최신 대표 메인글을 불러왔습니다. 수정 후 저장하면 다음부터 저장본이 그대로 열립니다.');
+    }
+    if(isMenopauseRepresentative && !hasMenopauseTemplate && window.JSH_MENOPAUSE_MAIN_TEMPLATE){
+      toast('갱년기 대표 메인글에 준비한 상세페이지 HTML을 불러왔습니다. 수정 후 저장해주세요.');
+    }
+
+  }
+
+  async function savePost(){
+    const page_id=$('postPage').value,title=$('postTitle').value.trim();
+    if(!page_id||!title){toast('게시판과 제목을 입력해주세요.');return}
+    const category=$('postCategorySelect').value||'';
+    const rich=$('postRichEditor');
+    const source=$('postBodyHtml');
+    const editorHtml=(source.style.display==='block' ? source.value : rich.innerHTML).trim() || '<p>본문을 입력해주세요.</p>';
+    let finalEditorHtml=editorHtml;
+    const savingPage=pageById(page_id);
+    const savingBopyeRepresentative=!!(state.editPost?.is_pinned && savingPage?.slug==='bopye');
+    const savingPainRepresentative=!!(state.editPost?.is_pinned && savingPage?.slug==='pain');
+    const savingMenopauseRepresentative=!!(state.editPost?.is_pinned && (savingPage?.slug==='menopause' || String(savingPage?.name||'').includes('갱년기')));
+    if(savingBopyeRepresentative && !finalEditorHtml.includes('data-bopye-main-template="v31535"') && window.JSH_BOPYE_MAIN_TEMPLATE){
+      finalEditorHtml=window.JSH_BOPYE_MAIN_TEMPLATE;
+      toast('보폐고엔오 대표글이 이전 형식이라 최신 GEO 템플릿으로 저장합니다.');
+    }
+
+    if(savingPainRepresentative && !finalEditorHtml.includes('data-pain-main-template="v31536"') && window.JSH_PAIN_MAIN_TEMPLATE){
+      finalEditorHtml=window.JSH_PAIN_MAIN_TEMPLATE;
+      toast('통증클리닉 대표글이 이전 형식이라 최신 템플릿으로 저장합니다.');
+    }
+    if(savingMenopauseRepresentative && !finalEditorHtml.includes('data-menopause-main-template="v31541"') && window.JSH_MENOPAUSE_MAIN_TEMPLATE){
+      finalEditorHtml=window.JSH_MENOPAUSE_MAIN_TEMPLATE;
+      toast('갱년기 대표글을 최신 상세페이지 형식으로 저장합니다.');
+    }
+
+    const payload={page_id,title,category,summary:$('postSummary').value.trim(),image_url:$('postImage').value.trim(),content_html:finalEditorHtml,source_url:$('postSourceUrl').value.trim(),source_type:state.editPost?.source_type||'manual'};
+    if(state.editPost){
+      if(state.editPost.is_pinned&&state.editPost.page_id!==page_id){toast('대표글은 다른 글을 대표로 지정한 뒤 이동해주세요.');return}
+      await rest('cms_posts?id=eq.'+state.editPost.id,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify(payload)});
+    }else{
+      await rest('cms_posts',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({...payload,is_active:true,is_pinned:false,sort_order:100})});
+    }
+    closeModal('postModal');await refreshAll();toast('게시글을 저장했습니다.');
+  }
+
+
+  function editorCommand(command,value=null){
+    const editor=$('postRichEditor');
+    if(!editor)return;
+    editor.focus();
+    document.execCommand(command,false,value);
+  }
+
+  function editorFormatBlock(tag){
+    if(!tag)return;
+    const editor=$('postRichEditor');
+    if(!editor)return;
+    editor.focus();
+    document.execCommand('formatBlock',false,tag);
+  }
+
+  function editorFontSize(px){
+    if(!px)return;
+    const editor=$('postRichEditor');
+    if(!editor)return;
+    editor.focus();
+
+    const sel=window.getSelection();
+    if(!sel || !sel.rangeCount)return;
+
+    if(sel.isCollapsed){
+      const span=document.createElement('span');
+      span.style.fontSize=px+'px';
+      span.appendChild(document.createTextNode('\u200B'));
+      const range=sel.getRangeAt(0);
+      range.insertNode(span);
+      range.setStart(span.firstChild,1);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      return;
+    }
+
+    const range=sel.getRangeAt(0);
+    const span=document.createElement('span');
+    span.style.fontSize=px+'px';
+    try{
+      span.appendChild(range.extractContents());
+      range.insertNode(span);
+      sel.removeAllRanges();
+      const newRange=document.createRange();
+      newRange.selectNodeContents(span);
+      sel.addRange(newRange);
+    }catch(e){}
+  }
+
+  function editorCreateLink(){
+    const url=prompt('연결할 주소를 입력해주세요.','https://');
+    if(!url)return;
+    editorCommand('createLink',url);
+  }
+
+  function toggleEditorSource(){
+    const editor=$('postRichEditor');
+    const source=$('postBodyHtml');
+    const btn=$('editorSourceBtn');
+    if(!editor||!source)return;
+
+    const sourceVisible=source.style.display==='block';
+    if(sourceVisible){
+      editor.innerHTML=source.value;
+      source.style.display='none';
+      editor.style.display='block';
+      if(btn)btn.textContent='HTML 보기';
+    }else{
+      source.value=editor.innerHTML;
+      editor.style.display='none';
+      source.style.display='block';
+      if(btn)btn.textContent='시각 편집';
+    }
+  }
+
+  function rememberPostEditorSelection(){
+    const editor=$('postRichEditor');
+    const source=$('postBodyHtml');
+    if(!editor || !source || source.style.display==='block')return;
+
+    const sel=window.getSelection();
+    if(!sel || !sel.rangeCount)return;
+
+    const range=sel.getRangeAt(0);
+    const node=range.commonAncestorContainer;
+    if(node===editor || editor.contains(node)){
+      postEditorSavedRange=range.cloneRange();
+    }
+  }
+
+  function pickPostInlineImages(){
+    rememberPostEditorSelection();
+    const input=$('postInlineImageFile');
+    if(input)input.click();
+  }
+
+  async function openPostInlineMediaLibrary(){
+    rememberPostEditorSelection();
+    await openMediaLibrary('post-inline');
+  }
+
+  function inlineImageFigureHtml(media){
+    const url=esc(media?.public_url||'');
+    const rawName=String(media?.original_name||'본문 이미지').replace(/\.[^.]+$/,'');
+    const alt=esc(rawName);
+    return '<figure class="jsh-inline-image">'+
+      '<img src="'+url+'" alt="'+alt+'" loading="lazy" decoding="async">'+
+      '</figure>';
+  }
+
+  function insertPostInlineImages(mediaItems){
+    const items=(mediaItems||[]).filter(x=>x?.public_url);
+    if(!items.length)return;
+
+    const editor=$('postRichEditor');
+    const source=$('postBodyHtml');
+    if(!editor || !source)return;
+
+    const html=items.map(inlineImageFigureHtml).join('')+'<p><br></p>';
+
+    // HTML source mode: insert directly at the textarea caret.
+    if(source.style.display==='block'){
+      const start=Number.isFinite(source.selectionStart)?source.selectionStart:source.value.length;
+      const end=Number.isFinite(source.selectionEnd)?source.selectionEnd:start;
+      source.setRangeText(html,start,end,'end');
+      source.focus();
+      return;
+    }
+
+    editor.focus();
+
+    let range=postEditorSavedRange;
+    const node=range?.commonAncestorContainer;
+    if(!range || !(node===editor || editor.contains(node))){
+      range=document.createRange();
+      range.selectNodeContents(editor);
+      range.collapse(false);
+    }
+
+    range.deleteContents();
+
+    const fragment=range.createContextualFragment(html);
+    const lastNode=fragment.lastChild;
+    range.insertNode(fragment);
+
+    const sel=window.getSelection();
+    if(sel){
+      const caret=document.createRange();
+      if(lastNode && lastNode.parentNode){
+        caret.setStartAfter(lastNode);
+      }else{
+        caret.selectNodeContents(editor);
+        caret.collapse(false);
+      }
+      caret.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(caret);
+      postEditorSavedRange=caret.cloneRange();
+    }
+
+    editor.scrollTop=editor.scrollHeight;
+  }
+
+  async function uploadPostInlineImages(){
+    const input=$('postInlineImageFile');
+    const files=Array.from(input?.files||[]);
+    if(!files.length){
+      toast('이미지 파일을 선택해주세요.');
+      return;
+    }
+
+    try{
+      toast(files.length>1
+        ? '본문 이미지 '+files.length+'장을 최적화하고 있습니다.'
+        : '본문 이미지를 최적화하고 있습니다.');
+
+      const mediaItems=[];
+      for(const file of files){
+        const optimized=await optimizeAdminImage(file,false);
+        const media=await saveUploadedMedia(optimized);
+        mediaItems.push(media);
+      }
+
+      insertPostInlineImages(mediaItems);
+      input.value='';
+
+      toast(files.length>1
+        ? '본문에 이미지 '+files.length+'장을 삽입했습니다.'
+        : '본문에 이미지를 삽입했습니다.');
+    }catch(e){
+      input.value='';
+      toast('본문 이미지 업로드 실패: '+e.message);
+    }
+  }
+
+
+  async function uploadPostImage(){
+    const file=$('postImageFile').files[0];
+    if(!file){toast('이미지 파일을 선택해주세요.');return}
+
+    try{
+      toast('대표이미지를 최적화하고 있습니다.');
+      const optimized=await optimizeAdminImage(file,false);
+      const media=await saveUploadedMedia(optimized);
+      $('postImage').value=media.public_url;
+      $('postImageFile').value='';
+      toast('대표이미지를 선택했습니다. 보관함에도 저장되었습니다.');
+    }catch(e){
+      toast('업로드 실패: '+e.message);
+    }
+  }
+
+  function openMove(id){
+    const p=postCache.find(x=>x.id===id);if(!p)return;
+    if(p.is_pinned){toast('대표글은 먼저 다른 글을 대표로 지정해주세요.');return}
+    state.move=p;fillPageSelect($('movePage'),p.page_id);openModal('moveModal');
+  }
+  async function saveMove(){
+    if(!state.move)return;
+    await rest('cms_posts?id=eq.'+state.move.id,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({page_id:$('movePage').value})});
+    closeModal('moveModal');await refreshAll();toast('게시판을 이동했습니다.');
+  }
+
+  function openPage(id=''){
+    const p=pageCache.find(x=>x.id===id);
+    $('pageModalTitle').textContent=p?'상세페이지 수정':'상세페이지 추가';
+    $('pageId').value=p?.id||'';
+    $('pageName').value=p?.name||'';
+    $('pageSlug').value=p?.slug||'';
+    $('pageSlug').disabled=!!p;
+    $('pageEyebrow').value=p?.eyebrow||'';
+    $('pageDescription').value=p?.description||'';
+    if($('pageDeleteBtn'))$('pageDeleteBtn').style.display=p?'inline-flex':'none';
+    openModal('pageModal');
+  }
+
+  async function savePage(){
+    const id=$('pageId').value,name=$('pageName').value.trim(),slug=$('pageSlug').value.trim().toLowerCase().replace(/\s+/g,'-');
+    if(!name||!slug){toast('페이지 이름과 slug를 입력해주세요.');return}
+    const payload={name,eyebrow:$('pageEyebrow').value.trim()||'SPECIALTY CLINIC',description:$('pageDescription').value.trim()};
+    if(id){
+      await rest('cms_pages?id=eq.'+id,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify(payload)});
+    }else{
+      const max=Math.max(0,...pageCache.map(p=>Number(p.sort_order)||0));
+      const created=await rest('cms_pages',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({...payload,slug,is_visible:true,sort_order:max+1})});
+      const page=created?.[0];
+      if(page)await rest('cms_posts',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({page_id:page.id,title:name+' 대표 메인글',summary:name+' 페이지의 대표글입니다.',content_html:'<p>대표 메인글 본문을 작성해주세요.</p>',is_active:true,is_pinned:true,source_type:'manual',sort_order:1})});
+    }
+    closeModal('pageModal');await refreshAll();toast('상세페이지를 저장했습니다.');
+  }
+
+
+  async function deletePage(id){
+    const p=pageCache.find(x=>x.id===id);
+    if(!p){toast('삭제할 상세페이지를 찾지 못했습니다.');return}
+    const relatedPosts=postCache.filter(x=>x.page_id===id);
+    const msg=relatedPosts.length
+      ? `"${p.name}" 상세페이지를 삭제할까요?\n\n이 페이지의 게시글 ${relatedPosts.length}개도 함께 삭제됩니다.\n업로드한 이미지 파일은 미디어 보관함에 남습니다.`
+      : `"${p.name}" 상세페이지를 삭제할까요?\n\n업로드한 이미지 파일은 미디어 보관함에 남습니다.`;
+    if(!confirm(msg))return;
+    try{
+      if(relatedPosts.length){
+        await rest('cms_posts?page_id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:{Prefer:'return=minimal'}});
+      }
+      await rest('cms_pages?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:{Prefer:'return=minimal'}});
+      if(state.filter===id)state.filter='all';
+      closeModal('pageModal');
+      await refreshAll();
+      toast('상세페이지를 삭제했습니다.');
+    }catch(e){toast('상세페이지 삭제 실패: '+e.message)}
+  }
+
+  async function togglePage(id){
+    const p=pageCache.find(x=>x.id===id);if(!p)return;
+    await rest('cms_pages?id=eq.'+id,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({is_visible:!p.is_visible})});
+    await refreshAll();toast(p.is_visible?'상단 메뉴에서 숨겼습니다.':'상단 메뉴에 노출했습니다.');
+  }
+
+  async function setOrder(id,v){
+    await rest('cms_pages?id=eq.'+id,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({sort_order:Number(v)||999})});
+    await refreshAll();
+  }
+
+
+  function renderAdminReviews(search=''){
+    const body=$('reviewAdminBody');
+    if(!body)return;
+
+    const q=String(search||'').trim().toLowerCase();
+    const rows=reviewCache.filter(x=>!q || (x.title||'').toLowerCase().includes(q));
+
+    $('reviewAdminTotal').textContent='총 '+rows.length+'개';
+
+    body.innerHTML=rows.length?rows.map(r=>`
+      <tr>
+        <td><div class="thumb">${r.image_url?`<img src="${esc(r.image_url)}" alt="">`:'IMG'}</div></td>
+        <td>
+          <div class="post-title">${esc(r.title||'')}</div>
+          <div class="muted">${esc(r.summary||'')}</div>
+        </td>
+        <td>${esc(r.treatment_category||'')}</td>
+        <td>
+          <button class="toggle ${r.is_visible?'on':''}" onclick="Admin.toggleReviewVisible('${r.id}')"></button>
+        </td>
+        <td>
+          <button class="icon-btn ${r.is_featured?'active':''}" onclick="Admin.toggleReviewFeatured('${r.id}')" title="대표후기">★</button>
+        </td>
+        <td>${Number(r.sort_order||100)}</td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn" onclick="Admin.openReview('${r.id}')" title="수정">✎</button>
+            <button class="icon-btn" onclick="Admin.deleteReview('${r.id}')" title="삭제">🗑</button>
+            <a class="icon-btn" href="reviews.html" target="_blank" style="display:grid;place-items:center">↗</a>
+          </div>
+        </td>
+      </tr>
+    `).join(''):'<tr><td colspan="7"><div class="empty">등록된 진료후기가 없습니다.</div></td></tr>';
+  }
+
+  function openReview(id=''){
+    const r=reviewCache.find(x=>x.id===id);
+    editReview=r||null;
+
+    $('reviewModalTitle').textContent=r?'진료후기 수정':'진료후기 추가';
+    $('reviewId').value=r?.id||'';
+    $('reviewCategory').value=r?.treatment_category||'';
+    $('reviewImage').value=r?.image_url||'';
+    $('reviewTitle').value=r?.title||'';
+    $('reviewSummary').value=r?.summary||'';
+    $('reviewBodyHtml').value=r?.content_html||'';
+    $('reviewSortOrder').value=Number(r?.sort_order||100);
+    $('reviewVisible').value=String(r?.is_visible!==false);
+    openModal('reviewModal');
+  }
+
+  async function saveReview(){
+    const title=$('reviewTitle').value.trim();
+    if(!title){toast('후기 제목을 입력해주세요.');return}
+
+    const payload={
+      title,
+      treatment_category:$('reviewCategory').value.trim(),
+      image_url:$('reviewImage').value.trim(),
+      summary:$('reviewSummary').value.trim(),
+      content_html:$('reviewBodyHtml').value.trim()||'<p>후기 내용을 입력해주세요.</p>',
+      sort_order:Number($('reviewSortOrder').value)||100,
+      is_visible:$('reviewVisible').value==='true'
+    };
+
+    if(editReview){
+      await rest('cms_reviews?id=eq.'+editReview.id,{
+        method:'PATCH',
+        headers:{Prefer:'return=minimal'},
+        body:JSON.stringify(payload)
+      });
+    }else{
+      await rest('cms_reviews',{
+        method:'POST',
+        headers:{Prefer:'return=minimal'},
+        body:JSON.stringify({...payload,is_featured:false})
+      });
+    }
+
+    closeModal('reviewModal');
+    await refreshAll();
+    toast('진료후기를 저장했습니다.');
+  }
+
+  async function toggleReviewVisible(id){
+    const r=reviewCache.find(x=>x.id===id);if(!r)return;
+    await rest('cms_reviews?id=eq.'+id,{
+      method:'PATCH',
+      headers:{Prefer:'return=minimal'},
+      body:JSON.stringify({is_visible:!r.is_visible})
+    });
+    await refreshAll();
+    toast(r.is_visible?'후기를 숨겼습니다.':'후기를 공개했습니다.');
+  }
+
+  async function toggleReviewFeatured(id){
+    const r=reviewCache.find(x=>x.id===id);if(!r)return;
+    await rest('cms_reviews?id=eq.'+id,{
+      method:'PATCH',
+      headers:{Prefer:'return=minimal'},
+      body:JSON.stringify({is_featured:!r.is_featured})
+    });
+    await refreshAll();
+    toast(!r.is_featured?'대표후기로 지정했습니다.':'대표후기 지정을 해제했습니다.');
+  }
+
+  async function deleteReview(id){
+    if(!confirm('이 진료후기를 삭제할까요?'))return;
+    await rest('cms_reviews?id=eq.'+id,{
+      method:'DELETE',
+      headers:{Prefer:'return=minimal'}
+    });
+    await refreshAll();
+    toast('진료후기를 삭제했습니다.');
+  }
+
+  async function uploadReviewImage(){
+    const file=$('reviewImageFile')?.files?.[0];
+    if(!file)return;
+
+    try{
+      toast('이미지를 저장하고 있습니다.');
+      const media=await saveUploadedMedia(file);
+      $('reviewImage').value=media.public_url;
+      $('reviewImageFile').value='';
+      toast('후기 대표이미지를 선택했습니다.');
+    }catch(e){
+      toast('업로드 실패: '+e.message);
+    }
+  }
+
+  async function renderPopups(){
+    try{
+      const rows=await rest('cms_popups?select=*&order=sort_order.asc,created_at.desc');
+
+      $('popupRows').innerHTML=rows.length?rows.map(x=>`
+        <div class="popup-row">
+          <div class="popup-list-thumb">
+            ${x.image_url?`<img src="${esc(x.image_url)}" alt="">`:'이미지 없음'}
+          </div>
+
+          <div>
+            <div class="popup-row-title">${esc(x.title||'제목 없음')}</div>
+            <div class="popup-row-link">${x.link_url?esc(x.link_url):'클릭 이동 없음'}</div>
+          </div>
+
+          <div class="visibility">
+            <span class="dot ${x.is_active?'':'off'}"></span>
+            ${x.is_active?'노출중':'숨김'}
+          </div>
+
+          <div class="popup-sort">
+            <span class="badge">${Number(x.sort_order||100)}</span>
+          </div>
+
+          <div class="popup-link-action">
+            ${x.link_url?`<a class="external-link-btn" href="${esc(x.link_url)}" target="_blank">링크 확인 ↗</a>`:'-'}
+          </div>
+
+          <div class="row-actions">
+            <button class="icon-btn" onclick="Admin.openPopup('${x.id}')" title="수정">✎</button>
+            <button class="action-btn small" onclick="Admin.togglePopup('${x.id}',${x.is_active})">${x.is_active?'숨기기':'노출'}</button>
+            <button class="icon-btn" onclick="Admin.deletePopup('${x.id}')" title="삭제">🗑</button>
+          </div>
+        </div>`).join('')
+        :'<div class="empty">등록된 팝업이 없습니다.</div>';
+    }catch(e){
+      console.error(e);
+      $('popupRows').innerHTML='<div class="empty">팝업을 불러오지 못했습니다.</div>';
+    }
+  }
+
+  let popupCache=[];
+
+  async function loadPopupCache(){
+    try{
+      popupCache=await rest('cms_popups?select=*&order=sort_order.asc,created_at.desc');
+    }catch(e){
+      popupCache=[];
+    }
+    return popupCache;
+  }
+
+  function updatePopupImagePreview(){
+    const box=$('popupImagePreview');
+    if(!box)return;
+    const url=$('popupImage')?.value.trim()||'';
+    box.innerHTML=url
+      ? `<img src="${esc(url)}" alt="">`
+      : '이미지를 등록하면 여기에서 미리 볼 수 있습니다.';
+  }
+
+  async function openPopup(id=''){
+    await loadPopupCache();
+    const row=popupCache.find(x=>x.id===id)||null;
+
+    $('popupModalTitle').textContent=row?'팝업 수정':'팝업 등록';
+    $('popupId').value=row?.id||'';
+    $('popupTitle').value=row?.title||'';
+    $('popupImage').value=row?.image_url||'';
+    $('popupLink').value=row?.link_url||'';
+    $('popupActive').value=String(row?.is_active!==false);
+    $('popupSortOrder').value=row?.sort_order??100;
+    $('popupImage').oninput=updatePopupImagePreview;
+
+    updatePopupImagePreview();
+    openModal('popupModal');
+  }
+
+  async function savePopup(){
+    const id=$('popupId').value.trim();
+    const title=$('popupTitle').value.trim();
+
+    if(!title){
+      toast('팝업 제목을 입력해주세요.');
+      return;
+    }
+
+    const payload={
+      title,
+      image_url:$('popupImage').value.trim(),
+      link_url:$('popupLink').value.trim(),
+      is_active:$('popupActive').value==='true',
+      sort_order:Number($('popupSortOrder').value||100)
+    };
+
+    try{
+      if(id){
+        await rest('cms_popups?id=eq.'+id,{
+          method:'PATCH',
+          headers:{Prefer:'return=minimal'},
+          body:JSON.stringify(payload)
+        });
+      }else{
+        await rest('cms_popups',{
+          method:'POST',
+          headers:{Prefer:'return=minimal'},
+          body:JSON.stringify(payload)
+        });
+      }
+
+      closeModal('popupModal');
+      await renderPopups();
+      toast('팝업을 저장했습니다.');
+    }catch(e){
+      console.error(e);
+      toast('팝업 저장 실패: '+e.message);
+    }
+  }
+
+  async function uploadPopupImage(){
+    const file=$('popupImageFile')?.files?.[0];
+    if(!file)return;
+
+    try{
+      toast('팝업 이미지를 최적화하고 있습니다.');
+      const optimized=await optimizeAdminImage(file,false);
+      const media=await saveUploadedMedia(optimized);
+      $('popupImage').value=media.public_url;
+      $('popupImageFile').value='';
+      updatePopupImagePreview();
+      toast('팝업 이미지를 저장했습니다.');
+    }catch(e){
+      console.error(e);
+      toast('팝업 이미지 업로드 실패: '+e.message);
+    }
+  }
+
+  async function addPopup(){
+    return openPopup('');
+  }
+
+  async function togglePopup(id,current){
+    await rest('cms_popups?id=eq.'+id,{
+      method:'PATCH',
+      headers:{Prefer:'return=minimal'},
+      body:JSON.stringify({is_active:!current})
+    });
+    await renderPopups();
+  }
+
+  async function deletePopup(id){
+    if(!confirm('팝업을 삭제할까요?'))return;
+    await rest('cms_popups?id=eq.'+id,{
+      method:'DELETE',
+      headers:{Prefer:'return=minimal'}
+    });
+    await renderPopups();
+    toast('팝업을 삭제했습니다.');
+  }
+
+
+
+
+  async function optimizeAdminImage(file,isHero=false){
+    if(!file.type.startsWith('image/'))throw new Error('이미지 파일만 업로드할 수 있습니다.');
+
+    const maxW=isHero?1920:1800;
+    const maxH=isHero?1080:1800;
+    const maxBytes=isHero?1.5*1024*1024:2*1024*1024;
+
+    const bitmap=await createImageBitmap(file);
+    const scale=Math.min(1,maxW/bitmap.width,maxH/bitmap.height);
+    const w=Math.max(1,Math.round(bitmap.width*scale));
+    const h=Math.max(1,Math.round(bitmap.height*scale));
+
+    const canvas=document.createElement('canvas');
+    canvas.width=w;canvas.height=h;
+    const ctx=canvas.getContext('2d',{alpha:false});
+    ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
+    ctx.drawImage(bitmap,0,0,w,h);
+    bitmap.close?.();
+
+    let q=.84;
+    let blob=await new Promise(res=>canvas.toBlob(res,'image/webp',q));
+    while(blob && blob.size>maxBytes && q>.54){
+      q-=.08;
+      blob=await new Promise(res=>canvas.toBlob(res,'image/webp',q));
+    }
+    if(!blob)throw new Error('이미지 최적화 실패');
+
+    const stem=(file.name||'image').replace(/\.[^.]+$/,'').replace(/[^\w가-힣-]+/g,'-').slice(0,50)||'image';
+    return new File([blob],stem+'.webp',{type:'image/webp'});
+  }
+
+  async function sha256File(file){
+    const buf=await file.arrayBuffer();
+    const digest=await crypto.subtle.digest('SHA-256',buf);
+    return Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function loadMediaLibrary(){
+    try{
+      mediaCache=await rest('cms_media?select=*&order=created_at.desc');
+    }catch(e){
+      mediaCache=[];
+    }
+  }
+
+  async function saveUploadedMedia(file){
+    const hash=await sha256File(file);
+
+    // 같은 파일은 다시 Storage에 올리지 않고 기존 항목 재사용
+    const found=await rest('cms_media?select=*&sha256=eq.'+encodeURIComponent(hash)+'&limit=1');
+    if(found?.length){
+      return found[0];
+    }
+
+    const ext=(file.name.split('.').pop()||'jpg').toLowerCase();
+    const now=new Date();
+    const ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+    const path='library/'+ym+'/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.'+ext;
+
+    const r=await fetch(BASE+'/storage/v1/object/site-media/'+path,{
+      method:'POST',
+      headers:headers({
+        'Content-Type':file.type||'application/octet-stream',
+        'x-upsert':'false'
+      }),
+      body:file
+    });
+
+    if(!r.ok)throw new Error(await r.text());
+
+    const publicUrl=BASE+'/storage/v1/object/public/site-media/'+path;
+
+    const inserted=await rest('cms_media',{
+      method:'POST',
+      headers:{Prefer:'return=representation'},
+      body:JSON.stringify({
+        storage_path:path,
+        public_url:publicUrl,
+        original_name:file.name,
+        mime_type:file.type||null,
+        size_bytes:file.size||null,
+        sha256:hash
+      })
+    });
+
+    return inserted[0];
+  }
+
+  async function openMediaLibrary(type,key=''){
+    mediaTarget={type,key};
+    await loadMediaLibrary();
+    renderMediaLibrary('');
+    openModal('mediaLibraryModal');
+  }
+
+  function renderMediaLibrary(search=''){
+    const grid=$('mediaLibraryGrid');
+    if(!grid)return;
+
+    const q=String(search||'').trim().toLowerCase();
+    const rows=mediaCache.filter(x=>!q || (x.original_name||'').toLowerCase().includes(q));
+
+    grid.innerHTML=rows.length?rows.map(x=>`
+      <div class="library-item">
+        <div class="library-thumb"><img src="${esc(x.public_url)}" alt=""></div>
+        <div class="library-info">
+          <div class="library-name">${esc(x.original_name||'이미지')}</div>
+          <div class="library-meta">${x.size_bytes?Math.round(x.size_bytes/1024)+' KB':''}</div>
+          <button class="library-use" type="button" onclick="Admin.useMedia('${x.id}')">이 이미지 사용</button>
+        </div>
+      </div>
+    `).join(''):'<div class="empty" style="grid-column:1/-1">보관된 이미지가 없습니다.</div>';
+  }
+
+  async function uploadLibraryImage(){
+    const file=$('mediaLibraryUpload')?.files?.[0];
+    if(!file)return;
+
+    try{
+      toast('이미지를 보관함에 저장하고 있습니다.');
+      const media=await saveUploadedMedia(file);
+      await loadMediaLibrary();
+      renderMediaLibrary($('mediaLibrarySearch')?.value||'');
+      toast(media.sha256?'이미지 보관이 완료되었습니다.':'이미지를 저장했습니다.');
+      $('mediaLibraryUpload').value='';
+    }catch(e){
+      toast('이미지 저장 실패: '+e.message);
+    }
+  }
+
+  async function useMedia(id){
+    const media=mediaCache.find(x=>x.id===id);
+    if(!media || !mediaTarget)return;
+
+    if(mediaTarget.type==='home'){
+      homeMedia[mediaTarget.key]=media.public_url;
+      await saveHomeMedia();
+      renderHomeMedia();
+      closeModal('mediaLibraryModal');
+      toast('메인페이지 이미지를 교체했습니다.');
+      return;
+    }
+
+    if(mediaTarget.type==='post'){
+      $('postImage').value=media.public_url;
+      closeModal('mediaLibraryModal');
+      toast('게시글 대표이미지로 선택했습니다.');
+      return;
+    }
+
+    if(mediaTarget.type==='post-inline'){
+      insertPostInlineImages([media]);
+      closeModal('mediaLibraryModal');
+      toast('보관함 이미지를 본문에 삽입했습니다.');
+      return;
+    }
+
+    if(mediaTarget.type==='review'){
+      $('reviewImage').value=media.public_url;
+      closeModal('mediaLibraryModal');
+      toast('진료후기 대표이미지로 선택했습니다.');
+      return;
+    }
+
+    if(mediaTarget.type==='product'){
+      $('productImage').value=media.public_url;
+      updateProductImagePreview();
+      closeModal('mediaLibraryModal');
+      toast('상품 대표이미지로 선택했습니다.');
+      return;
+    }
+
+    if(mediaTarget.type==='popup'){
+      $('popupImage').value=media.public_url;
+      updatePopupImagePreview();
+      closeModal('mediaLibraryModal');
+      toast('팝업 이미지로 선택했습니다.');
+    }
+  }
+
+
+  const HOME_MEDIA_SLOTS=[
+    {key:'hero1',title:'메인 슬라이드 1',help:'대표 원장 진료 이미지 · 업로드 시 1920×1080 / 약 1.5MB 이하 자동 최적화',ratio:'wide'},
+    {key:'hero2',title:'메인 슬라이드 2',help:'담적·소화기 진료 이미지 · 업로드 시 1920×1080 / 약 1.5MB 이하 자동 최적화',ratio:'wide'},
+    {key:'hero3',title:'메인 슬라이드 3',help:'검사·초음파 이미지 · 업로드 시 1920×1080 / 약 1.5MB 이하 자동 최적화',ratio:'wide'},
+    {key:'clinicDamjeok',title:'담적·소화기 카드',help:'메인 주요진료 카드 대표사진',ratio:'wide'},
+    {key:'clinicBopye',title:'보폐고엔오 카드',help:'메인 주요진료 카드 대표사진',ratio:'wide'},
+    {key:'clinicVascular',title:'혈관·대사 카드',help:'메인 주요진료 카드 대표사진',ratio:'wide'},
+    {key:'clinicDiet',title:'다이어트 카드',help:'메인 주요진료 카드 대표사진',ratio:'wide'},
+    {key:'clinicPain',title:'통증클리닉 카드',help:'메인 주요진료 카드 대표사진',ratio:'wide'},
+    {key:'clinicAutonomic',title:'자율신경 카드',help:'메인 주요진료 카드 대표사진',ratio:'wide'},
+    {key:'doctor',title:'의료진 소개 사진',help:'의료진 소개 영역의 큰 원장님 사진',ratio:'portrait'}
+  ];
+
+  async function loadHomeMedia(){
+    try{
+      const rows=await rest('cms_settings?select=*&key=eq.home_media&limit=1');
+      homeMedia=rows?.[0]?.value || {};
+    }catch(e){
+      homeMedia={};
+    }
+  }
+
+  async function saveHomeMedia(){
+    await rest('cms_settings?on_conflict=key',{
+      method:'POST',
+      headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify({key:'home_media',value:homeMedia})
+    });
+  }
+
+  function renderHomeMedia(){
+    const grid=$('homeMediaGrid');
+    if(!grid)return;
+
+    grid.innerHTML=HOME_MEDIA_SLOTS.map(slot=>{
+      const url=homeMedia[slot.key]||'';
+      return `
+        <div class="media-card">
+          <div class="media-preview ${slot.ratio==='portrait'?'portrait':''}">
+            ${url?`<img src="${esc(url)}" alt="">`:'아직 등록된 이미지가 없습니다.'}
+          </div>
+          <div class="media-card-body">
+            <div class="media-card-title">${esc(slot.title)}</div>
+            <div class="media-card-help">${esc(slot.help)}</div>
+
+            <input class="media-url"
+              id="mediaUrl_${slot.key}"
+              value="${esc(url)}"
+              placeholder="이미지 URL 직접 입력도 가능">
+
+            <input type="file"
+              id="mediaFile_${slot.key}"
+              accept="image/*"
+              style="display:none"
+              onchange="Admin.uploadHomeMedia('${slot.key}')">
+
+            <div class="media-card-actions">
+              <button class="primary" type="button"
+                onclick="document.getElementById('mediaFile_${slot.key}').click()">
+                새 사진 업로드
+              </button>
+
+              <button class="library-open" type="button" onclick="Admin.openMediaLibrary('home','${slot.key}')">
+                보관함에서 선택
+              </button>
+
+              <button type="button" onclick="Admin.saveHomeMediaUrl('${slot.key}')">
+                URL 적용
+              </button>
+
+              <button type="button" onclick="Admin.removeHomeMedia('${slot.key}')">
+                이미지 제거
+              </button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  async function uploadHomeMedia(key){
+    const input=$('mediaFile_'+key);
+    const file=input?.files?.[0];
+    if(!file){toast('이미지 파일을 선택해주세요.');return;}
+
+    try{
+      const isHero=['hero1','hero2','hero3'].includes(key);
+      toast(isHero?'대문 이미지를 자동 최적화하고 있습니다.':'이미지를 저장하고 있습니다.');
+      const optimized=await optimizeAdminImage(file,isHero);
+      const media=await saveUploadedMedia(optimized);
+      homeMedia[key]=media.public_url;
+      await saveHomeMedia();
+      renderHomeMedia();
+      input.value='';
+      toast('메인페이지 이미지를 저장했습니다. 보관함에도 남아 있습니다.');
+    }catch(e){
+      toast('이미지 업로드 실패: '+e.message);
+    }
+  }
+
+  async function saveHomeMediaUrl(key){
+    const url=$('mediaUrl_'+key)?.value.trim()||'';
+    homeMedia[key]=url;
+    await saveHomeMedia();
+    renderHomeMedia();
+    toast('이미지 URL을 적용했습니다.');
+  }
+
+  async function removeHomeMedia(key){
+    if(!homeMedia[key]){
+      toast('등록된 이미지가 없습니다.');
+      return;
+    }
+    if(!confirm('이 이미지를 메인페이지에서 제거할까요?'))return;
+
+    homeMedia[key]='';
+    await saveHomeMedia();
+    renderHomeMedia();
+    toast('메인페이지에서 이미지를 제거했습니다.');
+  }
+
+  
+
+  async function loadLocationSettings(){
+    const defaults={
+      clinicName:'제세현한의원',
+      address:'충청북도 청주시 상당구 상당로 10-1, 1층',
+      phone:'043-221-1275',
+      naverMapClientId:'x8pnvdh1ek'
+    };
+
+    try{
+      const rows=await rest('cms_settings?select=*&key=eq.location_settings&limit=1');
+      const stored=rows?.[0]?.value||{};
+      const value={
+        ...defaults,
+        ...stored,
+        naverMapClientId:stored.naverMapClientId||defaults.naverMapClientId
+      };
+
+      if($('locationClinicName'))$('locationClinicName').value=value.clinicName;
+      if($('locationAddress'))$('locationAddress').value=value.address;
+      if($('locationPhone'))$('locationPhone').value=value.phone;
+      if($('locationNaverMapClientId'))$('locationNaverMapClientId').value=value.naverMapClientId;
+    }catch(e){
+      console.warn('location settings load failed',e);
+    }
+  }
+
+  async function saveLocationSettings(){
+    const value={
+      clinicName:$('locationClinicName').value.trim()||'제세현한의원',
+      address:$('locationAddress').value.trim()||'충청북도 청주시 상당구 상당로 10-1, 1층',
+      phone:$('locationPhone').value.trim()||'043-221-1275',
+      naverMapClientId:$('locationNaverMapClientId').value.trim()
+    };
+
+    if(!value.naverMapClientId){
+      toast('Client ID가 비어 있습니다. 저장은 가능하지만 실제 지도는 표시되지 않습니다.');
+    }
+
+    await rest('cms_settings?on_conflict=key',{
+      method:'POST',
+      headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify({key:'location_settings',value})
+    });
+
+    await loadLocationSettings();
+    toast('네이버 지도 설정을 저장했습니다.');
+  }
+
+async function renderDesign(){
+    try{
+      const rows=await rest('cms_settings?select=*&key=eq.design&limit=1');
+      const font=rows?.[0]?.value?.font||'editorial';
+      document.querySelectorAll('.font-card').forEach(x=>x.classList.toggle('active',x.dataset.font===font));
+    }catch(e){}
+    await loadHomeMedia();
+    renderHomeMedia();
+    fillHomeCopyForm();
+    await loadLocationSettings();
+  }
+  async function chooseFont(font){
+    await rest('cms_settings?on_conflict=key',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({key:'design',value:{font}})});
+    await renderDesign();toast('폰트 설정을 저장했습니다.');
+  }
+
+
+  async function loadNaverSetting(){
+    try{
+      const rows=await rest('cms_settings?select=*&key=eq.naver_blog&limit=1');
+      const saved=rows?.[0]?.value?.blogId;
+      if(saved)state.blogId=saved;
+    }catch(e){}
+  }
+
+  async function saveNaverSetting(){
+    try{
+      await rest('cms_settings?on_conflict=key',{
+        method:'POST',
+        headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify({key:'naver_blog',value:{blogId:state.blogId}})
+      });
+    }catch(e){}
+  }
+
+  async function openImport(){
+    state.importStep=1;
+    state.selectedImports.clear();
+    state.importBoard='';
+    state.naverItems=[];
+    state.naverPage=1;
+    state.naverTotal=0;
+    state.naverCategory='all';
+    await loadNaverSetting();
+    renderImport();
+    openModal('importModal');
+  }
+
+  function importCategories(){
+    const map=new Map();
+    state.naverItems.forEach(x=>{
+      const key=x.category || (x.categoryNo ? '카테고리 '+x.categoryNo : '미분류');
+      map.set(key,(map.get(key)||0)+1);
+    });
+    return [...map.entries()];
+  }
+
+  function visibleImportItems(){
+    const search=($('importSearch')?.value||'').trim().toLowerCase();
+    const exclude=$('excludeImported')?.checked||false;
+
+    return state.naverItems.filter(x=>{
+      const cat=x.category || (x.categoryNo ? '카테고리 '+x.categoryNo : '미분류');
+      const catOk=state.naverCategory==='all' || cat===state.naverCategory;
+      const textOk=!search || ((x.title||'')+' '+(x.summary||'')+' '+cat).toLowerCase().includes(search);
+      const importedOk=!(exclude && x.imported);
+      return catOk && textOk && importedOk;
+    });
+  }
+
+
+  async function testNaverConnection(){
+    const input=$('naverBlogId');
+    if(input)state.blogId=input.value.trim();
+    const out=$('naverHealthResult');
+    if(out)out.textContent='확인 중...';
+    try{
+      const data=await callNaver({
+        action:'health',
+        blogId:state.blogId||'jesehyunhani'
+      });
+      if(data.naver?.ok){
+        if(out)out.textContent='✓ 실제 네이버 연결 정상 · '+data.naver.count+'개 확인 · '+(data.naver.source||'');
+        toast('네이버 블로그 실제 연결이 정상입니다.');
+      }else{
+        const msg=data.naver?.error||'네이버 연결 실패';
+        if(out)out.textContent='✕ '+msg;
+        toast('네이버 연결 실패: '+msg);
+      }
+    }catch(e){
+      if(out)out.textContent='✕ '+e.message;
+      toast(e.message);
+    }
+  }
+
+  async function loadNaverList(page=1){
+    const input=$('naverBlogId');
+    if(input)state.blogId=input.value.trim();
+    if(!state.blogId){toast('네이버 블로그 ID를 입력해주세요.');return;}
+
+    const btn=$('importNext');
+    if(btn){btn.disabled=true;btn.textContent='불러오는 중...';}
+    $('importFootLeft').textContent='네이버 블로그 연결 중';
+
+    try{
+      const data=await callNaver({
+        action:'list',
+        blogId:state.blogId,
+        page,
+        count:state.naverCount
+      });
+
+      state.naverItems=data.items||[];
+      state.naverPage=data.page||page;
+      state.naverTotal=data.totalCount||state.naverItems.length;
+      state.naverCategory='all';
+      state.importStep=2;
+      await saveNaverSetting();
+      renderImport();
+    }catch(e){
+      toast(e.message);
+      if(btn){btn.disabled=false;btn.textContent='글 목록 불러오기';}
+      $('importFootLeft').textContent='연결 실패';
+    }
+  }
+
+  function setImportCategory(cat){
+    state.naverCategory=cat;
+    renderImport();
+  }
+
+  function setImportCategoryByIndex(index){
+    const cats=importCategories();
+    const row=cats[Number(index)];
+    if(!row)return;
+    state.naverCategory=row[0];
+    renderImport();
+  }
+
+  function renderImportListOnly(){
+    const list=$('importList');
+    if(!list)return;
+
+    const items=visibleImportItems();
+
+    list.innerHTML=items.length?items.map(x=>`
+      <div class="import-item ${state.selectedImports.has(x.logNo)?'selected':''} ${x.imported?'imported-row':''}"
+        onclick="Admin.toggleImportRow('${x.logNo}',event)">
+        <input type="checkbox"
+          ${state.selectedImports.has(x.logNo)?'checked':''}
+          onclick="event.stopPropagation()"
+          onchange="Admin.selectImport('${x.logNo}',this.checked)">
+        <div class="import-thumb">
+          ${x.thumbnail?`<img src="${esc(x.thumbnail)}" alt="" style="width:100%;height:100%;object-fit:cover">`:'IMG'}
+        </div>
+        <div>
+          <div class="import-title">${esc(x.title||'')}</div>
+          <div class="import-meta">
+            ${esc(x.category || (x.categoryNo?'카테고리 '+x.categoryNo:'미분류'))}
+            ${x.publishedAt?' · '+esc(x.publishedAt):''}
+          </div>
+          ${x.summary?`<div style="font-size:10px;color:#8a94a3;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(x.summary)}</div>`:''}
+        </div>
+        <div>
+          ${x.imported?`<span class="imported">✓ 이미 가져옴</span><br><span style="font-size:9px;color:#8a94a3">다시 선택 가능</span><br><a href="${esc(x.url)}" target="_blank" onclick="event.stopPropagation()" style="font-size:10px;color:#687990">원문 보기</a>`:''}
+        </div>
+      </div>
+    `).join(''):'<div class="empty">조건에 맞는 글이 없습니다.</div>';
+$('importFootLeft').textContent=
+      state.selectedImports.size+'개 선택 · 전체 '+state.naverTotal+'개';
+  }
+
+  function renderImport(){
+    document.querySelectorAll('.step-tab').forEach((x,i)=>x.classList.toggle('active',i+1===state.importStep));
+    const body=$('importBody'),left=$('importFootLeft'),btn=$('importNext');
+
+    if(state.importStep===1){
+      body.innerHTML=`
+        <div style="padding:10px 2px 18px">
+          <div style="max-width:620px">
+            <div class="field">
+              <label>네이버 블로그 ID</label>
+              <input id="naverBlogId" value="${esc(state.blogId)}" placeholder="예: jesehyunhani">
+            </div>
+            <div style="margin-top:14px;padding:16px;border:1px solid #dbe5f0;border-radius:10px;background:#f8fbff">
+              <strong>실제 네이버 블로그 연동</strong>
+              <p style="font-size:12px;color:#718097;line-height:1.7;margin:7px 0 0">
+                네이버 전체 글 목록을 서버에서 불러온 뒤 선택한 글의 본문과 이미지를 Supabase로 복사합니다.
+                가져온 글은 홈페이지 안에서 자체 글로 열립니다.
+              </p>
+              <div style="margin-top:12px">
+                <button class="action-btn small" type="button" onclick="Admin.testNaverConnection()">네이버 연동 상태 확인</button>
+                <span id="naverHealthResult" style="margin-left:8px;font-size:11px;color:#687990"></span>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      left.textContent='블로그 ID 확인';
+      btn.disabled=false;
+      btn.textContent='글 목록 불러오기';
+      return;
+    }
+
+    if(state.importStep===2){
+      const cats=importCategories();
+
+      body.innerHTML=`
+        <div class="import-layout">
+          <div class="category-list">
+            <button type="button"
+              class="category-item category-btn ${state.naverCategory==='all'?'active':''}"
+              onclick="Admin.setImportCategory('all')">
+              <span>전체</span><strong>${state.naverItems.length}</strong>
+            </button>
+            ${cats.map(([name,count],idx)=>`
+              <button type="button"
+                class="category-item category-btn ${state.naverCategory===name?'active':''}"
+                data-cat-index="${idx}"
+                onclick="Admin.setImportCategoryByIndex(${idx})">
+                <span>${esc(name)}</span><strong>${count}</strong>
+              </button>
+            `).join('')}
+          </div>
+
+          <div>
+            <div class="import-tools" style="flex-wrap:wrap">
+              <input id="importSearch" placeholder="검색어를 입력해 주세요" oninput="Admin.renderImportListOnly()">
+              <label style="font-size:11px;color:#6f7c90;white-space:nowrap">
+                <input id="excludeImported" type="checkbox" onchange="Admin.renderImportListOnly()"> 가져온 글 제외
+              </label>
+              <button class="action-btn small" id="selectAllImportBtn" type="button" onclick="Admin.selectAllVisible()">보이는 글 전체 선택</button>
+              <button class="action-btn small" type="button" onclick="Admin.clearImportSelection()">선택 해제</button>
+            </div>
+
+            <div id="importList"></div>
+
+            <div style="display:flex;justify-content:center;gap:8px;margin-top:16px">
+              <button class="action-btn small" ${state.naverPage<=1?'disabled':''} onclick="Admin.changeNaverPage(${state.naverPage-1})">← 이전</button>
+              <span style="display:flex;align-items:center;font-size:12px;color:#68768a">페이지 ${state.naverPage}</span>
+              <button class="action-btn small" ${(state.naverPage*state.naverCount)>=state.naverTotal?'disabled':''} onclick="Admin.changeNaverPage(${state.naverPage+1})">다음 →</button>
+            </div>
+          </div>
+        </div>`;
+
+      btn.disabled=false;
+      btn.textContent='게시판 선택';
+      renderImportListOnly();
+      return;
+    }
+
+    if(state.importStep===3){
+      body.innerHTML=`
+        <h3 style="margin-top:0">가져온 글을 어느 상세페이지에 넣을까요?</h3>
+        <p style="font-size:12px;color:#7b8798">가져온 글은 해당 상세페이지 목록과 메인 건강정보에 표시됩니다.</p>
+        <div class="board-choice">
+          ${pageCache.filter(x=>x.is_visible).map(p=>`
+            <div class="board-option ${state.importBoard===p.id?'active':''}" onclick="Admin.chooseImportBoard('${p.id}')">
+              <strong>${esc(p.name)}</strong>
+              <div class="slug">${esc(p.slug)}</div>
+            </div>
+          `).join('')}
+        </div>`;
+      left.textContent=state.selectedImports.size+'개 글 선택';
+      btn.disabled=false;
+      btn.textContent='실제로 가져오기';
+    }
+  }
+
+  function selectImport(logNo,checked){
+    if(checked)state.selectedImports.add(logNo);
+    else state.selectedImports.delete(logNo);
+    renderImportListOnly();
+  }
+
+  function toggleImportRow(logNo,event){
+    if(event?.target?.closest('a,button,input,label'))return;
+    if(state.selectedImports.has(logNo))state.selectedImports.delete(logNo);
+    else state.selectedImports.add(logNo);
+    renderImportListOnly();
+  }
+
+  function selectAllVisible(){
+    visibleImportItems().forEach(x=>{
+      state.selectedImports.add(x.logNo);
+    });
+    renderImportListOnly();
+  }
+
+  function clearImportSelection(){
+    state.selectedImports.clear();
+    renderImportListOnly();
+  }
+
+  function chooseImportBoard(id){
+    state.importBoard=id;
+    renderImport();
+  }
+
+  async function changeNaverPage(page){
+    if(page<1)return;
+    try{
+      const data=await callNaver({
+        action:'list',
+        blogId:state.blogId,
+        page,
+        count:state.naverCount
+      });
+      state.naverItems=data.items||[];
+      state.naverPage=data.page||page;
+      state.naverTotal=data.totalCount||state.naverTotal;
+      state.naverCategory='all';
+      renderImport();
+    }catch(e){
+      toast('목록 불러오기 실패: '+e.message);
+    }
+  }
+
+  async function nextImport(){
+    if(state.importStep===1){
+      await loadNaverList(1);
+      return;
+    }
+
+    if(state.importStep===2){
+      if(!state.selectedImports.size){
+        toast('가져올 글을 선택해주세요.');
+        return;
+      }
+      state.importStep=3;
+      renderImport();
+      return;
+    }
+
+    if(state.importStep===3){
+      if(!state.importBoard){
+        toast('게시판을 선택해주세요.');
+        return;
+      }
+      if(state.importBusy)return;
+
+      state.importBusy=true;
+      const btn=$('importNext');
+      btn.disabled=true;
+
+      const targets=[...state.selectedImports];
+      let ok=0;
+      const failures=[];
+
+      for(let i=0;i<targets.length;i++){
+        const logNo=targets[i];
+        btn.textContent=`가져오는 중 ${i+1}/${targets.length}`;
+        $('importFootLeft').textContent=`본문·이미지 저장 중 ${i+1}/${targets.length}`;
+
+        try{
+          await callNaver({
+            action:'importOne',
+            blogId:state.blogId,
+            logNo,
+            pageId:state.importBoard
+          });
+          ok++;
+        }catch(e){
+          failures.push({logNo,error:e.message});
+        }
+      }
+
+      state.importBusy=false;
+      await refreshAll();
+
+      if(failures.length){
+        btn.disabled=false;
+        btn.textContent='닫기';
+        btn.onclick=()=>Admin.closeModal('importModal');
+        $('importFootLeft').textContent=`성공 ${ok}개 · 실패 ${failures.length}개`;
+
+        const selected=targets.map(logNo=>state.naverItems.find(x=>x.logNo===logNo)).filter(Boolean);
+        const names=new Map(selected.map(x=>[x.logNo,x.title]));
+
+        $('importBody').innerHTML=`
+          <div style="padding:4px 0">
+            <h3 style="margin:0 0 12px">가져오기 결과</h3>
+            <div style="padding:14px;border-radius:10px;background:${ok?'#eef9f2':'#fff3f3'};margin-bottom:12px">
+              <strong>성공 ${ok}개 · 실패 ${failures.length}개</strong>
+            </div>
+            ${failures.map(f=>`
+              <div style="padding:12px 0;border-bottom:1px solid #e8edf2">
+                <div style="font-size:12px;font-weight:800;color:#27364b">${esc(names.get(f.logNo)||f.logNo)}</div>
+                <div style="margin-top:5px;font-size:11px;color:#b14545;line-height:1.6;word-break:break-all">${esc(f.error)}</div>
+              </div>
+            `).join('')}
+            <p style="font-size:10px;color:#8994a4;margin-top:14px">
+              위 오류 문구가 표시되므로 이후 문제가 생겨도 어느 단계에서 실패했는지 바로 확인할 수 있습니다.
+            </p>
+          </div>`;
+
+        console.error('Naver import failures',failures);
+        toast(`가져오기 완료: 성공 ${ok}개, 실패 ${failures.length}개`);
+      }else{
+        closeModal('importModal');
+        toast(`${ok}개 글의 본문과 이미지를 가져왔습니다.`);
+      }
+    }
+  }
+
+
+  async function rpc(name,payload){
+    return await rest('rpc/'+name,{
+      method:'POST',
+      headers:{Prefer:'return=representation'},
+      body:JSON.stringify(payload||{})
+    });
+  }
+
+  function setStatsRange(days){
+    statsDays=days;
+    [30,60,90].forEach(n=>{
+      const b=$('range'+n);
+      if(b)b.classList.toggle('active',n===days);
+    });
+    renderStats();
+  }
+
+  function setStatsTab(tab){
+    statsTab=tab;
+    $('visitStatsTab')?.classList.toggle('active',tab==='visits');
+    $('postStatsTab')?.classList.toggle('active',tab==='posts');
+    if($('visitStatsPane'))$('visitStatsPane').style.display=tab==='visits'?'':'none';
+    if($('postStatsPane'))$('postStatsPane').style.display=tab==='posts'?'':'none';
+  }
+
+  function formatDate(s){
+    if(!s)return '';
+    const d=new Date(s);
+    if(Number.isNaN(d.getTime()))return s;
+    return String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+
+  function renderVisitChart(rows){
+    const svg=$('visitChart');
+    if(!svg)return;
+
+    const W=1100,H=340;
+    const L=48,R=26,T=24,B=46;
+    const chartW=W-L-R,chartH=H-T-B;
+    const maxViews=Math.max(1,...rows.map(x=>Number(x.views)||0));
+    const maxVisitors=Math.max(1,...rows.map(x=>Number(x.visitors)||0));
+    const step=chartW/Math.max(rows.length,1);
+    const barW=Math.max(3,Math.min(22,step*.58));
+
+    let parts=[];
+    for(let i=0;i<=4;i++){
+      const y=T+(chartH*i/4);
+      const val=Math.round(maxViews*(1-i/4));
+      parts.push(`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#e8edf3" stroke-width="1"/>`);
+      parts.push(`<text x="${L-8}" y="${y+4}" text-anchor="end" font-size="10" fill="#7b8798">${val}</text>`);
+    }
+
+    rows.forEach((row,i)=>{
+      const x=L+step*i+step/2;
+      const h=(Number(row.views)||0)/maxViews*chartH;
+      const y=T+chartH-h;
+      parts.push(`<rect x="${x-barW/2}" y="${y}" width="${barW}" height="${h}" rx="2" fill="#3189f4"/>`);
+
+      if(rows.length<=35 || i%Math.ceil(rows.length/12)===0 || i===rows.length-1){
+        parts.push(`<text x="${x}" y="${H-16}" text-anchor="middle" font-size="9" fill="#6e7b8c">${formatDate(row.day)}</text>`);
+      }
+    });
+
+    const pts=rows.map((row,i)=>{
+      const x=L+step*i+step/2;
+      const y=T+chartH-((Number(row.visitors)||0)/maxVisitors*chartH);
+      return [x,y];
+    });
+
+    if(pts.length){
+      parts.push(`<polyline fill="none" stroke="#ef3daf" stroke-width="2" points="${pts.map(p=>p.join(',')).join(' ')}"/>`);
+      pts.forEach(p=>parts.push(`<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="#ef3daf"/>`));
+    }
+
+    svg.innerHTML=parts.join('');
+  }
+
+  async function renderStats(){
+    if(!$('visitStatsPane'))return;
+
+    try{
+      const [visits,posts,summaryRows]=await Promise.all([
+        rpc('cms_visit_stats',{p_days:statsDays}),
+        rpc('cms_post_stats',{p_days:statsDays}),
+        rpc('cms_visit_summary',{p_days:statsDays})
+      ]);
+
+      const totalViews=visits.reduce((a,x)=>a+(Number(x.views)||0),0);
+      const uniqueVisitors=Number(summaryRows?.[0]?.visitors||0);
+
+      $('kpiViews').textContent=totalViews.toLocaleString();
+      $('kpiVisitors').textContent=uniqueVisitors.toLocaleString();
+      $('kpiAverage').textContent=(visits.length?Math.round(totalViews/visits.length):0).toLocaleString();
+
+      renderVisitChart(visits);
+
+      $('visitStatsBody').innerHTML=[...visits].reverse().map(x=>`
+        <tr>
+          <td>${esc(x.day)}</td>
+          <td class="num">${Number(x.views||0).toLocaleString()}회</td>
+          <td class="num">${Number(x.visitors||0).toLocaleString()}명</td>
+        </tr>
+      `).join('');
+
+      $('postStatsBody').innerHTML=posts.length?posts.map(x=>`
+        <tr>
+          <td>${esc(x.page_name||'')}</td>
+          <td class="stats-title">${esc(x.title||'')}</td>
+          <td class="num">${Number(x.views||0).toLocaleString()}회</td>
+          <td class="num">${Number(x.visitors||0).toLocaleString()}명</td>
+          <td>${x.last_viewed_at?new Date(x.last_viewed_at).toLocaleString('ko-KR'):'-'}</td>
+        </tr>
+      `).join(''):'<tr><td colspan="5"><div class="empty">아직 게시글 조회 기록이 없습니다.</div></td></tr>';
+
+      setStatsTab(statsTab);
+    }catch(e){
+      toast('통계를 불러오지 못했습니다: '+e.message);
+    }
+  }
+
+
+  function openModal(id){$(id).classList.add('open')}
+  function closeModal(id){$(id).classList.remove('open')}
+
+  window.Admin={rememberPostEditorSelection,pickPostInlineImages,openPostInlineMediaLibrary,uploadPostInlineImages,insertPostInlineImages,saveLocationSettings,updatePopupImagePreview,uploadPopupImage,savePopup,openPopup,renderProducts,setProductSearch,setProductStatus,setProductCategory,openProduct,saveProduct,toggleProductActive,toggleProductFeatured,deleteProduct,uploadProductImage,updateProductImagePreview,login,logout,filterPage,setPageCategorySearch,setSearch,setStatus,openCategoryManager,renderCategoryManager,addPostCategory,removePostCategory,saveHomeCopy,togglePost,pinPost,deletePost,openPost,savePost,editorCommand,editorFormatBlock,editorFontSize,editorCreateLink,toggleEditorSource,uploadPostImage,openMove,saveMove,openPage,savePage,deletePage,togglePage,setOrder,addPopup,togglePopup,deletePopup,chooseFont,uploadHomeMedia,saveHomeMediaUrl,removeHomeMedia,openMediaLibrary,renderMediaLibrary,uploadLibraryImage,useMedia,renderAdminReviews,openReview,saveReview,toggleReviewVisible,toggleReviewFeatured,deleteReview,uploadReviewImage,setStatsRange,setStatsTab,renderStats,openImport,renderImport,renderImportListOnly,setImportCategory,setImportCategoryByIndex,testNaverConnection,selectImport,toggleImportRow,selectAllVisible,clearImportSelection,chooseImportBoard,changeNaverPage,nextImport,openModal,closeModal};
+
+  document.addEventListener('DOMContentLoaded',async()=>{if(await restore())showApp()});
+})();
+</script>
+</body></html>

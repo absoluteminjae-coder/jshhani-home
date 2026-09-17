@@ -1,0 +1,163 @@
+
+/* v3.15.41 — 갱년기장애 상세페이지 */
+.menopause-main-v31541{
+  --mp-green:#183a2a;
+  --mp-green2:#315f45;
+  --mp-rose:#9a5d56;
+  --mp-blue:#4c728d;
+  --mp-soft:#f8f5f1;
+  --mp-mint:#edf3ef;
+  --mp-line:#dfe5e0;
+  --mp-muted:#6f7872;
+  color:#27342c;
+}
+.menopause-main-v31541 *{box-sizing:border-box}
+.menopause-main-v31541 .mp-kicker{margin-bottom:9px;color:var(--mp-green2);font-size:10px;font-weight:800;letter-spacing:.13em}
+.menopause-main-v31541 .mp-hero{
+  padding:26px 0 62px;display:grid;grid-template-columns:1.02fr .98fr;gap:34px;align-items:center
+}
+.menopause-main-v31541 .mp-hero h2{
+  margin:0 0 18px;color:var(--mp-green);font-family:var(--title);
+  font-size:clamp(38px,5vw,58px)!important;line-height:1.28!important;letter-spacing:-.045em
+}
+.menopause-main-v31541 .mp-hero h2 em{color:var(--mp-rose);font-style:normal}
+.menopause-main-v31541 .mp-lead{margin:0!important;color:#59645d;font-size:15px!important;line-height:1.95!important;word-break:keep-all}
+.menopause-main-v31541 .mp-answer-box{
+  margin-top:22px;padding:17px 19px;display:grid;grid-template-columns:130px 1fr;gap:14px;
+  border:1px solid #e4d9d5;border-radius:14px;background:#fbf7f5
+}
+.menopause-main-v31541 .mp-answer-box strong{color:var(--mp-rose);font-size:11px}
+.menopause-main-v31541 .mp-answer-box span{color:#68727a;font-size:11px;line-height:1.8}
+.menopause-main-v31541 .mp-hero-points{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.menopause-main-v31541 .mp-hero-points>div{padding:14px;border:1px solid var(--mp-line);border-radius:12px;background:#fff}
+.menopause-main-v31541 .mp-hero-points b{display:block;margin-bottom:4px;color:var(--mp-green);font-size:11px}
+.menopause-main-v31541 .mp-hero-points span{color:#778078;font-size:9px;line-height:1.6}
+
+.menopause-main-v31541 .mp-media-card{
+  margin:0;border:1px solid #dfe6e1;border-radius:18px;background:#fff;overflow:hidden;min-height:320px
+}
+.menopause-main-v31541 .mp-media-card img{display:block;width:100%;height:100%;min-height:320px;object-fit:cover}
+.menopause-main-v31541 .mp-media-placeholder{
+  min-height:320px;padding:34px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  background:linear-gradient(145deg,#f8f5f1,#edf3ef)
+}
+.menopause-main-v31541 .mp-media-placeholder span{color:#9ca8a0;font-size:9px;font-weight:800;letter-spacing:.15em}
+.menopause-main-v31541 .mp-media-placeholder b{margin-top:12px;color:#405348;font-family:var(--title);font-size:22px}
+.menopause-main-v31541 .mp-media-placeholder small{max-width:300px;margin-top:8px;color:#7e8780;font-size:10px;line-height:1.7}
+.menopause-main-v31541 .mp-media-placeholder.diagnostic{background:linear-gradient(145deg,#f5f8fb,#eef3f2)}
+
+.menopause-main-v31541 .mp-section{margin:0 -34px;padding:64px 34px}
+.menopause-main-v31541 .mp-soft{background:var(--mp-soft)}
+.menopause-main-v31541 .mp-mint{background:var(--mp-mint)}
+.menopause-main-v31541 .mp-section-head{max-width:820px;margin-bottom:28px}
+.menopause-main-v31541 .mp-section-head h3,
+.menopause-main-v31541 .mp-dark h3{
+  margin:0 0 12px;color:var(--mp-green);font-family:var(--title);
+  font-size:clamp(28px,3.7vw,40px)!important;line-height:1.43!important;letter-spacing:-.035em;word-break:keep-all
+}
+.menopause-main-v31541 .mp-section-head p{margin:0!important;color:var(--mp-muted);font-size:13px!important;line-height:1.9!important}
+
+.menopause-main-v31541 .mp-quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.menopause-main-v31541 .mp-quick-grid article{min-height:138px;padding:20px;border:1px solid var(--mp-line);border-radius:14px;background:#fff}
+.menopause-main-v31541 .mp-quick-grid b{display:block;margin-bottom:8px;color:var(--mp-green);font-family:var(--title);font-size:17px;line-height:1.5}
+.menopause-main-v31541 .mp-quick-grid span{color:#737c75;font-size:11px;line-height:1.72}
+
+.menopause-main-v31541 .mp-pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.menopause-main-v31541 .mp-pattern-card{padding:24px;border:1px solid var(--mp-line);border-radius:16px;background:#fff}
+.menopause-main-v31541 .mp-pattern-card.hot{border-top:3px solid #bd7a70}
+.menopause-main-v31541 .mp-pattern-card.cold{border-top:3px solid #6e8fa4}
+.menopause-main-v31541 .mp-pattern-label{color:#9aa49d;font-size:9px;font-weight:800;letter-spacing:.14em}
+.menopause-main-v31541 .mp-pattern-card h4{margin:13px 0 9px;color:var(--mp-green);font-family:var(--title);font-size:24px}
+.menopause-main-v31541 .mp-pattern-card h4 small{font-size:12px;color:#66766d}
+.menopause-main-v31541 .mp-pattern-intro{color:#707972;font-size:12px!important;line-height:1.75!important}
+.menopause-main-v31541 .mp-pattern-card ul{margin:18px 0 0;padding:0;list-style:none}
+.menopause-main-v31541 .mp-pattern-card li{position:relative;padding:7px 0 7px 18px;border-top:1px solid #eef0ed;color:#58655d;font-size:11px;line-height:1.6}
+.menopause-main-v31541 .mp-pattern-card li::before{content:"•";position:absolute;left:3px;color:#9aa99e}
+.menopause-main-v31541 .mp-pattern-note{margin-top:18px;padding:13px;border-radius:10px;background:#f7f8f6;color:#68736b;font-size:10px;line-height:1.7}
+.menopause-main-v31541 .mp-mixed-note{margin-top:12px;padding:18px 20px;display:grid;grid-template-columns:160px 1fr;gap:18px;border:1px solid #e1e5e1;border-radius:14px;background:#fafaf8}
+.menopause-main-v31541 .mp-mixed-note b{color:var(--mp-green);font-size:12px}
+.menopause-main-v31541 .mp-mixed-note span{color:#727b74;font-size:11px;line-height:1.75}
+
+.menopause-main-v31541 .mp-check-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:center}
+.menopause-main-v31541 .mp-check-grid.reverse{grid-template-columns:.85fr 1.15fr}
+.menopause-main-v31541 .mp-check-copy h4{margin:0 0 14px;color:var(--mp-green);font-family:var(--title);font-size:23px}
+.menopause-main-v31541 .mp-check-list{border-top:1px solid #dfe5e0}
+.menopause-main-v31541 .mp-check-list>div{padding:15px 0;border-bottom:1px solid #e5e9e6}
+.menopause-main-v31541 .mp-check-list b{display:block;margin-bottom:4px;color:#3e5547;font-size:12px}
+.menopause-main-v31541 .mp-check-list span{color:#747d77;font-size:11px;line-height:1.65}
+.menopause-main-v31541 .mp-disclaimer{margin:14px 0 0!important;padding:12px 13px;border-radius:10px;background:#fff;color:#7a827c;font-size:10px!important;line-height:1.7!important}
+
+.menopause-main-v31541 .mp-dark{margin:0 -34px;padding:58px 34px;background:var(--mp-green);color:#fff}
+.menopause-main-v31541 .mp-dark .mp-kicker{color:#a9bcae}
+.menopause-main-v31541 .mp-dark h3{color:#fff}
+.menopause-main-v31541 .mp-dark-copy>p{margin:0!important;max-width:760px;color:rgba(255,255,255,.64);font-size:13px!important;line-height:1.85!important}
+.menopause-main-v31541 .mp-process-grid{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.menopause-main-v31541 .mp-process-grid>div{padding:18px;border:1px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(255,255,255,.04)}
+.menopause-main-v31541 .mp-process-grid small{color:#a9bbae;font-size:9px}
+.menopause-main-v31541 .mp-process-grid h4{margin:15px 0 6px;color:#fff;font-family:var(--title);font-size:17px}
+.menopause-main-v31541 .mp-process-grid p{margin:0!important;color:rgba(255,255,255,.61);font-size:10px!important;line-height:1.7!important}
+
+.menopause-main-v31541 .mp-treatment-grid,
+.menopause-main-v31541 .mp-alert-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.menopause-main-v31541 .mp-treatment-grid article{display:grid;grid-template-columns:42px 1fr;gap:13px;padding:20px;border:1px solid var(--mp-line);border-radius:14px;background:#fff}
+.menopause-main-v31541 .mp-treatment-grid article>span{color:#9baa9f;font-family:var(--title);font-size:15px}
+.menopause-main-v31541 .mp-treatment-grid h4{margin:0 0 6px;color:var(--mp-green);font-family:var(--title);font-size:18px}
+.menopause-main-v31541 .mp-treatment-grid p{margin:0!important;color:#707972;font-size:11px!important;line-height:1.75!important}
+.menopause-main-v31541 .mp-alert-grid>div{padding:20px;border:1px solid #e3dfdc;border-radius:14px;background:#fff}
+.menopause-main-v31541 .mp-alert-grid b{display:block;margin-bottom:7px;color:#4b403b;font-family:var(--title);font-size:17px}
+.menopause-main-v31541 .mp-alert-grid span{color:#737c75;font-size:11px;line-height:1.72}
+
+.menopause-main-v31541 .mp-faq{border-top:1px solid #dfe4df}
+.menopause-main-v31541 .mp-faq details{border-bottom:1px solid #dfe4df}
+.menopause-main-v31541 .mp-faq summary{list-style:none;cursor:pointer;padding:18px 0;display:flex;justify-content:space-between;gap:18px;color:#2d4034;font-size:14px;font-weight:700}
+.menopause-main-v31541 .mp-faq summary::-webkit-details-marker{display:none}
+.menopause-main-v31541 .mp-faq summary::after{content:"+";color:#7d8e82;font-size:20px;font-weight:300}
+.menopause-main-v31541 .mp-faq details[open] summary::after{content:"−"}
+.menopause-main-v31541 .mp-faq p{max-width:880px;margin:0 0 19px!important;color:#6f7872;font-size:12px!important;line-height:1.9!important}
+
+.menopause-main-v31541 .mp-evidence{background:#fbfaf7}
+.menopause-main-v31541 .mp-reference-list{margin:0;padding:0;list-style:none;counter-reset:mpref;border-top:1px solid #dfe4df}
+.menopause-main-v31541 .mp-reference-list li{counter-increment:mpref;display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:14px;align-items:start;padding:19px 0;border-bottom:1px solid #e4e7e4}
+.menopause-main-v31541 .mp-reference-list li::before{content:"[" counter(mpref) "]";color:#789080;font-size:11px;font-weight:800}
+.menopause-main-v31541 .mp-reference-list b{display:block;margin-bottom:5px;color:var(--mp-green);font-size:13px;line-height:1.55}
+.menopause-main-v31541 .mp-reference-list p{margin:0 0 5px!important;color:#69736c;font-size:11px!important;line-height:1.7!important}
+.menopause-main-v31541 .mp-reference-list small{color:#8a918c;font-size:9px}
+.menopause-main-v31541 .mp-reference-list>a{min-width:82px;padding:8px 10px;border:1px solid #d8dfda;border-radius:999px;color:var(--mp-rose);text-align:center;text-decoration:none;font-size:9px;font-weight:700;white-space:nowrap}
+
+.menopause-main-v31541 .mp-author-box{margin:0 -34px;padding:22px 34px;display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid #e2e6e2;background:#f4f6f3}
+.menopause-main-v31541 .mp-author-box span,
+.menopause-main-v31541 .mp-author-box small{display:block;color:#828a84;font-size:9px}
+.menopause-main-v31541 .mp-author-box b{display:block;margin:4px 0;color:#304438;font-size:12px}
+.menopause-main-v31541 .mp-author-box>a{color:var(--mp-rose);text-decoration:none;font-size:10px;font-weight:700}
+
+.menopause-main-v31541 .mp-final{margin:0 -34px -34px;padding:42px 34px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;background:var(--mp-green);color:#fff}
+.menopause-main-v31541 .mp-final h3{margin:0 0 8px;color:#fff;font-family:var(--title);font-size:29px;line-height:1.42}
+.menopause-main-v31541 .mp-final p{margin:0!important;color:rgba(255,255,255,.62);font-size:12px!important;line-height:1.75!important}
+.menopause-main-v31541 .mp-final a{min-height:46px;padding:0 18px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;background:#fff;color:var(--mp-green);text-decoration:none;font-size:11px;font-weight:700}
+
+#postRichEditor .menopause-main-v31541{padding:18px;border:1px solid #d9e2db;border-radius:12px;background:#fff}
+
+@media(max-width:900px){
+  .menopause-main-v31541 .mp-hero{grid-template-columns:1fr}
+  .menopause-main-v31541 .mp-quick-grid{grid-template-columns:1fr 1fr}
+  .menopause-main-v31541 .mp-check-grid,
+  .menopause-main-v31541 .mp-check-grid.reverse{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .menopause-main-v31541 .mp-hero{padding-bottom:44px}
+  .menopause-main-v31541 .mp-hero h2{font-size:38px!important}
+  .menopause-main-v31541 .mp-answer-box{grid-template-columns:1fr}
+  .menopause-main-v31541 .mp-hero-points,
+  .menopause-main-v31541 .mp-quick-grid,
+  .menopause-main-v31541 .mp-pattern-grid,
+  .menopause-main-v31541 .mp-process-grid,
+  .menopause-main-v31541 .mp-treatment-grid,
+  .menopause-main-v31541 .mp-alert-grid{grid-template-columns:1fr}
+  .menopause-main-v31541 .mp-mixed-note{grid-template-columns:1fr}
+  .menopause-main-v31541 .mp-section,
+  .menopause-main-v31541 .mp-dark{margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}
+  .menopause-main-v31541 .mp-reference-list li{grid-template-columns:28px minmax(0,1fr)}
+  .menopause-main-v31541 .mp-reference-list>a{grid-column:2;justify-self:start}
+  .menopause-main-v31541 .mp-author-box{margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px;align-items:flex-start;flex-direction:column}
+  .menopause-main-v31541 .mp-final{margin-left:-18px;margin-right:-18px;margin-bottom:-18px;padding:36px 18px;grid-template-columns:1fr}
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>진료후기 | 제세현한의원</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site-v3128.css">
+<link rel="stylesheet" href="assets/reviews.css?v=3.5">
+<link rel="stylesheet" href="assets/frontend-editor-v3152.css">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=3.12.3">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon-512.png?v=3.12.3">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=3.12.3">
+</head>
+<body data-jsh-build="3.15.32">
+
+<header class="header">
+  <div class="container header-top">
+    <a class="brand" href="/" aria-label="제세현한의원 홈"><img class="static-brand-logo" src="assets/logo-jesehyun-v3130.png" alt="제세현한의원" width="1444" height="274"></a>
+    <div class="header-actions">
+      <a class="header-btn" href="tel:0432211275">043-221-1275</a>
+      <a class="header-btn primary" href="#">네이버 예약</a>
+    </div>
+  </div>
+  <nav class="container nav" data-dynamic-nav></nav>
+</header>
+
+<main class="reviews-auth-shell">
+
+  <section id="loginGate" class="reviews-login" style="display:none">
+    <div class="lock">🔒</div>
+    <div class="eyebrow">TREATMENT REVIEWS</div>
+    <h1>진료후기</h1>
+    <p>
+      진료후기는 로그인한 사용자에게만 공개됩니다.
+      카카오 계정의 이메일 정보만 확인하며, 닉네임과 프로필 사진은 요청하지 않습니다.
+    </p>
+    <div id="reviewLoginError" style="display:none;margin:16px auto 0;max-width:520px;padding:12px 14px;border-radius:8px;background:#fff0f0;color:#a63d3d;font-size:12px"></div>
+    <button class="kakao-btn" type="button" onclick="Reviews.loginWithKakao()">
+      카카오 이메일로 로그인하고 후기 보기
+    </button>
+  </section>
+
+  <section id="reviewsContent" style="display:none">
+    <div class="reviews-top">
+      <div class="container reviews-top-row">
+        <div>
+          <div class="eyebrow">TREATMENT REVIEWS</div>
+          <h1>진료후기</h1>
+          <p>제세현한의원의 진료 경험을 소개합니다.</p>
+        </div>
+
+        <div class="review-user">
+          <span id="reviewUserName">로그인 사용자</span>
+          <button class="review-logout" type="button" onclick="Reviews.logout()">로그아웃</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container review-list-wrap">
+      <div id="reviewListView" class="review-list-view">
+        <div id="reviewCount" class="review-count">진료후기</div>
+        <div id="reviewList"><div class="reviews-loading">후기를 불러오는 중입니다.</div></div>
+      </div>
+
+      <article id="reviewDetail" class="review-detail">
+        <button class="review-detail-back" type="button" onclick="Reviews.backToList()">← 목록으로</button>
+        <div id="reviewDetailCategory" class="review-category" style="margin-top:25px"></div>
+        <h1 id="reviewDetailTitle"></h1>
+        <div id="reviewDetailImage" class="review-detail-image"></div>
+        <div id="reviewDetailBody" class="review-detail-body"></div>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    제세현한의원 · 043-221-1275<br>
+    충청북도 청주시 상당구 상당로 10-1, 1층
+  </div>
+</footer>
+
+<script src="assets/config.js?v=3.10"></script>
+<script src="/assets/cms-public-v31541.js?v=3.15.41"></script>
+<script>JSH_PUBLIC.applyBrandAssets(); JSH_PUBLIC.renderNav();</script>
+<script>JSH_PUBLIC.renderNav(''); JSH_PUBLIC.applyDesign();</script>
+<script src="assets/reviews.js?v=3.5"></script>
+<script src="assets/analytics.js?v=3.2"></script>
+<script src="assets/frontend-editor-v3152.js"></script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+
+/* v3.15.12 — 다이어트 대표 메인글 */
+.diet-main-v31512{
+  --d-green:#183a2a;
+  --d-green2:#315f45;
+  --d-pink:#d46b8d;
+  --d-violet:#8870ad;
+  --d-paper:#f6f3ec;
+  --d-soft:#faf7f7;
+  --d-mint:#e9f0eb;
+  --d-line:#dfe4df;
+  --d-muted:#6e7771;
+  margin:0;
+  color:#26342b;
+}
+.diet-main-v31512 *{box-sizing:border-box}
+.diet-main-v31512 .diet-kicker{
+  margin-bottom:9px;
+  color:var(--d-green2);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.13em;
+}
+.diet-main-v31512 .diet-hero{
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(360px,1.1fr);
+  gap:44px;
+  align-items:center;
+  padding:24px 0 66px;
+}
+.diet-main-v31512 .diet-hero-copy h2{
+  margin:0 0 20px;
+  color:var(--d-green);
+  font-family:var(--title);
+  font-size:clamp(38px,5vw,62px);
+  line-height:1.26;
+  letter-spacing:-.045em;
+  word-break:keep-all;
+}
+.diet-main-v31512 .diet-hero-copy h2 em{font-style:normal;color:var(--d-pink)}
+.diet-main-v31512 .diet-hero-copy>p{
+  margin:0;
+  color:var(--d-muted);
+  font-size:14px;
+  line-height:1.95;
+  word-break:keep-all;
+}
+.diet-main-v31512 .diet-hero-points{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:24px;
+}
+.diet-main-v31512 .diet-hero-points>div{
+  padding:14px 12px;
+  border:1px solid var(--d-line);
+  border-radius:12px;
+  background:#fff;
+}
+.diet-main-v31512 .diet-hero-points b{
+  display:block;margin-bottom:4px;color:var(--d-green);font-size:11px
+}
+.diet-main-v31512 .diet-hero-points span{
+  color:#7b837d;font-size:9px;line-height:1.55
+}
+.diet-main-v31512 .diet-hero-image{
+  margin:0;
+  overflow:hidden;
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 20px 50px rgba(24,58,42,.08);
+}
+.diet-main-v31512 .diet-hero-image img{
+  width:100%;aspect-ratio:4/3;object-fit:cover;margin:0!important
+}
+.diet-main-v31512 .diet-section{
+  margin:0 -34px;
+  padding:72px 34px;
+}
+.diet-main-v31512 .diet-section.diet-soft{background:var(--d-soft)}
+.diet-main-v31512 .diet-section.diet-mint{background:var(--d-mint)}
+.diet-main-v31512 .diet-section-head{max-width:740px;margin-bottom:34px}
+.diet-main-v31512 .diet-section-head h3,
+.diet-main-v31512 .diet-dark h3{
+  margin:0 0 13px;
+  color:var(--d-green);
+  font-family:var(--title);
+  font-size:clamp(29px,4vw,42px);
+  line-height:1.42;
+  letter-spacing:-.035em;
+  word-break:keep-all;
+}
+.diet-main-v31512 .diet-section-head p{
+  margin:0;color:var(--d-muted);font-size:12px;line-height:1.9
+}
+.diet-main-v31512 .diet-goal-card{
+  overflow:hidden;border:1px solid var(--d-line);border-radius:16px;background:#fff
+}
+.diet-main-v31512 .diet-goal-title{
+  display:flex;justify-content:space-between;gap:18px;align-items:end;
+  padding:23px 25px;border-bottom:1px solid #e9ece9
+}
+.diet-main-v31512 .diet-goal-title strong{
+  color:var(--d-green);font-family:var(--title);font-size:22px
+}
+.diet-main-v31512 .diet-goal-title span{color:#858d87;font-size:9px}
+.diet-main-v31512 .diet-table-scroll{overflow-x:auto}
+.diet-main-v31512 table{width:100%;border-collapse:collapse;min-width:650px}
+.diet-main-v31512 th,
+.diet-main-v31512 td{
+  padding:14px 16px;border-bottom:1px solid #edf0ed;text-align:left;font-size:11px
+}
+.diet-main-v31512 th{background:#f7f8f6;color:#59645d;font-weight:700}
+.diet-main-v31512 td:first-child{
+  color:var(--d-green);font-family:var(--title);font-size:17px;font-weight:700
+}
+.diet-main-v31512 tbody tr:last-child td{border-bottom:0}
+.diet-main-v31512 .diet-small-note{
+  margin:0!important;padding:14px 18px;background:#faf9f6;
+  color:#7c847e;font-size:9px!important;line-height:1.75!important
+}
+.diet-main-v31512 .diet-stage-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px
+}
+.diet-main-v31512 .diet-stage-card{
+  overflow:hidden;border:1px solid var(--d-line);border-radius:15px;background:#fff
+}
+.diet-main-v31512 .diet-stage-card>img{
+  width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;margin:0!important;border-radius:0!important
+}
+.diet-main-v31512 .diet-stage-card>div{padding:18px}
+.diet-main-v31512 .diet-stage-card small{
+  color:var(--d-pink);font-size:9px;font-weight:800;letter-spacing:.08em
+}
+.diet-main-v31512 .diet-stage-card:nth-child(3) small{color:var(--d-violet)}
+.diet-main-v31512 .diet-stage-card h4{
+  margin:5px 0 8px;color:var(--d-green);font-family:var(--title);font-size:22px
+}
+.diet-main-v31512 .diet-stage-card p{
+  margin:0!important;color:#747c76;font-size:10px!important;line-height:1.72!important
+}
+.diet-main-v31512 .diet-dark{
+  margin:0 -34px;
+  padding:62px 34px;
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:42px;
+  background:var(--d-green);
+  color:#fff;
+}
+.diet-main-v31512 .diet-dark .diet-kicker{color:#a9beaf}
+.diet-main-v31512 .diet-dark h3{color:#fff}
+.diet-main-v31512 .diet-dark-copy>p{
+  margin:0!important;color:rgba(255,255,255,.62);font-size:11px!important;line-height:1.85!important
+}
+.diet-main-v31512 .diet-dark-list{border-top:1px solid rgba(255,255,255,.18)}
+.diet-main-v31512 .diet-dark-list>div{
+  display:grid;grid-template-columns:48px 1fr;gap:14px;
+  padding:18px 0;border-bottom:1px solid rgba(255,255,255,.14)
+}
+.diet-main-v31512 .diet-dark-list b{color:#aec3b4;font-family:var(--title)}
+.diet-main-v31512 .diet-dark-list strong{display:block;color:#fff;font-size:12px;margin-bottom:3px}
+.diet-main-v31512 .diet-dark-list span{color:rgba(255,255,255,.56);font-size:10px;line-height:1.7}
+.diet-main-v31512 .diet-info-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px
+}
+.diet-main-v31512 .diet-info-grid>div,
+.diet-main-v31512 .diet-life-grid>div,
+.diet-main-v31512 .diet-herb-grid>div,
+.diet-main-v31512 .diet-warning-grid>div{
+  padding:22px;border:1px solid var(--d-line);border-radius:14px;background:#fff
+}
+.diet-main-v31512 .diet-info-grid small,
+.diet-main-v31512 .diet-maint-grid small{color:#818a84;font-size:9px}
+.diet-main-v31512 .diet-info-grid b{
+  display:block;margin:6px 0 8px;color:var(--d-green);font-family:var(--title);font-size:19px
+}
+.diet-main-v31512 .diet-info-grid p,
+.diet-main-v31512 .diet-life-grid p,
+.diet-main-v31512 .diet-maint-grid p,
+.diet-main-v31512 .diet-warning-grid p{
+  margin:0!important;color:#717a73;font-size:10px!important;line-height:1.75!important
+}
+.diet-main-v31512 .diet-life-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.diet-main-v31512 .diet-life-grid b,
+.diet-main-v31512 .diet-herb-grid b{
+  display:block;margin-bottom:7px;color:var(--d-green);font-family:var(--title);font-size:18px
+}
+.diet-main-v31512 .diet-maint{
+  overflow:hidden;border:1px solid var(--d-line);border-radius:17px;background:#fff
+}
+.diet-main-v31512 .diet-maint-head{
+  padding:27px 28px;background:linear-gradient(115deg,#fff,#f4f7f4)
+}
+.diet-main-v31512 .diet-maint-head h4{
+  margin:0 0 8px;color:var(--d-green);font-family:var(--title);font-size:25px
+}
+.diet-main-v31512 .diet-maint-head p{
+  margin:0!important;color:#747d76;font-size:10px!important;line-height:1.8!important
+}
+.diet-main-v31512 .diet-maint-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #e5e9e6
+}
+.diet-main-v31512 .diet-maint-grid>div{
+  padding:22px;border-right:1px solid #e5e9e6
+}
+.diet-main-v31512 .diet-maint-grid>div:last-child{border-right:0}
+.diet-main-v31512 .diet-maint-grid b{
+  display:block;margin:5px 0 8px;color:var(--d-green);font-family:var(--title);font-size:18px
+}
+.diet-main-v31512 .diet-herb-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:8px
+}
+.diet-main-v31512 .diet-herb-grid span{color:#747c76;font-size:9px;line-height:1.6}
+.diet-main-v31512 .diet-warning-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.diet-main-v31512 .diet-warning-grid h4{
+  margin:0 0 9px;color:var(--d-green);font-family:var(--title);font-size:19px
+}
+.diet-main-v31512 .diet-warning-grid ul{margin:0;padding-left:18px}
+.diet-main-v31512 .diet-warning-grid li{color:#717a73;font-size:10px;line-height:1.8}
+.diet-main-v31512 .diet-final{
+  margin:0 -34px -34px;
+  padding:48px 34px;
+  border-radius:0 0 16px 16px;
+  background:var(--d-green);color:#fff
+}
+.diet-main-v31512 .diet-final h3{
+  margin:0 0 9px;color:#fff;font-family:var(--title);font-size:30px;line-height:1.42
+}
+.diet-main-v31512 .diet-final p{
+  margin:0!important;color:rgba(255,255,255,.6);font-size:10px!important;line-height:1.75!important
+}
+
+/* 관리자 본문 편집기 안에서도 템플릿이 알아보기 쉽게 보이게 */
+#postRichEditor .diet-main-v31512{
+  padding:18px;
+  border:1px solid #d9e2db;
+  border-radius:12px;
+  background:#fff;
+}
+#postRichEditor .diet-main-v31512 img{
+  cursor:pointer;
+}
+
+@media(max-width:900px){
+  .diet-main-v31512 .diet-hero{grid-template-columns:1fr}
+  .diet-main-v31512 .diet-hero-image{order:-1}
+  .diet-main-v31512 .diet-stage-grid{grid-template-columns:1fr 1fr}
+  .diet-main-v31512 .diet-dark{grid-template-columns:1fr}
+  .diet-main-v31512 .diet-info-grid{grid-template-columns:1fr}
+  .diet-main-v31512 .diet-herb-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:640px){
+  .diet-main-v31512 .diet-hero{padding-bottom:44px}
+  .diet-main-v31512 .diet-hero-copy h2{font-size:39px}
+  .diet-main-v31512 .diet-hero-points{grid-template-columns:1fr}
+  .diet-main-v31512 .diet-section,
+  .diet-main-v31512 .diet-dark{margin-left:-18px;margin-right:-18px;padding:54px 18px}
+  .diet-main-v31512 .diet-stage-grid,
+  .diet-main-v31512 .diet-life-grid,
+  .diet-main-v31512 .diet-warning-grid{grid-template-columns:1fr}
+  .diet-main-v31512 .diet-maint-grid{grid-template-columns:1fr}
+  .diet-main-v31512 .diet-maint-grid>div{border-right:0;border-bottom:1px solid #e5e9e6}
+  .diet-main-v31512 .diet-maint-grid>div:last-child{border-bottom:0}
+  .diet-main-v31512 .diet-herb-grid{grid-template-columns:1fr 1fr}
+  .diet-main-v31512 .diet-final{margin-left:-18px;margin-right:-18px;margin-bottom:-18px;padding:38px 18px}
+}

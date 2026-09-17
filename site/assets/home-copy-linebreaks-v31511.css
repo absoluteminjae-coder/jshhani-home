@@ -1,0 +1,17 @@
+
+/* v3.15.11 — 관리자에서 입력한 Enter 줄바꿈을 메인페이지에 그대로 반영 */
+#hero .hero-copy h1,
+#hero .hero-copy p,
+#clinics .section-head h2,
+#clinics .section-head p,
+#doctor .doctor-copy h2,
+#doctor .doctor-name,
+#doctor .doctor-copy p,
+#health .section-head h2,
+#health .section-head p,
+[data-section="health-content"] .section-head h2,
+[data-section="health-content"] .section-head p,
+#visit .section-head h2,
+#visit .section-head p{
+  white-space:pre-line;
+}
