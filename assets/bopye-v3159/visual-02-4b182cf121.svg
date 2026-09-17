@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <!-- 마이크 바디 -->
+  <rect x="28" y="8" width="24" height="38" rx="12" fill="rgba(255,255,255,0.85)"/>
+  <!-- 그릴 라인 -->
+  <line x1="28" y1="24" x2="52" y2="24" stroke="rgba(26,58,42,0.2)" stroke-width="1.2"/>
+  <line x1="28" y1="30" x2="52" y2="30" stroke="rgba(26,58,42,0.2)" stroke-width="1.2"/>
+  <line x1="28" y1="36" x2="52" y2="36" stroke="rgba(26,58,42,0.2)" stroke-width="1.2"/>
+  <!-- 스탠드 -->
+  <line x1="40" y1="46" x2="40" y2="62" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="28" y1="62" x2="52" y2="62" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- 음파 -->
+  <path d="M58 18 Q65 27 58 36" stroke="rgba(255,255,255,0.7)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M63 14 Q73 27 63 40" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M22 18 Q15 27 22 36" stroke="rgba(255,255,255,0.7)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M17 14 Q7 27 17 40" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

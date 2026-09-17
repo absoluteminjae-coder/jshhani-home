@@ -1,0 +1,67 @@
+
+/* v3.15.16 — 보폐고엔오 대표 메인글 CMS 연결 */
+.bopye-main-cms-v31516{
+  color:#26342b;
+}
+.bopye-main-cms-v31516 .hero{
+  margin:0 -34px;
+  padding-left:34px;
+  padding-right:34px;
+}
+.bopye-main-cms-v31516 .section{
+  margin-left:-34px;
+  margin-right:-34px;
+  padding-left:34px;
+  padding-right:34px;
+}
+.bopye-main-cms-v31516 .final{
+  margin:0 -34px -34px;
+  padding-left:34px;
+  padding-right:34px;
+}
+.bopye-main-cms-v31516 .header,
+.bopye-main-cms-v31516 footer{
+  display:none !important;
+}
+.bopye-main-cms-v31516 .hero p,
+.bopye-main-cms-v31516 .section-head p,
+.bopye-main-cms-v31516 .symptom-card p,
+.bopye-main-cms-v31516 .guide-head p,
+.bopye-main-cms-v31516 .use-copy p,
+.bopye-main-cms-v31516 .answer{
+  font-size:14px !important;
+  line-height:1.9 !important;
+}
+.bopye-main-cms-v31516 .symptom-card .note,
+.bopye-main-cms-v31516 .dose span,
+.bopye-main-cms-v31516 .herb span,
+.bopye-main-cms-v31516 .step p{
+  font-size:11px !important;
+}
+#postRichEditor .bopye-main-cms-v31516{
+  padding:18px;
+  border:1px solid #d9e2db;
+  border-radius:12px;
+  background:#fff;
+}
+#postRichEditor .bopye-main-cms-v31516 img{
+  cursor:pointer;
+}
+@media(max-width:640px){
+  .bopye-main-cms-v31516 .hero,
+  .bopye-main-cms-v31516 .section,
+  .bopye-main-cms-v31516 .final{
+    margin-left:-18px;
+    margin-right:-18px;
+    padding-left:18px;
+    padding-right:18px;
+  }
+  .bopye-main-cms-v31516 .hero p,
+  .bopye-main-cms-v31516 .section-head p,
+  .bopye-main-cms-v31516 .symptom-card p,
+  .bopye-main-cms-v31516 .guide-head p,
+  .bopye-main-cms-v31516 .use-copy p,
+  .bopye-main-cms-v31516 .answer{
+    font-size:13px !important;
+  }
+}

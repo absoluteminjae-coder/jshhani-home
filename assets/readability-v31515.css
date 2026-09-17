@@ -1,0 +1,169 @@
+
+/* v3.15.15 — 메인/상세페이지 설명문 가독성 개선 */
+
+/* Main page */
+#hero .hero-copy p{
+  font-size:16px !important;
+  line-height:1.9 !important;
+}
+
+#clinics .section-head p,
+#health .section-head p,
+[data-section="health-content"] .section-head p,
+#visit .section-head p{
+  font-size:14px !important;
+  line-height:1.85 !important;
+}
+
+#clinics .clinic-card p,
+#health .post-card p,
+[data-section="health-content"] .post-card p,
+.exam-card p{
+  font-size:13px !important;
+  line-height:1.75 !important;
+}
+
+.exam-card h3{
+  font-size:18px !important;
+}
+
+#health .post-category,
+[data-section="health-content"] .post-category{
+  font-size:11px !important;
+}
+
+/* Detail page */
+.page-head p{
+  font-size:15px !important;
+  line-height:1.85 !important;
+}
+
+.featured-article .article-body,
+.unified-post .article-body,
+.article-body{
+  font-size:16px !important;
+  line-height:1.9 !important;
+}
+
+.featured-article .article-body p,
+.unified-post .article-body p,
+.article-body p{
+  font-size:16px !important;
+  line-height:1.9 !important;
+}
+
+.featured-article .article-body li,
+.unified-post .article-body li,
+.article-body li{
+  font-size:15px !important;
+  line-height:1.85 !important;
+}
+
+.featured-article .article-body h2,
+.article-body h2{
+  font-size:28px !important;
+  line-height:1.45 !important;
+}
+
+.featured-article .article-body h3,
+.article-body h3{
+  font-size:22px !important;
+  line-height:1.5 !important;
+}
+
+/* Related cards */
+.detail-related-card p{
+  font-size:12px !important;
+  line-height:1.75 !important;
+}
+.detail-related-card h3{
+  font-size:19px !important;
+}
+.detail-related-list-copy strong{
+  font-size:13px !important;
+}
+
+/* Individual article */
+.article-head p,
+.article-summary{
+  font-size:14px !important;
+  line-height:1.8 !important;
+}
+
+/* Diet template descriptions */
+.diet-main-v31512 .diet-hero-copy>p{
+  font-size:15px !important;
+}
+.diet-main-v31512 .diet-section-head p{
+  font-size:14px !important;
+}
+.diet-main-v31512 .diet-stage-card p,
+.diet-main-v31512 .diet-info-grid p,
+.diet-main-v31512 .diet-life-grid p,
+.diet-main-v31512 .diet-maint-grid p,
+.diet-main-v31512 .diet-warning-grid p{
+  font-size:12px !important;
+}
+.diet-main-v31512 .diet-dark-copy>p{
+  font-size:13px !important;
+}
+.diet-main-v31512 .diet-dark-list span{
+  font-size:12px !important;
+}
+
+@media(max-width:640px){
+  #hero .hero-copy p{
+    font-size:15px !important;
+  }
+
+  #clinics .section-head p,
+  #health .section-head p,
+  [data-section="health-content"] .section-head p,
+  #visit .section-head p{
+    font-size:13px !important;
+  }
+
+  #clinics .clinic-card p,
+  #health .post-card p,
+  [data-section="health-content"] .post-card p,
+  .exam-card p{
+    font-size:12px !important;
+  }
+
+  .page-head p{
+    font-size:14px !important;
+  }
+
+  .featured-article .article-body,
+  .unified-post .article-body,
+  .article-body,
+  .featured-article .article-body p,
+  .unified-post .article-body p,
+  .article-body p{
+    font-size:15px !important;
+    line-height:1.85 !important;
+  }
+
+  .featured-article .article-body li,
+  .unified-post .article-body li,
+  .article-body li{
+    font-size:14px !important;
+  }
+
+  .featured-article .article-body h2,
+  .article-body h2{
+    font-size:24px !important;
+  }
+
+  .featured-article .article-body h3,
+  .article-body h3{
+    font-size:20px !important;
+  }
+
+  .diet-main-v31512 .diet-hero-copy>p{
+    font-size:14px !important;
+  }
+  .diet-main-v31512 .diet-section-head p{
+    font-size:13px !important;
+  }
+}

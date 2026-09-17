@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="bg_가래" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d5a3d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3d7a52;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="shine_가래" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.12);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg_가래)"/>
+  <rect width="400" height="300" fill="url(#shine_가래)"/>
+  
+  <!-- 폐 실루엣 -->
+  <ellipse cx="175" cy="115" rx="35" ry="48" fill="rgba(255,255,255,0.2)"/>
+  <ellipse cx="225" cy="115" rx="35" ry="48" fill="rgba(255,255,255,0.2)"/>
+  <rect x="193" y="75" width="14" height="55" rx="7" fill="rgba(255,255,255,0.25)"/>
+  <!-- 폐 내부 세부 -->
+  <path d="M158 108 Q168 100 175 110 Q182 120 175 130" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none"/>
+  <path d="M165 95 Q173 88 178 98" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none"/>
+  <path d="M242 108 Q232 100 225 110 Q218 120 225 130" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none"/>
+  <path d="M235 95 Q227 88 222 98" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none"/>
+  <!-- 기침 파동 -->
+  <path d="M200 160 Q220 155 240 165 Q260 175 280 160" stroke="rgba(255,255,255,0.45)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M200 172 Q225 165 250 175 Q270 185 290 172" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M200 184 Q228 175 260 185" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+</svg>

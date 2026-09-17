@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="bg_축농증" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a3a2a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f2318;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="shine_축농증" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.12);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg_축농증)"/>
+  <rect width="400" height="300" fill="url(#shine_축농증)"/>
+  
+  <circle cx="200" cy="110" r="65" fill="rgba(255,255,255,0.1)"/>
+  <!-- 얼굴 -->
+  <ellipse cx="200" cy="105" rx="45" ry="52" fill="rgba(255,255,255,0.2)"/>
+  <!-- 눈살 찌푸림 -->
+  <path d="M178 88 Q185 83 192 88" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M208 88 Q215 83 222 88" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- 눈 -->
+  <ellipse cx="185" cy="96" rx="7" ry="5" fill="rgba(255,255,255,0.85)"/>
+  <ellipse cx="215" cy="96" rx="7" ry="5" fill="rgba(255,255,255,0.85)"/>
+  <!-- 코 막힘 표현 -->
+  <ellipse cx="200" cy="115" rx="18" ry="13" fill="rgba(255,255,255,0.85)"/>
+  <ellipse cx="200" cy="112" rx="12" ry="6" fill="rgba(184,217,194,0.5)"/>
+  <!-- 손 -->
+  <path d="M168 108 Q160 115 165 125 Q170 132 178 128" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- 반짝 -->
+  <circle cx="245" cy="78" r="4" fill="rgba(255,255,255,0.4)"/>
+  <circle cx="155" cy="85" r="3" fill="rgba(255,255,255,0.35)"/>
+
+</svg>

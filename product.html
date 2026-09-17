@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>상품 | 제세현한의원</title>
+<meta name="description" content="제세현한의원 상품 상세">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shop-v3140.css">
+<link rel="icon" type="image/png" href="assets/favicon-32.png">
+</head>
+<body data-jsh-build="3.15.32">
+
+<header class="header">
+  <div class="container header-top">
+    <a class="brand" href="/" aria-label="제세현한의원 홈">
+      <img class="static-brand-logo" src="assets/logo-jesehyun-v3130.png" alt="제세현한의원">
+    </a>
+    <div class="header-actions">
+      <a class="header-btn" href="tel:0432211275">043-221-1275</a>
+      <a class="header-btn primary" href="#">네이버 예약</a>
+    </div>
+  </div>
+  <nav class="container desktop-nav" data-dynamic-nav></nav>
+</header>
+
+<main>
+  <div class="container product-detail" id="productRoot"><div class="empty-products">상품을 불러오는 중입니다.</div></div>
+</main>
+<footer><div class="container">제세현한의원 · 충청북도 청주시 상당구 상당로 10-1, 1층 · 043-221-1275</div></footer>
+<script src="assets/config.js"></script>
+<script src="/assets/cms-public-v31541.js?v=3.15.41"></script>
+<script>
+(async function(){
+ const C=window.JSH_CONFIG||{};
+ const base=(C.supabaseUrl||'').replace(/\/$/,'');
+ const key=C.supabaseAnonKey||'';
+ const id=new URLSearchParams(location.search).get('id')||'';
+ const root=document.getElementById('productRoot');
+ const esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+ const won=v=>Number(v||0)>0?Number(v).toLocaleString('ko-KR')+'원':'가격 문의';
+
+ JSH_PUBLIC.renderNav('shop');JSH_PUBLIC.applyBrandAssets();JSH_PUBLIC.applyDesign();
+
+ try{
+   const r=await fetch(base+'/rest/v1/cms_products?select=*&id=eq.'+encodeURIComponent(id)+'&is_active=eq.true&limit=1',{
+     headers:{apikey:key,Authorization:'Bearer '+key}
+   });
+   if(!r.ok)throw new Error(await r.text());
+   const rows=await r.json(),p=rows[0];
+   if(!p){
+     root.innerHTML='<div class="empty-products">현재 공개되지 않은 상품입니다.</div>';return;
+   }
+   document.title=(p.name||'상품')+' | 제세현한의원';
+   const sold=p.stock_status==='out_of_stock';
+   const buy=p.external_url&&!sold
+     ?`<a class="buy-btn" href="${esc(p.external_url)}" target="_blank" rel="noopener">외부 판매처에서 구매하기 ↗</a>`
+     :`<div class="buy-btn disabled">${sold?'현재 품절입니다':'구매 링크 준비 중'}</div>`;
+
+   root.innerHTML=`
+     <div class="product-detail-grid">
+       <div class="product-detail-image">${p.image_url?`<img src="${esc(p.image_url)}" alt="">`:''}</div>
+       <div class="product-detail-info">
+         <div class="category">${esc(p.category||'상품')}</div>
+         <h1>${esc(p.name)}</h1>
+         <div class="summary">${esc(p.summary||'')}</div>
+         <div class="detail-price">
+           <strong>${won(p.sale_price||p.regular_price)}</strong>
+           ${p.sale_price&&p.regular_price&&Number(p.sale_price)<Number(p.regular_price)?`<del>${won(p.regular_price)}</del>`:''}
+         </div>
+         ${buy}
+       </div>
+     </div>
+     <div class="product-description">${p.description_html||''}</div>`;
+ }catch(e){
+   console.error(e);root.innerHTML='<div class="empty-products">상품 정보를 불러오지 못했습니다.</div>';
+ }
+})();
+</script>
+</body>
+</html>

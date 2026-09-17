@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /remote-consult.html
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+Sitemap: https://www.jshhani.com/sitemap.xml
