@@ -18,4 +18,4 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 
-Sitemap: https://www.jshhani.com/sitemap.xml
+Sitemap: https://jshhani.com/sitemap.xml

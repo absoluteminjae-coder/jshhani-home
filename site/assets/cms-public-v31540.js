@@ -109,7 +109,7 @@
 
   function applyDetailSeo(slug,pageName){
     const seo=DETAIL_SEO[slug]||{};
-    const canonical='https://www.jshhani.com/'+encodeURIComponent(slug)+'/';
+    const canonical='https://jshhani.com/'+encodeURIComponent(slug)+'/';
     document.title=seo.title || ((pageName||'상세 진료')+' | 제세현한의원');
 
     let canonicalEl=document.head.querySelector('link[rel="canonical"]');
@@ -145,13 +145,13 @@
         'description':seo.description||'',
         'inLanguage':'ko-KR',
         'dateModified':(slug==='damjeok'||slug==='bopye'||slug==='pain')?'2026-09-16':undefined,
-        'author':(slug==='damjeok'||slug==='bopye'||slug==='pain')?{'@type':'Person','name':'차민재','jobTitle':'한의사','url':'https://www.jshhani.com/doctor.html','worksFor':{'@id':'https://www.jshhani.com/#clinic'}}:undefined,
-        'about':{'@type':'MedicalClinic','@id':'https://www.jshhani.com/#clinic'}
+        'author':(slug==='damjeok'||slug==='bopye'||slug==='pain')?{'@type':'Person','name':'차민재','jobTitle':'한의사','url':'https://jshhani.com/doctor.html','worksFor':{'@id':'https://jshhani.com/#clinic'}}:undefined,
+        'about':{'@type':'MedicalClinic','@id':'https://jshhani.com/#clinic'}
       },
       {
         '@type':'BreadcrumbList',
         'itemListElement':[
-          {'@type':'ListItem','position':1,'name':'제세현한의원','item':'https://www.jshhani.com/'},
+          {'@type':'ListItem','position':1,'name':'제세현한의원','item':'https://jshhani.com/'},
           {'@type':'ListItem','position':2,'name':pageName||slug,'item':canonical}
         ]
       }

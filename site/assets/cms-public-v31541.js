@@ -112,7 +112,7 @@
     const isMenopausePage=(slug==='menopause'||String(pageName||'').includes('갱년기'));
     const menopauseSeo=DETAIL_SEO.menopause||{};
     const seo=isMenopausePage?menopauseSeo:(DETAIL_SEO[slug]||{});
-    const canonical='https://www.jshhani.com/'+encodeURIComponent(slug)+'/';
+    const canonical='https://jshhani.com/'+encodeURIComponent(slug)+'/';
     document.title=seo.title || ((pageName||'상세 진료')+' | 제세현한의원');
 
     let canonicalEl=document.head.querySelector('link[rel="canonical"]');
@@ -132,7 +132,13 @@
     upsertMeta('meta[property="og:description"]',{property:'og:description',content:seo.description||''});
     upsertMeta('meta[property="og:url"]',{property:'og:url',content:canonical});
 
+    const hasStaticSchema=[...document.head.querySelectorAll('script[type="application/ld+json"]')]
+      .some(script=>script.id!=='jsh-detail-schema' && script.textContent.includes(canonical+'#webpage'));
     let ld=document.head.querySelector('#jsh-detail-schema');
+    if(hasStaticSchema){
+      if(ld)ld.remove();
+      return;
+    }
     if(!ld){
       ld=document.createElement('script');
       ld.type='application/ld+json';
@@ -148,13 +154,13 @@
         'description':seo.description||'',
         'inLanguage':'ko-KR',
         'dateModified':(slug==='damjeok'||slug==='bopye'||slug==='pain'||isMenopausePage)?'2026-09-17':undefined,
-        'author':(slug==='damjeok'||slug==='bopye'||slug==='pain'||isMenopausePage)?{'@type':'Person','name':'차민재','jobTitle':'한의사','url':'https://www.jshhani.com/doctor.html','worksFor':{'@id':'https://www.jshhani.com/#clinic'}}:undefined,
-        'about':{'@type':'MedicalClinic','@id':'https://www.jshhani.com/#clinic'}
+        'author':(slug==='damjeok'||slug==='bopye'||slug==='pain'||isMenopausePage)?{'@type':'Person','name':'차민재','jobTitle':'한의사','url':'https://jshhani.com/doctor.html','worksFor':{'@id':'https://jshhani.com/#clinic'}}:undefined,
+        'about':{'@type':'MedicalClinic','@id':'https://jshhani.com/#clinic'}
       },
       {
         '@type':'BreadcrumbList',
         'itemListElement':[
-          {'@type':'ListItem','position':1,'name':'제세현한의원','item':'https://www.jshhani.com/'},
+          {'@type':'ListItem','position':1,'name':'제세현한의원','item':'https://jshhani.com/'},
           {'@type':'ListItem','position':2,'name':pageName||slug,'item':canonical}
         ]
       }
