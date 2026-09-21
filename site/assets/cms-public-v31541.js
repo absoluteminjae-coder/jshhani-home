@@ -378,8 +378,8 @@
     if(!root)return;
 
     const slug=detailSlug();
-
-    root.innerHTML='<div class="cms-loading">페이지를 불러오는 중입니다.</div>';
+    const staticFallback=root.innerHTML;
+    const hasStaticFallback=root.hasAttribute('data-static-prerender');
 
     try{
       const rows=await get('cms_pages?select=*&slug=eq.'+encodeURIComponent(slug)+'&is_visible=eq.true&limit=1');
@@ -388,7 +388,9 @@
       await Promise.all([renderNav(slug),applyDesign()]);
 
       if(!p){
-        root.innerHTML='<div class="cms-error"><h2>현재 공개되지 않은 페이지입니다.</h2><p><a href="/">홈으로 돌아가기</a></p></div>';
+        if(!hasStaticFallback){
+          root.innerHTML='<div class="cms-error"><h2>현재 공개되지 않은 페이지입니다.</h2><p><a href="/">홈으로 돌아가기</a></p></div>';
+        }
         return;
       }
 
@@ -453,6 +455,14 @@
       // Pretty URLs (/damjeok/, /bopye/, /diet/...) change the base path.
       // Normalize any CMS/template local asset path before inserting HTML.
       pinnedBody=rootHtmlAssetUrls(pinnedBody);
+
+      const pinnedText=document.createElement('div');
+      pinnedText.innerHTML=pinnedBody;
+      const hasSubstantialPinned=(pinnedText.textContent||'').replace(/\s+/g,' ').trim().length>=200;
+      if(hasStaticFallback && !hasSubstantialPinned){
+        applyDetailSeo(slug,p.name);
+        return;
+      }
 
       const related=posts.filter(x=>!pinned || x.id!==pinned.id);
       const relatedCards=related.slice(0,3);
@@ -564,7 +574,11 @@
         </section>`;
     }catch(e){
       console.error(e);
-      root.innerHTML='<div class="cms-error"><h2>페이지를 불러오지 못했습니다.</h2><p>Supabase 연결을 확인해주세요.</p></div>';
+      if(hasStaticFallback){
+        root.innerHTML=staticFallback;
+      }else{
+        root.innerHTML='<div class="cms-error"><h2>페이지를 불러오지 못했습니다.</h2><p>Supabase 연결을 확인해주세요.</p></div>';
+      }
     }
   }
 
