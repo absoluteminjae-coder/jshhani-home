@@ -550,7 +550,7 @@
         <section class="cta">
           <div class="container cta-inner">
             <div><h2>${esc(p.name)} 진료가 궁금하신가요?</h2><p>현재 증상과 경과를 확인한 뒤 진료 방향을 안내드립니다.</p></div>
-            <a href="#">진료 예약하기</a>
+            <a href="tel:0432211275">전화 예약하기</a>
           </div>
         </section>`;
     }catch(e){
