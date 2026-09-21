@@ -306,6 +306,11 @@ a{text-decoration:none;color:inherit}
 .stats-table th{background:#fafbfd;color:#657287}
 .stats-table td.num{text-align:right;font-weight:700}
 .stats-title{font-weight:700;color:#1c2a3d}
+.analytics-note{margin:0 0 16px;padding:13px 15px;border:1px solid #dce8f8;border-radius:10px;background:#f5f9ff;color:#53657d;font-size:11px;line-height:1.7}
+.ai-two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.ai-type{display:inline-block;padding:4px 7px;border-radius:999px;background:#eef5ff;color:#1768da;font-size:10px;font-weight:800}
+.ai-type.referral{background:#f7edff;color:#8146b7}
+.analytics-error{padding:24px;border:1px dashed #dce3ec;border-radius:10px;color:#7d8999;text-align:center;font-size:12px;background:#fff}
 
 /* media library */
 .library-toolbar{display:flex;gap:9px;align-items:center;margin-bottom:14px}
@@ -327,6 +332,7 @@ a{text-decoration:none;color:inherit}
 @media(max-width:1100px){.library-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:760px){
   .analytics-summary{grid-template-columns:1fr}
+  .ai-two-col{grid-template-columns:1fr}
   .library-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
@@ -1383,6 +1389,7 @@ a{text-decoration:none;color:inherit}
   <div class="analytics-tabs">
     <button class="analytics-tab active" id="visitStatsTab" onclick="Admin.setStatsTab('visits')">방문 통계</button>
     <button class="analytics-tab" id="postStatsTab" onclick="Admin.setStatsTab('posts')">게시글 조회수</button>
+    <button class="analytics-tab" id="aiStatsTab" onclick="Admin.setStatsTab('ai')">AI 검색·활용</button>
   </div>
 
   <div id="visitStatsPane">
@@ -1414,6 +1421,42 @@ a{text-decoration:none;color:inherit}
         <tbody id="postStatsBody"></tbody>
       </table>
     </div>
+  </div>
+
+  <div id="aiStatsPane" style="display:none">
+    <p class="analytics-note">
+      AI 크롤러 요청은 각 서비스의 User-Agent를 기준으로 집계하며, AI 서비스 유입은 브라우저가 전달한 출처 주소를 기준으로 집계합니다.
+      출처를 전달하지 않는 방문은 집계되지 않아 실제보다 적을 수 있습니다. 실제 답변에 인용되었는지는 AI 서비스가 별도 데이터를 제공하지 않아 직접 확인할 수 없습니다. 개인정보와 IP 주소는 저장하지 않습니다.
+    </p>
+
+    <div id="aiStatsContent">
+      <div class="analytics-summary">
+        <div class="analytics-kpi"><span>AI 크롤러 요청</span><strong id="kpiAiCrawlers">0</strong></div>
+        <div class="analytics-kpi"><span>AI 서비스 유입</span><strong id="kpiAiReferrals">0</strong></div>
+        <div class="analytics-kpi"><span>AI 관련 페이지</span><strong id="kpiAiPages">0</strong></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-legend"><span class="legend-bar">크롤러 요청</span><span class="legend-line">AI 서비스 유입</span></div>
+        <div class="chart-scroll"><svg id="aiChart" class="analytics-chart" viewBox="0 0 1100 340" preserveAspectRatio="none"></svg></div>
+      </div>
+
+      <div class="ai-two-col">
+        <div class="table-wrap">
+          <table class="stats-table">
+            <thead><tr><th>유형</th><th>AI 서비스</th><th style="text-align:right">횟수</th><th>최근 활동</th></tr></thead>
+            <tbody id="aiSourceStatsBody"></tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table class="stats-table">
+            <thead><tr><th>페이지</th><th style="text-align:right">수집</th><th style="text-align:right">유입</th><th>최근 활동</th></tr></thead>
+            <tbody id="aiPageStatsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="aiStatsUnavailable" class="analytics-error" style="display:none"></div>
   </div>
 </section>
 </div></main></div></div>
@@ -3833,8 +3876,10 @@ $('importFootLeft').textContent=
     statsTab=tab;
     $('visitStatsTab')?.classList.toggle('active',tab==='visits');
     $('postStatsTab')?.classList.toggle('active',tab==='posts');
+    $('aiStatsTab')?.classList.toggle('active',tab==='ai');
     if($('visitStatsPane'))$('visitStatsPane').style.display=tab==='visits'?'':'none';
     if($('postStatsPane'))$('postStatsPane').style.display=tab==='posts'?'':'none';
+    if($('aiStatsPane'))$('aiStatsPane').style.display=tab==='ai'?'':'none';
   }
 
   function formatDate(s){
@@ -3889,14 +3934,99 @@ $('importFootLeft').textContent=
     svg.innerHTML=parts.join('');
   }
 
+  function renderAiChart(rows){
+    const svg=$('aiChart');
+    if(!svg)return;
+
+    const W=1100,H=340;
+    const L=48,R=26,T=24,B=46;
+    const chartW=W-L-R,chartH=H-T-B;
+    const maxCrawlers=Math.max(1,...rows.map(x=>Number(x.crawler_hits)||0));
+    const maxReferrals=Math.max(1,...rows.map(x=>Number(x.referral_hits)||0));
+    const step=chartW/Math.max(rows.length,1);
+    const barW=Math.max(3,Math.min(22,step*.58));
+    const parts=[];
+
+    for(let i=0;i<=4;i++){
+      const y=T+(chartH*i/4);
+      const val=Math.round(maxCrawlers*(1-i/4));
+      parts.push(`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#e8edf3" stroke-width="1"/>`);
+      parts.push(`<text x="${L-8}" y="${y+4}" text-anchor="end" font-size="10" fill="#7b8798">${val}</text>`);
+    }
+
+    rows.forEach((row,i)=>{
+      const x=L+step*i+step/2;
+      const h=(Number(row.crawler_hits)||0)/maxCrawlers*chartH;
+      const y=T+chartH-h;
+      parts.push(`<rect x="${x-barW/2}" y="${y}" width="${barW}" height="${h}" rx="2" fill="#3189f4"/>`);
+      if(rows.length<=35 || i%Math.ceil(rows.length/12)===0 || i===rows.length-1){
+        parts.push(`<text x="${x}" y="${H-16}" text-anchor="middle" font-size="9" fill="#6e7b8c">${formatDate(row.day)}</text>`);
+      }
+    });
+
+    const pts=rows.map((row,i)=>{
+      const x=L+step*i+step/2;
+      const y=T+chartH-((Number(row.referral_hits)||0)/maxReferrals*chartH);
+      return [x,y];
+    });
+    if(pts.length){
+      parts.push(`<polyline fill="none" stroke="#8f4cc9" stroke-width="2" points="${pts.map(p=>p.join(',')).join(' ')}"/>`);
+      pts.forEach(p=>parts.push(`<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="#8f4cc9"/>`));
+    }
+    svg.innerHTML=parts.join('');
+  }
+
+  function renderAiStats(data){
+    const content=$('aiStatsContent');
+    const unavailable=$('aiStatsUnavailable');
+    if(!content||!unavailable)return;
+
+    if(!data || data.__error){
+      content.style.display='none';
+      unavailable.style.display='block';
+      unavailable.textContent='AI 통계 데이터베이스 설정이 아직 적용되지 않았습니다.';
+      return;
+    }
+
+    const payload=Array.isArray(data)?(data[0]||{}):data;
+    const summary=payload.summary||{};
+    const daily=payload.daily||[];
+    const sources=payload.sources||[];
+    const pages=payload.pages||[];
+
+    content.style.display='block';
+    unavailable.style.display='none';
+    $('kpiAiCrawlers').textContent=Number(summary.crawler_hits||0).toLocaleString();
+    $('kpiAiReferrals').textContent=Number(summary.referral_hits||0).toLocaleString();
+    $('kpiAiPages').textContent=Number(summary.pages||0).toLocaleString();
+    renderAiChart(daily);
+
+    $('aiSourceStatsBody').innerHTML=sources.length?sources.map(x=>`
+      <tr>
+        <td><span class="ai-type ${x.event_type==='referral'?'referral':''}">${x.event_type==='referral'?'유입':'크롤러'}</span></td>
+        <td class="stats-title">${esc(x.source||'')}</td>
+        <td class="num">${Number(x.hits||0).toLocaleString()}회</td>
+        <td>${x.last_seen?new Date(x.last_seen).toLocaleString('ko-KR'):'-'}</td>
+      </tr>`).join(''):'<tr><td colspan="4"><div class="empty">아직 AI 관련 활동이 없습니다.</div></td></tr>';
+
+    $('aiPageStatsBody').innerHTML=pages.length?pages.map(x=>`
+      <tr>
+        <td class="stats-title">${esc(x.path||'')}</td>
+        <td class="num">${Number(x.crawler_hits||0).toLocaleString()}회</td>
+        <td class="num">${Number(x.referral_hits||0).toLocaleString()}회</td>
+        <td>${x.last_seen?new Date(x.last_seen).toLocaleString('ko-KR'):'-'}</td>
+      </tr>`).join(''):'<tr><td colspan="4"><div class="empty">아직 AI가 확인한 페이지가 없습니다.</div></td></tr>';
+  }
+
   async function renderStats(){
     if(!$('visitStatsPane'))return;
 
     try{
-      const [visits,posts,summaryRows]=await Promise.all([
+      const [visits,posts,summaryRows,aiStats]=await Promise.all([
         rpc('cms_visit_stats',{p_days:statsDays}),
         rpc('cms_post_stats',{p_days:statsDays}),
-        rpc('cms_visit_summary',{p_days:statsDays})
+        rpc('cms_visit_summary',{p_days:statsDays}),
+        rpc('cms_ai_dashboard',{p_days:statsDays}).catch(e=>({__error:e.message}))
       ]);
 
       const totalViews=visits.reduce((a,x)=>a+(Number(x.views)||0),0);
@@ -3925,6 +4055,8 @@ $('importFootLeft').textContent=
           <td>${x.last_viewed_at?new Date(x.last_viewed_at).toLocaleString('ko-KR'):'-'}</td>
         </tr>
       `).join(''):'<tr><td colspan="5"><div class="empty">아직 게시글 조회 기록이 없습니다.</div></td></tr>';
+
+      renderAiStats(aiStats);
 
       setStatsTab(statsTab);
     }catch(e){
