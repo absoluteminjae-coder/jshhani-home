@@ -260,7 +260,7 @@
 
       // v3.12.3: 로고와 favicon은 승인된 AI 원본을 정적 파일로 사용합니다.
       // 새로고침 시 과거 Supabase 이미지가 덮어쓰는 현상을 막습니다.
-      if(brand.site_title){
+      if(brand.site_title && !document.title.trim()){
         document.title=brand.site_title;
       }
     }catch(e){
