@@ -172,6 +172,18 @@ export default {
       return new Response("Method Not Allowed", { status: 405 });
     }
 
+    // Normalize the public menopause URL before requesting an asset.
+    if (['/menopasue', '/menopasue/', '/menopasue.html', '/menopause', '/menopause.html'].includes(url.pathname) ||
+        (['/detail', '/detail/', '/detail.html'].includes(url.pathname) &&
+         ['menopasue', 'menopause'].includes(url.searchParams.get('slug')))) {
+      const target = new URL(url);
+      target.protocol = 'https:';
+      target.host = 'jshhani.com';
+      target.pathname = '/menopause/';
+      target.searchParams.delete('slug');
+      return Response.redirect(target.href, 301);
+    }
+
     let response;
 
     if (/^\/[^/]+\/$/.test(url.pathname)) {
@@ -194,6 +206,17 @@ export default {
 
     if (!response) response = await env.ASSETS.fetch(request);
 
+    // Give every HTML entry point the updated menu and detail-page client.
+    if (request.method === 'GET' && response.status === 200 &&
+        (response.headers.get('content-type') || '').includes('text/html')) {
+      const html = await response.text();
+      const updated = html.replace(/\/assets\/cms-public-v31541\.js(?:\?[^"'<>\s]*)?/g,
+        '/assets/cms-public-v31550.js');
+      const headers = new Headers(response.headers);
+      for (const name of ['content-length', 'etag', 'last-modified', 'content-encoding']) headers.delete(name);
+      headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+      response = new Response(updated, {status: 200, headers});
+    }
     response = await applyServerDetailSeo(response, url, request.method);
 
     if (request.method === "GET" && response.ok) {
